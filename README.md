@@ -76,20 +76,5 @@ There is also generous commenting throughout the application which helps explain
 ## Contribute
 Please create a pull request with your desired changes.
 
-## Troubleshooting
-The primary source of debugging information for your app is the logs. To see them, run the following command using the Cloud Foundry CLI:
-
-  ```
-  $ bx cf logs <application-name> --recent
-  ```
-
-If you are not sure what your application name is, use this command to print your application name(s):
-
-  ```
-  $ bx cf apps
-  ```
-
-For more detailed information on troubleshooting your application, see the [Troubleshooting section](https://www.ng.bluemix.net/docs/troubleshoot/tr.html) in the documentation.
-
 ## License
 See [LICENSE.MD](https://github.com/IBM-Bluemix/Nodejs-MEAN-Stack/blob/master/LICENSE.md) for license information.
