@@ -1,5 +1,5 @@
 
-#Project-Team-2
+# Project-Team-2
 Student Names: Akshat Alpesh Shah, Mario Yepez, Sheethal Halandur Nagaraja, Zainab Khan
 
 Team Name:
@@ -11,7 +11,7 @@ Project description:A ML powered job search engine which uses cognitive API to f
 Proposed methodology/ resources : IBM Watson cognitive services API, Node.JS, Java script, Cloudant
 
 
-# Modern Web Application using MEAN stack
+# Modern Web Application using MEAN stack (from IBM)
 
 This is a basic boilerplate for the MEAN stack ([MongoDB](https://www.mongodb.org/), [Express](http://expressjs.com/), [AngularJS](https://angularjs.org/) and [Node.js](https://nodejs.org)) on [IBM Cloud](http://bluemix.net).
 
