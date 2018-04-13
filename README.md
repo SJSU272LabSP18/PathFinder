@@ -11,6 +11,9 @@ Project description:A ML powered job search engine which uses cognitive API to f
 Proposed methodology/ resources : IBM Watson cognitive services API, Node.JS, Java script, Cloudant
 
 
+Latest Running Build Is Hosted Here: https://mean-allegro-interpretership.mybluemix.net
+
+
 # Modern Web Application using MEAN stack (from IBM)
 
 This is a basic boilerplate for the MEAN stack ([MongoDB](https://www.mongodb.org/), [Express](http://expressjs.com/), [AngularJS](https://angularjs.org/) and [Node.js](https://nodejs.org)) on [IBM Cloud](http://bluemix.net).
@@ -36,32 +39,13 @@ This application uses the [Compose for MongoDB service](https://console.bluemix.
 
 ## Getting Started
 ##### Local Application Development
-1. Clone or download this repo onto your machine.
+1. Clone this repo onto your machine.
 2. Install [application requirements](#application-requirements) if not done so already.
 3. Open application directory in your terminal and run `npm install`
 4. Rename `.env.example` file to `.env`.  Edit the contents as needed, at a minimum adding your own SESSION_SECRET.
 5. Start up your local MongoDB server (typically just `mongod`, see docs [here](https://docs.mongodb.org/getting-started/shell/installation/))
 6. Run `node server.js` to start your app
 7. Open a browser to the link provided in the terminal prompt to view your app
-
-##### Deploy to IBM Cloud
-
-Option 1 (launch this app directly from this repo):
-
-[![Deploy to Bluemix](https://bluemix.net/deploy/button.png)](https://bluemix.net/deploy?repository=https://github.com/IBM-Bluemix/Nodejs-MEAN-Stack)
-
-Option 2 (deploy from your local machine):
-
-1. Clone or download this repo onto your machine.
-2. Open a terminal prompt to the directory of your application.
-3. If you don't have an account, [create a free one here](https://console.ng.bluemix.net/registration/).
-4. Set your Cloud Foundry CLI tool's API endpoint to: `bx api https://api.ng.bluemix.net `
-5. Login to your account via the command line: `bx login`
-6. Target your account ORG and SPACE  `bx target -o ORG -s SPACE`
-7. Create the instance of Compose for MongoDB on IBM Cloud:  `bx cf create-service compose-for-mongodb Standard mean-starter-mongodb`
-8. Push your app to IBM Cloud with `bx cf push`
-9. Done, the app should be looking like:<img src="ReadME-Images/live-app.png">
-
 
 
 #### Problems or Questions?
