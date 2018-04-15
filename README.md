@@ -33,7 +33,9 @@ This application uses the [Compose for MongoDB service](https://console.bluemix.
 - [PassportJS](http://passportjs.org) for authentication, with over 300 authentication strategies to pick from.
 
 ## Application Requirements
-- [Node.js & NPM](https://nodejs.org/en/download/\)
+- [Node.js & NPM](https://nodejs.org/en/download/)
+- [Compose for MongoDB database](https://console.bluemix.net/catalog/compose-for-mongodb)
+- [Cloud Foundry Command Line Tool](https://docs.cloudfoundry.org/devguide/installcf/)
 
 ## Getting Started
 ##### Local Application Development
