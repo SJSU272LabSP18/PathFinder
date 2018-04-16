@@ -30,7 +30,12 @@ app.controller('HeaderController', function($scope, $localStorage, $sessionStora
     };
 });
 
-app.controller('HomeController', function($scope, $localStorage, $sessionStorage){    console.log($scope)});
+app.controller('HomeController', function($scope, $localStorage, $sessionStorage){
+
+  // Set local scope to persisted user data
+  $scope.user = $localStorage;
+
+});
 
 app.controller('LoginController', function($scope, $localStorage, $sessionStorage, $location, $http){
 

@@ -1,24 +1,107 @@
 <!--home.html-->
-<div class="row">
+
+<!-- When User Is Not Logged in -->
+
+<div class="wrapper" ng-hide="user.status">
+    <div class="page-header page-header-small">
+        <div class="page-header-image" data-parallax="false" style="z-index:0; background-image: url(&quot;../assets/img/landingpage1.jpg&quot;);">
+        </div>
+        <div class="container">
+            <div class="content-center">
+                <!-- Pathfinder Logo SVG -->
+                 <svg width="42px" height="100px" viewBox="0 0 42 50" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                   <!-- Generator: Sketch 49.3 (51167) - http://www.bohemiancoding.com/sketch -->
+                   <desc>Created with Sketch.</desc>
+                   <defs>
+                       <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-1">
+                           <stop stop-color="#FFFFFF" offset="0%"></stop>
+                           <stop stop-color="#D8D8D8" offset="100%"></stop>
+                       </linearGradient>
+                   </defs>
+                   <g id="Logo" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" font-family="WildArrows, Wild Arrows" font-size="72" font-weight="400">
+                       <text id="P" fill="url(#linearGradient-1)">
+                           <tspan x="-1" y="48">P</tspan>
+                       </text>
+                   </g>
+                 </svg>
+                 <!-- End Pathfinder Logo SVG -->
+                <h2 class="title">Pathfinder - Take your job search to the next level.</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+/* P: */
+font-family: WildArrows;
+font-size: 72px;
+color: #FC5131;
+text-align: left;
+
+<div class="container" ng-hide="user.status">
+    <div class="row">
+        <div class="col-lg-6 col-md-12" ng-hide="user.status">
+            <h2 class="title">What's wrong with traditional job hunting websites?</h2>
+            <h5 class="description" ng-hide="user.status">
+                Most traditional job websites only match at keyword level.
+                <br>
+                <br>
+                This means candidates are not matched at a personal level.
+                <br>
+                <br>
+                Most job search engines have no idea what a job seeker's personality or their aptitude for certain skills.
+                <br>
+                <br>
+                Traditional job search websites are not asking the important questions.
+            </h5>
+        </div>
+        <div class="col-lg-6 col-md-12">
+            <div class="hero-images-container">
+              <img src="assets/img/hero-image-1.png" alt="">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container" ng-hide="user.status">
+    <div class="row">
+        <div class="col-lg-6 col-md-12">
+            <h2 class="title">What makes Pathfinder unique?</h2>
+            <h5 class="description">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                <br>
+                <br>
+                Vivamus ut erat eu lorem tincidunt varius.
+                <br>
+                <br>
+                Cras sagittis urna vitae lorem vehicula consectetur.
+                <br>
+                <br>
+                Sed vel risus eu tortor fermentum eleifend eget non nunc.
+                <br>
+                <br>
+                Cras sagittis urna vitae lorem vehicula consectetur.
+                <br>
+                <br>
+                Sed vel risus eu tortor fermentum eleifend eget non nunc.
+            </h5>
+        </div>
+        <div class="col-lg-6 col-md-12">
+            <div class="hero-images-container">
+              <img src="assets/img/hero-image-2.png" alt="">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /When User Is Not Logged in -->
+
+
+<!-- When User Is Logged in -->
+<div class="row" ng-show="user.status">
     <div class="jumbotron">
         <h1>Pathfinder</h1>
-        <p>Insert your message here.</p>
+        <p>You're logged in! The homepage is different when logged in</p>
     </div>
 </div>
-
-
-<div class="row">
-    <div class="col-lg-6">
-        <h3>Get Started with Boilerplate Meep</h3>
-        <p>See the <a href="https://github.com/IBM-Bluemix/Nodejs-MEAN-Stack">README</a> for getting started documentation.</p>
-    </div>
-    <div class="col-lg-6">
-        <h3>Resources & Documentation</h3>
-        <ul>
-            <li><a href="https://bootswatch.com/cosmo/">UI Theme Docs</a></li>
-            <li><a href="https://getbootstrap.com/css">Bootstrap UI Docs</a></li>
-        </ul>
-    </div>
-</div>
+<!-- /When User Is Logged in -->
 
 <!--/home.html-->
