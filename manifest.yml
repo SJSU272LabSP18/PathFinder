@@ -2,7 +2,7 @@
 applications:
 - name: mean-stack
   host: mean-${random-word}
-  memory: 256M
+  memory: 1024M
   services:
   - mean-starter-mongodb
   env:
