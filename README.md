@@ -11,7 +11,8 @@ Project description:A ML powered job search engine which uses cognitive API to f
 Proposed methodology/ resources : IBM Watson cognitive services API, Node.JS, Java script, Cloudant
 
 
-Latest Running Build Is Hosted Here: https://mean-allegro-interpretership.mybluemix.net
+Latest Running Build Is Hosted Here: 
+https://pathfinderuno.mybluemix.net/#/
 
 
 # Modern Web Application using MEAN stack (from IBM)
