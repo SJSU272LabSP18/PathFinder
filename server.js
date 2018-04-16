@@ -21,7 +21,7 @@ var express = require('express'),// server middleware
     appEnv = cfenv.getAppEnv(),// Grab environment variables
 
     User = require('./server/models/user.model');
-    
+
 
 /********************************
 Local Environment Variables
@@ -30,7 +30,7 @@ if(appEnv.isLocal){
     require('dotenv').load();// Loads .env file into environment
 }
 
-/******************************** 
+/********************************
  MongoDB Connection
  ********************************/
 
@@ -94,7 +94,7 @@ app.use(session({
         autoReconnect: true
     }),
     saveUninitialized : false,
-    cookie: { secure: true }
+    cookie: { secure: false }
 }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -297,6 +297,10 @@ app.get('/account/logout', function(req,res){
 
 // Custom middleware to check if user is logged-in
 function authorizeRequest(req, res, next) {
+    console.log("Req.User")
+    console.log(req.user);
+    console.log("Req")
+    console.log(req);
     if (req.user) {
         next();
     } else {

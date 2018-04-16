@@ -30,7 +30,7 @@ app.controller('HeaderController', function($scope, $localStorage, $sessionStora
     };
 });
 
-app.controller('HomeController', function($scope, $localStorage, $sessionStorage){});
+app.controller('HomeController', function($scope, $localStorage, $sessionStorage){    console.log($scope)});
 
 app.controller('LoginController', function($scope, $localStorage, $sessionStorage, $location, $http){
 
@@ -197,6 +197,7 @@ app.controller('AccountController', function($scope, $localStorage, $sessionStor
             );
         }
     };
+
 });
 
 app.controller('ProtectedController', function($scope, $location, $http){
