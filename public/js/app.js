@@ -42,8 +42,8 @@ app.controller('LoginController', function($scope, $localStorage, $sessionStorag
 
     $scope.$on('$viewContentLoaded', function(){
       //Here your view content is fully loaded !!
-      $location.hash('login_header');
-      anchorSmoothScroll.scrollTo('login_header');
+      $location.hash('loginHeader');
+      anchorSmoothScroll.scrollTo('loginHeader');
     });
 
     // Login submission
