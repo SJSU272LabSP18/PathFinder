@@ -35,7 +35,19 @@ app.controller('HomeController', function($scope, $localStorage, $sessionStorage
   // Set local scope to persisted user data
   $scope.user = $localStorage;
 
-  console.log($scope.user);
+});
+
+
+app.controller('ExploreController', function($scope, $localStorage, $sessionStorage, $location, anchorSmoothScroll){
+
+  // Set local scope to persisted user data
+  $scope.user = $localStorage;
+
+  $scope.$on('$viewContentLoaded', function(){
+    //Here your view content is fully loaded !!
+    $location.hash('exploreHeader');
+    anchorSmoothScroll.scrollTo('exploreHeader');
+  });
 
 });
 
@@ -246,6 +258,12 @@ app.config(function($routeProvider) {
         when('/', {
             templateUrl: 'views/home.html',
             controller: 'HomeController'
+        }).
+
+        //Root
+        when('/explore', {
+            templateUrl: 'views/explore.html',
+            controller: 'ExploreController'
         }).
 
         //Login page
