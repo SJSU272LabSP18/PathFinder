@@ -274,7 +274,6 @@ app.post('/account/update', authorizeRequest, function(req,res){
         user.email = req.body.email;
         user.firstname = req.body.firstname;
         user.lastname = req.body.lastname;
-        user.role = req.body.role;
 
         user.save(function(err) {
             if (err) {
