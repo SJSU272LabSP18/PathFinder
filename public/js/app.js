@@ -38,15 +38,28 @@ app.controller('HomeController', function($scope, $localStorage, $sessionStorage
 });
 
 
-app.controller('ExploreController', function($scope, $localStorage, $sessionStorage, $location, anchorSmoothScroll){
+app.controller('ExploreJobsController', function($scope, $localStorage, $sessionStorage, $location, anchorSmoothScroll){
 
   // Set local scope to persisted user data
   $scope.user = $localStorage;
 
   $scope.$on('$viewContentLoaded', function(){
     //Here your view content is fully loaded !!
-    $location.hash('exploreHeader');
-    anchorSmoothScroll.scrollTo('exploreHeader');
+    //$location.hash('header');
+    anchorSmoothScroll.scrollTo('header');
+  });
+
+});
+
+app.controller('ExploreTalentController', function($scope, $localStorage, $sessionStorage, $location, anchorSmoothScroll){
+
+  // Set local scope to persisted user data
+  $scope.user = $localStorage;
+
+  $scope.$on('$viewContentLoaded', function(){
+    //Here your view content is fully loaded !!
+    //$location.hash('header');
+    anchorSmoothScroll.scrollTo('header');
   });
 
 });
@@ -56,7 +69,7 @@ app.controller('LoginController', function($scope, $localStorage, $sessionStorag
 
     $scope.$on('$viewContentLoaded', function(){
       //Here your view content is fully loaded !!
-      $location.hash('loginHeader');
+      //$location.hash('loginHeader');
       anchorSmoothScroll.scrollTo('loginHeader');
     });
 
@@ -260,10 +273,16 @@ app.config(function($routeProvider) {
             controller: 'HomeController'
         }).
 
-        //Root
-        when('/explore', {
-            templateUrl: 'views/explore.html',
-            controller: 'ExploreController'
+        //Explore Jobs
+        when('/explore/jobs', {
+            templateUrl: 'views/explore_jobs.html',
+            controller: 'ExploreJobsController'
+        }).
+
+        //Explore Talent
+        when('/explore/talent', {
+            templateUrl: 'views/explore_talent.html',
+            controller: 'ExploreTalentController'
         }).
 
         //Login page
