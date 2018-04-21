@@ -10,13 +10,23 @@
         <form class="form-horizontal" novalidate ng-submit="submitForm()" name="createAccountForm">
             <fieldset>
                 <div class="form-group">
-                    <label for="inputName" class="col-lg-3 control-label">Name</label>
+                    <label for="inputFirstName" class="col-lg-3 control-label">First Name</label>
                     <div class="col-lg-9">
                         <input type="text"
                                class="form-control"
-                               id="inputName"
-                               ng-model="newUser.name"
-                               required placeholder="Name">
+                               id="inputFirstName"
+                               ng-model="newUser.firstname"
+                               required placeholder="First Name">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputLastName" class="col-lg-3 control-label">Last Name</label>
+                    <div class="col-lg-9">
+                        <input type="text"
+                               class="form-control"
+                               id="inputLastName"
+                               ng-model="newUser.lastname"
+                               required placeholder="Last Name">
                     </div>
                 </div>
                 <div class="form-group">
@@ -48,6 +58,27 @@
                                ng-model="newUser.password"
                                required
                                placeholder="Password">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputRole" class="col-lg-3 control-label">I am a...</label>
+                    <div class="col-lg-9">
+
+                        <div class="radio">
+                          <input type="radio" class="form-control" name="radio1" id="roleRadio1" required ng-model="newUser.role" value="Jobseeker">
+                          <label for="roleRadio1">
+                              Jobseeker
+                          </label>
+                          <input type="radio" class="form-control" name="radio1" id="roleRadio2" required ng-model="newUser.role"value="Jobposter">
+                          <label for="roleRadio2">
+                              Jobposter
+                          </label>
+                        </div>
+
+                        <div class="radio">
+
+                        </div>
+
                     </div>
                 </div>
                 <div class="form-group">

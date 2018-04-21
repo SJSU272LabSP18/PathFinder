@@ -162,8 +162,10 @@ app.post('/account/login', function(req,res){
             if (err) { return res.status(500).send('Error saving session.'); }
             var userInfo = {
                 username: user.username,
-                name : user.name,
-                email : user.email
+                firstname : user.firstname,
+                lastname : user.lastname,
+                email : user.email,
+                role: user.role
             };
             return res.json(userInfo);
         });
@@ -177,7 +179,9 @@ app.post('/account/create', function(req,res){
     // 1. Input validation. Front end validation exists, but this functions as a fail-safe
     req.checkBody('username', 'Username is required').notEmpty();
     req.checkBody('password', 'Password is required').notEmpty();
-    req.checkBody('name', 'Name is required').notEmpty();
+    req.checkBody('firstname', 'First Name is required').notEmpty();
+    req.checkBody('lastname',  'Last Name is required').notEmpty();
+    req.checkBody('role', 'Role is required, must be a Jobseeker or Jobposter').notEmpty();
     req.checkBody('email', 'Email is required and must be in a valid form').notEmpty().isEmail();
 
     var errors = req.validationErrors(); // returns an array with results of validation check
@@ -195,7 +199,9 @@ app.post('/account/create', function(req,res){
         username: req.body.username,
         password: hash,
         email: req.body.email,
-        name: req.body.name
+        firstname: req.body.firstname,
+        lastname: req.body.lastname,
+        role: req.body.role
     });
 
     // 4. Store the data in MongoDB
@@ -242,7 +248,9 @@ app.post('/account/update', authorizeRequest, function(req,res){
     // 1. Input validation. Front end validation exists, but this functions as a fail-safe
     req.checkBody('username', 'Username is required').notEmpty();
     req.checkBody('password', 'Password is required').notEmpty();
-    req.checkBody('name', 'Name is required').notEmpty();
+    req.checkBody('firstname', 'First Name is required').notEmpty();
+    req.checkBody('lastname', 'Last Name is required').notEmpty();
+
     req.checkBody('email', 'Email is required and must be in a valid form').notEmpty().isEmail();
 
     var errors = req.validationErrors(); // returns an object with results of validation check
@@ -264,7 +272,10 @@ app.post('/account/update', authorizeRequest, function(req,res){
         user.username = req.body.username;
         user.password = hash;
         user.email = req.body.email;
-        user.name = req.body.name;
+        user.firstname = req.body.firstname;
+        user.lastname = req.body.lastname;
+        user.role = req.body.role;
+
         user.save(function(err) {
             if (err) {
                 console.log(err);

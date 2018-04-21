@@ -35,6 +35,8 @@ app.controller('HomeController', function($scope, $localStorage, $sessionStorage
   // Set local scope to persisted user data
   $scope.user = $localStorage;
 
+  console.log($scope.user);
+
 });
 
 app.controller('LoginController', function($scope, $localStorage, $sessionStorage, $location, $http, anchorSmoothScroll){
@@ -86,8 +88,10 @@ app.controller('CreateAccountController', function($scope, $localStorage, $sessi
             data: {
                     'username': $scope.newUser.username,
                     'password': $scope.newUser.password,
-                    'name' : $scope.newUser.name,
-                    'email' : $scope.newUser.email
+                    'firstname' : $scope.newUser.firstname,
+                    'lastname' : $scope.newUser.lastname,
+                    'email' : $scope.newUser.email,
+                    'role' : $scope.newUser.role
                 }
             })
             .success(function(response){
@@ -144,7 +148,8 @@ app.controller('AccountController', function($scope, $localStorage, $sessionStor
             data: {
                 'username': $scope.formData.username,
                 'password': $scope.password,
-                'name' : $scope.formData.name,
+                'firstname' : $scope.formData.firstname,
+                'lastname' : $scope.formData.lastname,
                 'email' : $scope.formData.email
             }
         })
