@@ -10,6 +10,7 @@ app.controller('HeaderController', function($scope, $localStorage, $sessionStora
 
     // Set local scope to persisted user data
     $scope.user = $localStorage;
+    $scope.loc = $location;
 
     // Logout function
     $scope.logout = function(){
@@ -30,10 +31,12 @@ app.controller('HeaderController', function($scope, $localStorage, $sessionStora
     };
 });
 
-app.controller('HomeController', function($scope, $localStorage, $sessionStorage){
+app.controller('HomeController', function($scope, $localStorage, $location, $sessionStorage){
 
   // Set local scope to persisted user data
   $scope.user = $localStorage;
+  $scope.loc = $location;
+
 
 });
 
@@ -43,11 +46,10 @@ app.controller('ExploreJobsController', function($scope, $localStorage, $session
   // Set local scope to persisted user data
   $scope.user = $localStorage;
 
-  $scope.$on('$viewContentLoaded', function(){
-    //Here your view content is fully loaded !!
-    //$location.hash('header');
-    anchorSmoothScroll.scrollTo('header');
-  });
+  $scope.personaToIndustry = function() {
+    $scope.user.persona = $("#personas a.active").attr("id")
+    console.log($scope.user.persona)
+  }
 
 });
 
@@ -55,23 +57,15 @@ app.controller('ExploreTalentController', function($scope, $localStorage, $sessi
 
   // Set local scope to persisted user data
   $scope.user = $localStorage;
-
-  $scope.$on('$viewContentLoaded', function(){
-    //Here your view content is fully loaded !!
-    //$location.hash('header');
-    anchorSmoothScroll.scrollTo('header');
-  });
+  $scope.loc = $location;
 
 });
 
 app.controller('LoginController', function($scope, $localStorage, $sessionStorage, $location, $http, anchorSmoothScroll){
 
-
-    $scope.$on('$viewContentLoaded', function(){
-      //Here your view content is fully loaded !!
-      //$location.hash('loginHeader');
-      anchorSmoothScroll.scrollTo('loginHeader');
-    });
+    // Set local scope to persisted user data
+    $scope.user = $localStorage;
+    $scope.loc = $location;
 
     // Login submission
     $scope.submitLogin = function(){

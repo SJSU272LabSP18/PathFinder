@@ -1,39 +1,124 @@
 <!--explore.html-->
+<style>
+
+#industry{
+  display: none;
+}
+
+</style>
+
 <div class="row" id="header">
   <div class="col-md-12">
       <h2>Explore Jobs</h2>
   </div>
 </div>
 
-<div class="container">
-    <div class="row">
-        <div class="col-lg-6 col-md-12">
-            <h2 class="title">Which closely describes you?</h2>
-            <h5 class="description">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                <br>
-                <br>
-                Vivamus ut erat eu lorem tincidunt varius.
-                <br>
-                <br>
-                Cras sagittis urna vitae lorem vehicula consectetur.
-                <br>
-                <br>
-                Sed vel risus eu tortor fermentum eleifend eget non nunc.
-                <br>
-                <br>
-                Cras sagittis urna vitae lorem vehicula consectetur.
-                <br>
-                <br>
-                Sed vel risus eu tortor fermentum eleifend eget non nunc.
-            </h5>
-        </div>
-        <div class="col-lg-6 col-md-12">
-            <div class="hero-images-container">
-              <img src="assets/img/hero-image-2.png" alt="">
+<div class="container form">
+
+  <div class="container">
+      <!-- Persona Card -->
+      <h2>Which Persona closely describes you?</h2>
+      <div class="row">
+        <form class="form-horizontal" novalidate ng-submit="personaToIndustry()" name="selectPersonaForm">
+          <fieldset>
+            <!-- Persona Options -->
+            <ul class="nav nav-tabs justify-content-center image_section form-group" id="personas" role="tablist">
+                <li class="nav-item col-sm-3">
+                    <a class="nav-link active" data-toggle="tab" id="intern" data-target="#option1" role="tab">
+                      <img src="assets/img/placeholderimg.png" alt="Thumbnail Image" class="rounded-circle img-raised d-none d-md-block">
+                      <p>Intern</p>
+                    </a>
+                </li>
+                <li class="nav-item col-sm-3">
+                    <a class="nav-link" data-toggle="tab" id="new_grad" data-target="#option2" role="tab">
+                      <img src="assets/img/placeholderimg.png" alt="Thumbnail Image" class="rounded-circle img-raised d-none d-md-block">
+                      <p>New Grad</p>
+                    </a>
+                </li>
+                <li class="nav-item col-sm-3">
+                    <a class="nav-link" data-toggle="tab" id="fresher" data-target="#option3" role="tab">
+                      <img src="assets/img/placeholderimg.png" alt="Thumbnail Image" class="rounded-circle img-raised d-none d-md-block">
+                      <p>Fresher</p>
+                    </a>
+                </li>
+                <li class="nav-item col-sm-3">
+                    <a class="nav-link" data-toggle="tab" id="experienced" data-target="#option4" role="tab">
+                      <img src="assets/img/placeholderimg.png" alt="Thumbnail Image" class="rounded-circle img-raised d-none d-md-block">
+                      <p>Experienced</p>
+                    </a>
+                </li>
+                <li class="nav-item col-sm-3">
+                    <a class="nav-link" data-toggle="tab" id="unemployed" data-target="#option5" role="tab">
+                      <img src="assets/img/placeholderimg.png" alt="Thumbnail Image" class="rounded-circle img-raised d-none d-md-block">
+                      <p>Unemployed</p>
+                    </a>
+                </li>
+                <li class="nav-item col-sm-3">
+                    <a class="nav-link" data-toggle="tab" id="other" data-target="#option6" role="tab">
+                      <img src="assets/img/placeholderimg.png" alt="Thumbnail Image" class="rounded-circle img-raised d-none d-md-block">
+                      <p>Other</p>
+                    </a>
+                </li>
+            </ul>
+            <!--/ Persona Options -->
+            <div class="card-body">
+                <!-- Tab panes -->
+                <div class="tab-content text-center">
+                    <div class="tab-pane active" id="option1" role="tabpanel">
+                        <h2>Intern</h2>
+                        <p>
+                          I'm looking for an internship. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vitae mattis turpis, sit amet tincidunt sem. Nullam massa elit, lacinia vel cursus non, aliquet tristique dolor. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed lacinia felis eu dolor fringilla pharetra.
+                        </p>
+                        <input type="hidden"
+                               class="form-control"
+                               ng-model="explore.persona"
+                               value="Norway">
+                    </div>
+                    <div class="tab-pane" id="option2" role="tabpanel">
+                        <h2>New Grad</h2>
+                        <p>
+                          I just graduated from college and looking to land my first job. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vitae mattis turpis, sit amet tincidunt sem. Nullam massa elit, lacinia vel cursus non, aliquet tristique dolor. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed lacinia felis eu dolor fringilla pharetra.
+                        </p>
+                    </div>
+                    <div class="tab-pane" id="option3" role="tabpanel">
+                        <h2>Fresher</h2>
+                        <p>
+                          I have some experience and looking for another job. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vitae mattis turpis, sit amet tincidunt sem. Nullam massa elit, lacinia vel cursus non, aliquet tristique dolor. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed lacinia felis eu dolor fringilla pharetra.
+                        </p>
+                    </div>
+                    <div class="tab-pane" id="option4" role="tabpanel">
+                        <h2>Experienced</h2>
+                        <p>
+                          I have a lot of experience and am looking for another job. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vitae mattis turpis, sit amet tincidunt sem. Nullam massa elit, lacinia vel cursus non, aliquet tristique dolor. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed lacinia felis eu dolor fringilla pharetra.
+                        </p>
+                    </div>
+                    <div class="tab-pane" id="option5" role="tabpanel">
+                        <h2>Unemployed</h2>
+                        <p>
+                          I've been unemployed long term and looking for a new job. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vitae mattis turpis, sit amet tincidunt sem. Nullam massa elit, lacinia vel cursus non, aliquet tristique dolor. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed lacinia felis eu dolor fringilla pharetra.
+                        </p>
+                    </div>
+                    <div class="tab-pane" id="option6" role="tabpanel">
+                      <h2>Other</h2>
+                      <p>
+                        I'm special! Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vitae mattis turpis, sit amet tincidunt sem. Nullam massa elit, lacinia vel cursus non, aliquet tristique dolor. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed lacinia felis eu dolor fringilla pharetra.
+                      </p>
+                    </div>
+                    <div class="form-group">
+                      <button class="btn btn-primary" type="submit">Sounds like me!</button>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
+          </fieldset>
+        </form>
+        <!-- End Persona Card -->
+
+
+
+      </div>
+  </div>
+
 </div>
+
 
 <!--/explore.html-->
