@@ -37,11 +37,10 @@ app.controller('HomeController', function($scope, $localStorage, $location, $ses
   $scope.user = $localStorage;
   $scope.loc = $location;
 
-
 });
 
 
-app.controller('ExploreJobsController', function($scope, $localStorage, $sessionStorage, $location, anchorSmoothScroll){
+app.controller('PersonaController', function($scope, $localStorage, $sessionStorage, $location, anchorSmoothScroll){
 
   // Set local scope to persisted user data
   $scope.user = $localStorage;
@@ -51,11 +50,43 @@ app.controller('ExploreJobsController', function($scope, $localStorage, $session
 	    $('.nav-tabs li a').eq($(this).val()).tab('show');
 	});
 
-  $scope.personaToIndustry = function() {
-    $scope.user.persona = $("#personas a.active").attr("id")
-    console.log($scope.user.persona)
+  $scope.cancel = function() {
+    $location.path('/');
   }
 
+  $scope.submitForm = function() {
+    $scope.user.persona = $("#personas a.active").attr("id")
+    $location.path('/explore/industries');
+  }
+
+});
+
+app.controller('IndustryController', function($scope, $localStorage, $sessionStorage, $location, anchorSmoothScroll){
+
+  // Set local scope to persisted user data
+  $scope.user = $localStorage;
+
+  $('#tab_selector').on('change', function (e) {
+	    $('.nav-tabs li a').eq($(this).val()).tab('show');
+	});
+
+  $scope.backToPersonas = function() {
+    $location.path('/explore/personas');
+  }
+
+  $scope.submitForm = function() {
+    $scope.user.industry = $("#industries a.active").attr("id")
+    console.log("Persona: " + $scope.user.persona);
+    console.log("Industry: " + $scope.user.industry);
+    $location.path('/explore/jobs');
+  }
+
+});
+
+app.controller('JobsController', function($scope, $localStorage, $sessionStorage, $location, anchorSmoothScroll){
+
+  // Set local scope to persisted user data
+  $scope.user = $localStorage;
 });
 
 app.controller('ExploreTalentController', function($scope, $localStorage, $sessionStorage, $location, anchorSmoothScroll){
@@ -272,10 +303,22 @@ app.config(function($routeProvider) {
             controller: 'HomeController'
         }).
 
-        //Explore Jobs
+        //Explore Jobs Personas
+        when('/explore/personas', {
+            templateUrl: 'views/personas.html',
+            controller: 'PersonaController'
+        }).
+
+        //Explore Jobs Industries
+        when('/explore/industries', {
+            templateUrl: 'views/industries.html',
+            controller: 'IndustryController'
+        }).
+
+        //Explore Jobs Jobs
         when('/explore/jobs', {
             templateUrl: 'views/explore_jobs.html',
-            controller: 'ExploreJobsController'
+            controller: 'JobsController'
         }).
 
         //Explore Talent
