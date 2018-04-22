@@ -22,51 +22,61 @@
         <form class="form-horizontal" novalidate ng-submit="personaToIndustry()" name="selectPersonaForm">
           <fieldset>
             <!-- Persona Options -->
-            <ul class="nav nav-tabs justify-content-center image_section form-group" id="personas" role="tablist">
-                <li class="nav-item col-sm-12 col-md-3">
-                    <a class="nav-link active" data-toggle="tab" id="intern" data-target="#option1" role="tab">
-                      <img src="assets/img/placeholderimg.png" alt="Thumbnail Image" class="rounded-circle img-raised d-none d-md-block">
-                      <p>Intern</p>
-                    </a>
-                </li>
-                <li class="nav-item col-sm-12 col-md-3">
-                    <a class="nav-link" data-toggle="tab" id="new_grad" data-target="#option2" role="tab">
-                      <img src="assets/img/placeholderimg.png" alt="Thumbnail Image" class="rounded-circle img-raised d-none d-md-block">
-                      <p>New Grad</p>
-                    </a>
-                </li>
-                <li class="nav-item col-sm-12 col-md-3">
-                    <a class="nav-link" data-toggle="tab" id="fresher" data-target="#option3" role="tab">
-                      <img src="assets/img/placeholderimg.png" alt="Thumbnail Image" class="rounded-circle img-raised d-none d-md-block">
-                      <p>Fresher</p>
-                    </a>
-                </li>
-                <li class="nav-item col-sm-12 col-md-3">
-                    <a class="nav-link" data-toggle="tab" id="experienced" data-target="#option4" role="tab">
-                      <img src="assets/img/placeholderimg.png" alt="Thumbnail Image" class="rounded-circle img-raised d-none d-md-block">
-                      <p>Experienced</p>
-                    </a>
-                </li>
-                <li class="nav-item col-sm-12 col-md-3">
-                    <a class="nav-link" data-toggle="tab" id="unemployed" data-target="#option5" role="tab">
-                      <img src="assets/img/placeholderimg.png" alt="Thumbnail Image" class="rounded-circle img-raised d-none d-md-block">
-                      <p>Unemployed</p>
-                    </a>
-                </li>
-                <li class="nav-item col-sm-12 col-md-3">
-                    <a class="nav-link" data-toggle="tab" id="other" data-target="#option6" role="tab">
-                      <img src="assets/img/placeholderimg.png" alt="Thumbnail Image" class="rounded-circle img-raised d-none d-md-block">
-                      <p>Other</p>
-                    </a>
-                </li>
-            </ul>
+            <div class="d-none d-md-block">
+              <ul class="nav nav-tabs justify-content-center image_section form-group" id="personas" role="tablist">
+                  <li class="nav-item col-sm-12 col-md-3">
+                      <a class="nav-link active" data-toggle="tab" id="intern" data-target="#option1" role="tab">
+                        <img src="assets/img/placeholderimg.png" alt="Thumbnail Image" class="rounded-circle img-raised d-none d-md-block">
+                        <p>Intern</p>
+                      </a>
+                  </li>
+                  <li class="nav-item col-sm-12 col-md-3">
+                      <a class="nav-link" data-toggle="tab" id="new_grad" data-target="#option2" role="tab">
+                        <img src="assets/img/placeholderimg.png" alt="Thumbnail Image" class="rounded-circle img-raised d-none d-md-block">
+                        <p>New Grad</p>
+                      </a>
+                  </li>
+                  <li class="nav-item col-sm-12 col-md-3">
+                      <a class="nav-link" data-toggle="tab" id="fresher" data-target="#option3" role="tab">
+                        <img src="assets/img/placeholderimg.png" alt="Thumbnail Image" class="rounded-circle img-raised d-none d-md-block">
+                        <p>Fresher</p>
+                      </a>
+                  </li>
+                  <li class="nav-item col-sm-12 col-md-3">
+                      <a class="nav-link" data-toggle="tab" id="experienced" data-target="#option4" role="tab">
+                        <img src="assets/img/placeholderimg.png" alt="Thumbnail Image" class="rounded-circle img-raised d-none d-md-block">
+                        <p>Experienced</p>
+                      </a>
+                  </li>
+                  <li class="nav-item col-sm-12 col-md-3">
+                      <a class="nav-link" data-toggle="tab" id="unemployed" data-target="#option5" role="tab">
+                        <img src="assets/img/placeholderimg.png" alt="Thumbnail Image" class="rounded-circle img-raised d-none d-md-block">
+                        <p>Unemployed</p>
+                      </a>
+                  </li>
+                  <li class="nav-item col-sm-12 col-md-3">
+                      <a class="nav-link" data-toggle="tab" id="other" data-target="#option6" role="tab">
+                        <img src="assets/img/placeholderimg.png" alt="Thumbnail Image" class="rounded-circle img-raised d-none d-md-block">
+                        <p>Other</p>
+                      </a>
+                  </li>
+              </ul>
+            </div>
+            <select class="form-control d-md-none" id="tab_selector">
+                <option value="0">Intern</option>
+                <option value="1">New Grad</option>
+                <option value="2">Fresher</option>
+                <option value="3">Experienced</option>
+                <option value="4">Unemployed</option>
+                <option value="5">Other</option>
+            </select>
             <!--/ Persona Options -->
             <div class="card-body">
                 <!-- Tab panes -->
                 <div class="tab-content text-center">
                     <div class="tab-pane active" id="option1" role="tabpanel">
                         <h2>Intern</h2>
-                        <div class="offset-sm-3 col-sm-6 d-none d-sm-block d-md-none">
+                        <div class="offset-sm-3 col-sm-6 d-md-none">
                           <img src="assets/img/placeholderimg.png" alt="Thumbnail Image" class="rounded-circle img-raised">
                         </div>
                         <p>
@@ -75,7 +85,7 @@
                     </div>
                     <div class="tab-pane" id="option2" role="tabpanel">
                         <h2>New Grad</h2>
-                        <div class="offset-sm-3 col-sm-6 d-none d-sm-block d-md-none">
+                        <div class="offset-sm-3 col-sm-6 d-md-none">
                           <img src="assets/img/placeholderimg.png" alt="Thumbnail Image" class="rounded-circle img-raised">
                         </div>
                         <p>
@@ -84,7 +94,7 @@
                     </div>
                     <div class="tab-pane" id="option3" role="tabpanel">
                         <h2>Fresher</h2>
-                        <div class="offset-sm-3 col-sm-6 d-none d-sm-block d-md-none">
+                        <div class="offset-sm-3 col-sm-6 d-md-none">
                           <img src="assets/img/placeholderimg.png" alt="Thumbnail Image" class="rounded-circle img-raised">
                         </div>
                         <p>
@@ -93,7 +103,7 @@
                     </div>
                     <div class="tab-pane" id="option4" role="tabpanel">
                         <h2>Experienced</h2>
-                        <div class="offset-sm-3 col-sm-6 d-none d-sm-block d-md-none">
+                        <div class="offset-sm-3 col-sm-6 d-md-none">
                           <img src="assets/img/placeholderimg.png" alt="Thumbnail Image" class="rounded-circle img-raised">
                         </div>
                         <p>
@@ -102,7 +112,7 @@
                     </div>
                     <div class="tab-pane" id="option5" role="tabpanel">
                         <h2>Unemployed</h2>
-                        <div class="offset-sm-3 col-sm-6 d-none d-sm-block d-md-none">
+                        <div class="offset-sm-3 col-sm-6 d-md-none">
                           <img src="assets/img/placeholderimg.png" alt="Thumbnail Image" class="rounded-circle img-raised">
                         </div>
                         <p>
@@ -111,7 +121,7 @@
                     </div>
                     <div class="tab-pane" id="option6" role="tabpanel">
                       <h2>Other</h2>
-                      <div class="offset-sm-3 col-sm-6 d-none d-sm-block d-md-none">
+                      <div class="offset-sm-3 col-sm-6 d-md-none">
                         <img src="assets/img/placeholderimg.png" alt="Thumbnail Image" class="rounded-circle img-raised">
                       </div>
                       <p>

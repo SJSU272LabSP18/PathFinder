@@ -46,6 +46,11 @@ app.controller('ExploreJobsController', function($scope, $localStorage, $session
   // Set local scope to persisted user data
   $scope.user = $localStorage;
 
+
+  $('#tab_selector').on('change', function (e) {
+	    $('.nav-tabs li a').eq($(this).val()).tab('show');
+	});
+
   $scope.personaToIndustry = function() {
     $scope.user.persona = $("#personas a.active").attr("id")
     console.log($scope.user.persona)
