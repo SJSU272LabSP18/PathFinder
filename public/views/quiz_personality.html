@@ -1,0 +1,32 @@
+<!--industries.html-->
+<div class="row" id="header">
+  <div class="col-md-12">
+      <h2>Quiz</h2>
+  </div>
+</div>
+
+<div class="container form">
+
+  <div class="container">
+    <!-- Personality Card -->
+    <h2>Now for some personality questions!</h2>
+    <form class="form-horizontal" novalidate ng-submit="submitForm()" name="personalityForm">
+      <fieldset>
+
+          <div class="form-group" data-ng-repeat="question in questions">
+            <label for="{{question.id}}">{{question.id}} {{question.question}}</label><br>
+            <textarea class="form-control" name="{{question.id}}}" rows="5" placeholder="Enter text here" required></textarea>
+          </div>
+
+          <div class="form-group">
+            <button class="btn btn-default" ng-click="backToIndustries()">Back</button>
+            <button class="btn btn-primary" type="submit">Submit</button>
+          </div>
+      </fieldset>
+    </form>
+      <!-- End Personality Card -->
+  </div>
+
+</div>
+
+<!--/industries.html-->

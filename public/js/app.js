@@ -289,6 +289,174 @@ app.controller('ProtectedController', function($scope, $location, $http){
 
 });
 
+
+app.controller('QuizController', function($scope, $localStorage, $sessionStorage, $location, $http){
+
+  // Check if user is authorized to view page
+  $http({
+      method: 'GET',
+      url: '/protected'
+  })
+      .success(function(response){
+          $scope.message = response;
+      })
+      .error(function(response){
+          alert(response);
+          $location.path('/account/login');
+      }
+  );
+
+  // Set local scope to persisted user data
+  $scope.user = $localStorage;
+  console.log($scope.user);
+
+  // Initialize Quiz Sections
+  if($scope.user.quiz == undefined){
+    $scope.user.quiz = {
+      "quizSections": ["persona", "industry", "personality", "perks", "resume"],
+      "quizIndex": 0,
+      "activeSection": 0
+    }
+
+  }
+
+  console.log($scope.user.quiz.activeSection);
+  switch ($scope.user.quiz.activeSection){
+    case 0:
+      $location.path('/quiz/personas');
+      break;
+    case 1:
+      $location.path('/quiz/industries');
+      break;
+    case 2:
+      $location.path('/quiz/personality');
+      break;
+
+  }
+
+  $scope.cancel = function() {
+    $location.path('/');
+  }
+
+});
+
+
+app.controller('QuizPersonaController', function($scope, $localStorage, $sessionStorage, $location, $http){
+
+  // Check if user is authorized to view page
+  $http({
+      method: 'GET',
+      url: '/protected'
+  })
+      .success(function(response){
+          $scope.message = response;
+      })
+      .error(function(response){
+          alert(response);
+          $location.path('/account/login');
+      }
+  );
+
+
+  // Set local scope to persisted user data
+  $scope.user = $localStorage;
+
+  $('#tab_selector').on('change', function (e) {
+	    $('.nav-tabs li a').eq($(this).val()).tab('show');
+	});
+
+  $scope.cancel = function() {
+    $location.path('/');
+  }
+
+  $scope.submitForm = function() {
+    $scope.user.persona = $("#personas a.active").attr("id")
+    $scope.user.quiz.activeSection = 1;
+    console.log($scope.user.quiz.activeSection);
+    $location.path('/quiz');
+  }
+
+});
+
+app.controller('QuizIndustryController', function($scope, $localStorage, $sessionStorage, $location, $http){
+
+  // Check if user is authorized to view page
+  $http({
+      method: 'GET',
+      url: '/protected'
+  })
+      .success(function(response){
+          $scope.message = response;
+      })
+      .error(function(response){
+          alert(response);
+          $location.path('/account/login');
+      }
+  );
+
+  // Set local scope to persisted user data
+  $scope.user = $localStorage;
+
+  $('#tab_selector').on('change', function (e) {
+	    $('.nav-tabs li a').eq($(this).val()).tab('show');
+	});
+
+  $scope.backToPersonas = function() {
+    $scope.user.quiz.activeSection = 0;
+    $location.path('/quiz');
+  }
+
+  $scope.submitForm = function() {
+    $scope.user.industry = $("#industries a.active").attr("id")
+    $scope.user.quiz.activeSection = 2;
+    console.log($scope.user.quiz.activeSection);
+    $location.path('/quiz');
+  }
+
+});
+
+app.controller('QuizPersonalityController', function($scope, $localStorage, $sessionStorage, $location, $http){
+
+  // Check if user is authorized to view page
+  $http({
+      method: 'GET',
+      url: '/protected'
+  })
+      .success(function(response){
+          $scope.message = response;
+      })
+      .error(function(response){
+          alert(response);
+          $location.path('/account/login');
+      }
+  );
+
+  // Set local scope to persisted user data
+  $scope.user = $localStorage;
+
+  $scope.questions = [
+               {id:'Q1', question:"What does your ideal work day look like?"},
+               {id:'Q2', question:"What is the greatest accomplishment of your life?"},
+               {id:'Q3', question:"For what in your life do you feel most grateful?"},
+               {id:'Q4', question:"If you were able to live to the age of 90 and retain either the mind or body of a 30-year old for the last 60 years of your life, which would you choose?"},
+               {id:'Q5', question:"What would constitute a perfect day for you? (not work related like number 1)"},
+               {id:'Q6', question:"Describe your average day (needs to be swapped out)"}
+              ]
+
+  $scope.backToIndustries = function() {
+    $scope.user.quiz.activeSection = 1;
+    $location.path('/quiz');
+  }
+
+  $scope.submitForm = function() {
+    $scope.user.industry = $("#industries a.active").attr("id")
+    $scope.user.quiz.activeSection = 2;
+    console.log($scope.user.quiz.activeSection);
+    $location.path('/quiz');
+  }
+
+});
+
 /*********************************
  Routing
  *********************************/
@@ -337,6 +505,30 @@ app.config(function($routeProvider) {
         when('/account', {
             templateUrl: 'views/account.html',
             controller: 'AccountController'
+        }).
+
+        //Quiz Main Page
+        when('/quiz', {
+            templateUrl: 'views/quiz_main.html',
+            controller: 'QuizController'
+        }).
+
+        //Quiz Personas Page
+        when('/quiz/personas', {
+            templateUrl: 'views/quiz_personas.html',
+            controller: 'QuizPersonaController'
+        }).
+
+        //Quiz Industries Page
+        when('/quiz/industries', {
+            templateUrl: 'views/quiz_industries.html',
+            controller: 'QuizIndustryController'
+        }).
+
+        //Quiz Personality Page
+        when('/quiz/personality', {
+            templateUrl: 'views/quiz_personality.html',
+            controller: 'QuizPersonalityController'
         }).
 
         //Create Account page
@@ -409,4 +601,4 @@ app.service('anchorSmoothScroll', function(){
 
      };
 
- });
+});
