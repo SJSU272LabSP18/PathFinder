@@ -17,6 +17,23 @@
   <link rel="stylesheet" href="css/app.css">
   <link href="../assets/css/pathfinder.css" rel="stylesheet" />
 
+  <style>
+
+  html, body {
+  height: 100%;
+  }
+  body {
+    display: flex;
+    flex-direction: column;
+  }
+  .content {
+    flex: 1 0 auto;
+  }
+  .footer {
+    flex-shrink: 0;
+  }
+
+  </style>
 
 </head>
 <body ng-app="MEANapp" class="sidebar-collapse">
@@ -122,11 +139,10 @@
         </div>
         <!-- End 'Home' Header Image -->
 
-
     </div>
 
 
-    <div class="section">
+    <div class="section content">
       <div class="container" ng-view>
           <!--Views loaded here via $routeProvider in app.js-->
       </div>
