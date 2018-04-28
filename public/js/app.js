@@ -331,7 +331,9 @@ app.controller('QuizController', function($scope, $localStorage, $sessionStorage
     case 2:
       $location.path('/quiz/personality');
       break;
-
+    case 3:
+      $location.path('/quiz/perks');
+      break;
   }
 
   $scope.cancel = function() {
@@ -401,7 +403,7 @@ app.controller('QuizIndustryController', function($scope, $localStorage, $sessio
 	    $('.nav-tabs li a').eq($(this).val()).tab('show');
 	});
 
-  $scope.backToPersonas = function() {
+  $scope.back = function() {
     $scope.user.quiz.activeSection = 0;
     $location.path('/quiz');
   }
@@ -446,15 +448,53 @@ app.controller('QuizPersonalityController', function($scope, $localStorage, $ses
   }
 
 
-  $scope.backToIndustries = function() {
+  $scope.back = function() {
     $scope.user.quiz.activeSection = 1;
     $location.path('/quiz');
   }
 
   $scope.submitForm = function() {
-    console.log($scope.user.questions)
+    $scope.user.quiz.activeSection = 3;
+    $location.path('/quiz');
+  }
+
+});
+
+app.controller('QuizPerksController', function($scope, $localStorage, $sessionStorage, $location, $http){
+
+  // Check if user is authorized to view page
+  $http({
+      method: 'GET',
+      url: '/protected'
+  })
+      .success(function(response){
+          $scope.message = response;
+      })
+      .error(function(response){
+          alert(response);
+          $location.path('/account/login');
+      }
+  );
+
+  // Set local scope to persisted user data
+  $scope.user = $localStorage;
+
+  if ($scope.user.perks == undefined){
+    $scope.user.perks = [
+                 {id:'Perk1', perk:"Food Provided", checked: false},
+                 {id:'Perk2', perk:"Transportation Provided", checked: false},
+                 {id:'Perk3', perk:"Gym Provided", checked: false},
+                 {id:'Perk4', perk:"Unlimited PTO", checked: false},
+                ]
+  }
+
+  $scope.back = function() {
     $scope.user.quiz.activeSection = 2;
-    console.log($scope.user.quiz.activeSection);
+    $location.path('/quiz');
+  }
+
+  $scope.submitForm = function() {
+    $scope.user.quiz.activeSection = 3;
     $location.path('/quiz');
   }
 
@@ -532,6 +572,12 @@ app.config(function($routeProvider) {
         when('/quiz/personality', {
             templateUrl: 'views/quiz_personality.html',
             controller: 'QuizPersonalityController'
+        }).
+
+        //Quiz Personality Page
+        when('/quiz/perks', {
+            templateUrl: 'views/quiz_perks.html',
+            controller: 'QuizPerksController'
         }).
 
         //Create Account page
