@@ -580,6 +580,12 @@ app.config(function($routeProvider) {
             controller: 'QuizPerksController'
         }).
 
+        //Quiz Resume Page
+        when('/quiz/perks', {
+            templateUrl: 'views/quiz_resume.html',
+            controller: 'QuizResumeController'
+        }).
+
         //Create Account page
         when('/account/create', {
             templateUrl: 'views/create_account.html',
