@@ -434,14 +434,16 @@ app.controller('QuizPersonalityController', function($scope, $localStorage, $ses
   // Set local scope to persisted user data
   $scope.user = $localStorage;
 
-  $scope.questions = [
-               {id:'Q1', question:"What does your ideal work day look like?"},
-               {id:'Q2', question:"What is the greatest accomplishment of your life?"},
-               {id:'Q3', question:"For what in your life do you feel most grateful?"},
-               {id:'Q4', question:"If you were able to live to the age of 90 and retain either the mind or body of a 30-year old for the last 60 years of your life, which would you choose?"},
-               {id:'Q5', question:"What would constitute a perfect day for you? (not work related like number 1)"},
-               {id:'Q6', question:"Describe your average day (needs to be swapped out)"}
-              ]
+  if ($scope.user.questions == undefined){
+    $scope.user.questions = [
+                 {id:'Q1', question:"What does your ideal work day look like?", answer:""},
+                 {id:'Q2', question:"What is the greatest accomplishment of your life?", answer:""},
+                 {id:'Q3', question:"For what in your life do you feel most grateful?", answer:""},
+                 {id:'Q4', question:"If you were able to live to the age of 90 and retain either the mind or body of a 30-year old for the last 60 years of your life, which would you choose?", answer:""},
+                 {id:'Q5', question:"What would constitute a perfect day for you? (not work related like number 1)", answer:""},
+                 {id:'Q6', question:"Describe your average day (needs to be swapped out)", answer:""}
+                ]
+  }
 
 
   $scope.backToIndustries = function() {
@@ -450,6 +452,7 @@ app.controller('QuizPersonalityController', function($scope, $localStorage, $ses
   }
 
   $scope.submitForm = function() {
+    console.log($scope.user.questions)
     $scope.user.quiz.activeSection = 2;
     console.log($scope.user.quiz.activeSection);
     $location.path('/quiz');
