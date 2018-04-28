@@ -443,13 +443,13 @@ app.controller('QuizPersonalityController', function($scope, $localStorage, $ses
                {id:'Q6', question:"Describe your average day (needs to be swapped out)"}
               ]
 
+
   $scope.backToIndustries = function() {
     $scope.user.quiz.activeSection = 1;
     $location.path('/quiz');
   }
 
   $scope.submitForm = function() {
-    $scope.user.industry = $("#industries a.active").attr("id")
     $scope.user.quiz.activeSection = 2;
     console.log($scope.user.quiz.activeSection);
     $location.path('/quiz');
@@ -602,3 +602,59 @@ app.service('anchorSmoothScroll', function(){
      };
 
 });
+
+app.directive('wordcountValidate', function() {
+    return {
+        // restrict to an attribute type.
+        restrict: 'A',
+
+        // element must have ng-model attribute.
+        require: 'ngModel',
+
+        // scope = the parent scope
+        // elem = the element the directive is on
+        // attr = a dictionary of attributes on the element
+        // ctrl = the controller for ngModel.
+        link: function(scope, elem, attr, ctrl) {
+
+            // add a parser that will process each time the value is
+            // parsed into the model when the user updates it.
+            ctrl.$parsers.unshift(function(value) {
+                // test and set the validity after update.
+                if(value == undefined){
+                  value = "";
+                }
+                var valid = value.trim().split(/\s+/).length >= parseInt(attr.wordcountValidate);
+                ctrl.$setValidity('wordcountValidate', valid);
+
+                // if it's valid, return the value to the model,
+                // otherwise return undefined.
+                return valid ? value : undefined;
+            });
+
+            // add a formatter that will process each time the value
+            // is updated on the DOM element.
+            ctrl.$formatters.unshift(function(value) {
+                // validate.
+                if(value == undefined){
+                  value = "";
+                }
+                ctrl.$setValidity('wordcountValidate', value.trim().split(/\s+/).length >= parseInt(attr.wordcountValidate));
+
+                // return the value or nothing will be written to the DOM.
+                return value;
+            });
+        }
+    };
+});
+
+
+app.filter('wordCounter', function () {
+    return function (value) {
+        if (value && typeof value === 'string') {
+            return value.trim().split(/\s+/).length;
+        } else {
+            return 0;
+        }
+    };
+})
