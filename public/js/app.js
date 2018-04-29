@@ -334,6 +334,9 @@ app.controller('QuizController', function($scope, $localStorage, $sessionStorage
     case 3:
       $location.path('/quiz/perks');
       break;
+    case 4:
+      $location.path('/quiz/resume');
+      break;
   }
 
   $scope.cancel = function() {
@@ -494,7 +497,71 @@ app.controller('QuizPerksController', function($scope, $localStorage, $sessionSt
   }
 
   $scope.submitForm = function() {
+    $scope.user.quiz.activeSection = 4;
+    $location.path('/quiz');
+  }
+
+});
+
+app.controller('QuizResumeController', function($scope, $localStorage, $sessionStorage, $location, $http){
+
+  // Check if user is authorized to view page
+  $http({
+      method: 'GET',
+      url: '/protected'
+  })
+      .success(function(response){
+          $scope.message = response;
+      })
+      .error(function(response){
+          alert(response);
+          $location.path('/account/login');
+      }
+  );
+
+  // Set local scope to persisted user data
+  $scope.user = $localStorage;
+
+  // Experience related methods
+  if ($scope.user.experiences == undefined){
+    $scope.user.experiences = [
+                 {id:'1', company:"", role:"", description:"", startdate:"", enddate:""}
+                ]
+  }
+
+  $scope.removeExperience = function(experience_id){
+    $scope.user.experiences = $scope.user.experiences.filter(e => e.id !== experience_id)
+  }
+
+  $scope.addExperience = function(){
+    $scope.user.experiences.push({id: $scope.user.experiences.length,  company:"", role:"", description:"", startdate:"", enddate:""});
+
+  }
+
+  // Education related methods
+  if ($scope.user.educations == undefined){
+    $scope.user.educations = [
+                 {id:'1', degree:"", institute:"", description:""}
+                ]
+  }
+
+  $scope.removeEducation = function(education_id){
+    $scope.user.educations = $scope.user.educations.filter(e => e.id !== education_id)
+  }
+
+  $scope.addEducation = function(){
+    $scope.user.educations.push({id: $scope.user.educations.length, degree:"", institute:"", description:""});
+  }
+
+  // Form submission related methods
+
+  $scope.back = function() {
     $scope.user.quiz.activeSection = 3;
+    $location.path('/quiz');
+  }
+
+  $scope.submitForm = function() {
+    $scope.user.quiz.activeSection = 4;
     $location.path('/quiz');
   }
 
@@ -581,7 +648,7 @@ app.config(function($routeProvider) {
         }).
 
         //Quiz Resume Page
-        when('/quiz/perks', {
+        when('/quiz/resume', {
             templateUrl: 'views/quiz_resume.html',
             controller: 'QuizResumeController'
         }).
