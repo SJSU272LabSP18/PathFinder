@@ -611,6 +611,28 @@ app.controller('QuizResumeController', function($scope, $localStorage, $sessionS
 
 });
 
+app.controller('JobseekerJobsController', function($scope, $localStorage, $sessionStorage, $location, $http){
+
+  // Check if user is authorized to view page
+  $http({
+      method: 'GET',
+      url: '/protected'
+  })
+      .success(function(response){
+          $scope.message = response;
+      })
+      .error(function(response){
+          alert(response);
+          $location.path('/account/login');
+      }
+  );
+
+  // Set local scope to persisted user data
+  $scope.user = $localStorage;
+
+
+});
+
 /*********************************
  Routing
  *********************************/
@@ -695,6 +717,12 @@ app.config(function($routeProvider) {
         when('/quiz/resume', {
             templateUrl: 'views/quiz_resume.html',
             controller: 'QuizResumeController'
+        }).
+
+        //Quiz Resume Page
+        when('/jobseeker/jobs', {
+            templateUrl: 'views/jobseeker_jobs.html',
+            controller: 'JobseekerJobsController'
         }).
 
         //Create Account page

@@ -45,6 +45,12 @@
                           </a>
                       </li>
                       <li class="nav-item">
+                          <a class="nav-link" href="#/jobseeker/jobs" ng-show="user.status && user.user.role=='Jobseeker'">
+                              <i class="fa fa-briefcase"></i>
+                              <p>Jobs</p>
+                          </a>
+                      </li>
+                      <li class="nav-item">
                           <a class="nav-link" href="#/protected" ng-show="user.status">
                               <i class="now-ui-icons files_paper"></i>
                               <p>User Content</p>
