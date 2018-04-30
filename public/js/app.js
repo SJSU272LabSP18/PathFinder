@@ -606,7 +606,7 @@ app.controller('QuizResumeController', function($scope, $localStorage, $sessionS
 
     $scope.user.skills = finalskillpills;
     $scope.user.quiz.activeSection = 4;
-    $location.path('/quiz');
+    $location.path('/');
   }
 
 });
