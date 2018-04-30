@@ -593,7 +593,18 @@ app.controller('QuizResumeController', function($scope, $localStorage, $sessionS
     $scope.user.experiences = $scope.formExperiences;
     $scope.user.educations = $scope.formEducations;
 
-    $scope.user.skills = $('#skillPillbox').pillbox('items');
+    // Remove Duplicates from PillBox
+    skillpills = $('#skillPillbox').pillbox('items');
+    var unique_skills = {};
+
+    for ( var i=0, len=skillpills.length; i < len; i++ )
+        unique_skills[skillpills[i]['value']] = skillpills[i];
+
+    finalskillpills = new Array();
+    for ( var key in unique_skills )
+        finalskillpills.push(unique_skills[key]);
+
+    $scope.user.skills = finalskillpills;
     $scope.user.quiz.activeSection = 4;
     $location.path('/quiz');
   }
