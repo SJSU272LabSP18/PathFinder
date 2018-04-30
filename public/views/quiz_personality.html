@@ -13,7 +13,7 @@
     <form class="form-horizontal needs-validation"  novalidate ng-submit="submitForm()" name="personalityForm" novalidate>
       <fieldset>
 
-          <div ng-form="subForm" ng-class="{'has-success': subForm.$valid }" ng-repeat="question in user.questions">
+          <div ng-form="subForm" ng-class="{'has-success': subForm.$valid }" ng-repeat="question in formQuestions">
             <label for="{{question.id}}">{{question.id}} {{question.question}}</label><br>
             <textarea class="form-control" ng-model="question.answer" name="{{question.id}}" rows="3" placeholder="Enter text here" required wordcount-validate="5"></textarea>
             <span ng-hide="subForm.$valid">Minimum # of words needed: {{subForm[question.id].$viewValue|wordCounter}}/5</span>

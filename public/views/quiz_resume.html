@@ -21,7 +21,7 @@
           </button>
         </div>
 
-        <div ng-form="subFormExperience" ng-repeat="experience in user.experiences">
+        <div ng-form="subFormExperience" ng-repeat="experience in formExperiences">
 
           <label>Company:</label><br>
           <input name="{{experience.id}}company"  class="form-control" ng-model="experience.company" type="text" required>
@@ -53,7 +53,7 @@
           </button>
         </div>
 
-        <div ng-form="subFormEducation" ng-repeat="education in user.educations">
+        <div ng-form="subFormEducation" ng-repeat="education in formEducations">
 
           <label>Institute:</label><br>
           <input name="{{education.id}}institute"  class="form-control" ng-model="education.institute" type="text" required>
@@ -71,7 +71,6 @@
               <input class="form-control" type="text" ng-model="education.enddate", placeholder="Leave blank for present">
             </div>
           </div>
-
           <textarea class="form-control" ng-model="education.description" rows="3" placeholder="Enter details here"></textarea>
 
           <button class="btn btn-danger" ng-click="removeEducation(education.id)">Remove</button>
@@ -88,10 +87,6 @@
               <li class="pillbox-input-wrap btn-group">
                 <a class="pillbox-more">and <span class="pillbox-more-count"></span> more...</a>
                 <input type="text" class="form-control dropdown-toggle pillbox-add-item" placeholder="add item">
-                <button type="button" class="dropdown-toggle sr-only">
-                  <span class="caret"></span>
-                  <span class="sr-only">Toggle Dropdown</span>
-                </button>
               </li>
             </ul>
           </div>

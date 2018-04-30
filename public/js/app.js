@@ -450,6 +450,7 @@ app.controller('QuizPersonalityController', function($scope, $localStorage, $ses
                 ]
   }
 
+  $scope.formQuestions = $.extend(true,{},$scope.user.questions);
 
   $scope.back = function() {
     $scope.user.quiz.activeSection = 1;
@@ -457,6 +458,9 @@ app.controller('QuizPersonalityController', function($scope, $localStorage, $ses
   }
 
   $scope.submitForm = function() {
+    $scope.user.questions = $scope.formQuestions;
+    console.log($scope.user.questions);
+
     $scope.user.quiz.activeSection = 3;
     $location.path('/quiz');
   }
@@ -491,12 +495,15 @@ app.controller('QuizPerksController', function($scope, $localStorage, $sessionSt
                 ]
   }
 
+  $scope.formPerks = $.extend(true,{},$scope.user.perks);
+
   $scope.back = function() {
     $scope.user.quiz.activeSection = 2;
     $location.path('/quiz');
   }
 
   $scope.submitForm = function() {
+    $scope.user.perks = $scope.formPerks;
     $scope.user.quiz.activeSection = 4;
     $location.path('/quiz');
   }
@@ -522,6 +529,7 @@ app.controller('QuizResumeController', function($scope, $localStorage, $sessionS
   // Set local scope to persisted user data
   $scope.user = $localStorage;
 
+  // Disable hitting enter to submit
   $(document).on("keypress", "form", function(event) {
       return event.keyCode != 13;
   });
@@ -533,12 +541,15 @@ app.controller('QuizResumeController', function($scope, $localStorage, $sessionS
                 ]
   }
 
+  $scope.formExperiences= $.extend(true,[],$scope.user.experiences);
+
+
   $scope.removeExperience = function(experience_id){
-    $scope.user.experiences = $scope.user.experiences.filter(e => e.id !== experience_id)
+    $scope.formExperiences = $scope.formExperiences.filter(e => e.id !== experience_id)
   }
 
   $scope.addExperience = function(){
-    $scope.user.experiences.push({id: $scope.user.experiences.length,  company:"", role:"", description:"", startdate:"", enddate:""});
+    $scope.formExperiences.push({id: $scope.formExperiences.length,  company:"", role:"", description:"", startdate:"", enddate:""});
 
   }
 
@@ -549,23 +560,27 @@ app.controller('QuizResumeController', function($scope, $localStorage, $sessionS
                 ]
   }
 
+  $scope.formEducations = $.extend(true,[],$scope.user.educations);
+
   $scope.removeEducation = function(education_id){
-    $scope.user.educations = $scope.user.educations.filter(e => e.id !== education_id)
+    $scope.formEducations = $scope.formEducations.filter(e => e.id !== education_id)
   }
 
   $scope.addEducation = function(){
-    $scope.user.educations.push({id: $scope.user.educations.length, degree:"", institute:"", description:"", startdate:"", enddate:""});
+    $scope.formEducations.push({id: $scope.formEducations.length, degree:"", institute:"", description:"", startdate:"", enddate:""});
   }
 
   // Skill PillBox methods
   if ($scope.user.skills == undefined){
-    $scope.user.skills = [
-                ]
+    $scope.user.skills = []
   }
+
+  $scope.formSkills= $.extend(true,[],$scope.user.skills);
+
 
   $('#skillPillbox').pillbox();
 
-  $('#skillPillbox').pillbox('addItems', $scope.user.skills);
+  $('#skillPillbox').pillbox('addItems', $scope.formSkills);
 
   // Form submission related methods
 
@@ -575,9 +590,12 @@ app.controller('QuizResumeController', function($scope, $localStorage, $sessionS
   }
 
   $scope.submitForm = function() {
+    $scope.user.experiences = $scope.formExperiences;
+    $scope.user.educations = $scope.formEducations;
+
     $scope.user.skills = $('#skillPillbox').pillbox('items');
     $scope.user.quiz.activeSection = 4;
-    $location.path('/');
+    $location.path('/quiz');
   }
 
 });
