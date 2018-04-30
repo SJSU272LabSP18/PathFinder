@@ -611,7 +611,7 @@ app.controller('QuizResumeController', function($scope, $localStorage, $sessionS
 
 });
 
-app.controller('JobseekerJobsController', function($scope, $localStorage, $sessionStorage, $location, $http){
+app.controller('JobseekerJobsController', function($scope, $filter, $localStorage, $sessionStorage, $location, $http){
 
   // Check if user is authorized to view page
   $http({
@@ -631,7 +631,146 @@ app.controller('JobseekerJobsController', function($scope, $localStorage, $sessi
   $scope.user = $localStorage;
 
 
+  // Create Table Based on Jobs Data
+
+  // init
+  $scope.sort = {
+              sortingOrder : 'Company',
+              reverse : false
+          };
+
+  $scope.gap = 5;
+  $scope.filteredItems = [];
+  $scope.groupedItems = [];
+  $scope.itemsPerPage = 10;
+  $scope.pagedItems = [];
+  $scope.currentPage = 0;
+
+  $scope.items = [
+    {"id":1,"Company":"Spotify","Job_Title":"Front-End Engineer","City":"New York City","State":"NY","Ranking":99},
+    {"id":2,"Company":"Soundcloud","Job_Title":"Back-End Engineer","City":"New York City","State":"NY","Ranking":60},
+    {"id":3,"Company":"Pandora","Job_Title":"Full-Stack Engineer","City":"Oakland","State":"CA","Ranking":75},
+    {"id":4,"Company":"Apple Music","Job_Title":"Front-End Engineer","City":"Cupertino","State":"CA","Ranking":90},
+    {"id":5,"Company":"Tidal","Job_Title":"UX Engineer","City":"Chicago","State":"IL","Ranking":80},
+  ];
+
+  // Calculate gap that should be caused
+  num_pages = Math.ceil($scope.items.length/$scope.itemsPerPage);
+  if(num_pages < $scope.gap){
+    $scope.gap = num_pages;
+  }
+
+  var searchMatch = function (haystack, needle) {
+      if (!needle) {
+          return true;
+      }
+      return haystack.toLowerCase().indexOf(needle.toLowerCase()) !== -1;
+  };
+
+  // init the filtered items
+  $scope.search = function () {
+      $scope.filteredItems = $filter('filter')($scope.items, function (item) {
+          for(var attr in item) {
+              if (searchMatch(item[attr], $scope.query))
+                  return true;
+          }
+          return false;
+      });
+      // take care of the sorting order
+      if ($scope.sort.sortingOrder !== '') {
+          $scope.filteredItems = $filter('orderBy')($scope.filteredItems, $scope.sort.sortingOrder, $scope.sort.reverse);
+      }
+      $scope.currentPage = 0;
+      // now group by pages
+      $scope.groupToPages();
+  };
+
+
+  // calculate page in place
+  $scope.groupToPages = function () {
+      $scope.pagedItems = [];
+
+      for (var i = 0; i < $scope.filteredItems.length; i++) {
+          if (i % $scope.itemsPerPage === 0) {
+              $scope.pagedItems[Math.floor(i / $scope.itemsPerPage)] = [ $scope.filteredItems[i] ];
+          } else {
+              $scope.pagedItems[Math.floor(i / $scope.itemsPerPage)].push($scope.filteredItems[i]);
+          }
+      }
+  };
+
+  $scope.range = function (size,start, end) {
+      var ret = [];
+      console.log(size,start, end);
+      if (size < end) {
+          end = size;
+          start = size-$scope.gap;
+      }
+      for (var i = start; i < end; i++) {
+          ret.push(i);
+      }
+       console.log(ret);
+      return ret;
+  };
+
+  $scope.prevPage = function () {
+      if ($scope.currentPage > 0) {
+          $scope.currentPage--;
+      }
+  };
+
+  $scope.nextPage = function () {
+      if ($scope.currentPage < $scope.pagedItems.length - 1) {
+          $scope.currentPage++;
+      }
+  };
+
+  $scope.setPage = function () {
+      $scope.currentPage = this.n;
+  };
+
+  // functions have been describe process the data for display
+  $scope.search();
+
+
+  // Redirect user to jobs page
+  $scope.goToJob = function(id) {
+    $location.path('/jobseeker/jobs/view/' + id);
+  }
+
+
 });
+
+
+app.controller('JobseekerJobViewController', function($scope, $localStorage, $location, $sessionStorage, $routeParams){
+
+  // Set local scope to persisted user data
+  $scope.user = $localStorage;
+  console.log($routeParams);
+
+  // Pull this from db in future
+  $scope.items = [
+    {"id":1,"Company":"Spotify","Job_Title":"Front-End Engineer","City":"New York City","State":"NY","Ranking":99},
+    {"id":2,"Company":"Soundcloud","Job_Title":"Back-End Engineer","City":"New York City","State":"NY","Ranking":60},
+    {"id":3,"Company":"Pandora","Job_Title":"Full-Stack Engineer","City":"Oakland","State":"CA","Ranking":75},
+    {"id":4,"Company":"Apple Music","Job_Title":"Front-End Engineer","City":"Cupertino","State":"CA","Ranking":90},
+    {"id":5,"Company":"Tidal","Job_Title":"UX Engineer","City":"Chicago","State":"IL","Ranking":80},
+  ];
+
+  $scope.job = $scope.items.find(function(element) {
+    return element.id ==  $routeParams.id;
+  });
+
+  if($scope.job == undefined){
+    alert("No Job Found in DB");
+    $location.path('/jobseeker/jobs');
+  }
+
+  console.log($scope.job);
+
+
+});
+
 
 /*********************************
  Routing
@@ -719,10 +858,16 @@ app.config(function($routeProvider) {
             controller: 'QuizResumeController'
         }).
 
-        //Quiz Resume Page
+        //Job Seeker Jobs List Page
         when('/jobseeker/jobs', {
             templateUrl: 'views/jobseeker_jobs.html',
             controller: 'JobseekerJobsController'
+        }).
+
+        //Job Seeker Specific Job Page
+        when('/jobseeker/jobs/view/:id', {
+            templateUrl: 'views/jobseeker_job_view.html',
+            controller: 'JobseekerJobViewController'
         }).
 
         //Create Account page
@@ -842,7 +987,6 @@ app.directive('wordcountValidate', function() {
     };
 });
 
-
 app.filter('wordCounter', function () {
     return function (value) {
         if (value && typeof value === 'string') {
@@ -852,3 +996,43 @@ app.filter('wordCounter', function () {
         }
     };
 })
+
+
+app.directive("customSort", function() {
+  return {
+      restrict: 'A',
+      transclude: true,
+      scope: {
+        order: '=',
+        sort: '='
+      },
+      template :
+        ' <a ng-click="sort_by(order)" style="color: #555555;">'+
+        '    <span ng-transclude></span>'+
+        '    <i ng-class="selectedCls(order)"></i>'+
+        '</a>',
+      link: function(scope) {
+
+      // change sorting order
+      scope.sort_by = function(newSortingOrder) {
+          var sort = scope.sort;
+
+          if (sort.sortingOrder == newSortingOrder){
+              sort.reverse = !sort.reverse;
+          }
+
+          sort.sortingOrder = newSortingOrder;
+      };
+
+
+      scope.selectedCls = function(column) {
+          if(column == scope.sort.sortingOrder){
+              return ('fa fa-chevron-' + ((scope.sort.reverse) ? 'down' : 'up'));
+          }
+          else{
+              return'fa fa-sort'
+          }
+      };
+    }// end link
+  }
+});
