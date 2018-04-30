@@ -522,6 +522,10 @@ app.controller('QuizResumeController', function($scope, $localStorage, $sessionS
   // Set local scope to persisted user data
   $scope.user = $localStorage;
 
+  $(document).on("keypress", "form", function(event) {
+      return event.keyCode != 13;
+  });
+
   // Experience related methods
   if ($scope.user.experiences == undefined){
     $scope.user.experiences = [
@@ -541,7 +545,7 @@ app.controller('QuizResumeController', function($scope, $localStorage, $sessionS
   // Education related methods
   if ($scope.user.educations == undefined){
     $scope.user.educations = [
-                 {id:'1', degree:"", institute:"", description:""}
+                 {id:'1', degree:"", institute:"", description:"", startdate:"", enddate:""}
                 ]
   }
 
@@ -550,8 +554,18 @@ app.controller('QuizResumeController', function($scope, $localStorage, $sessionS
   }
 
   $scope.addEducation = function(){
-    $scope.user.educations.push({id: $scope.user.educations.length, degree:"", institute:"", description:""});
+    $scope.user.educations.push({id: $scope.user.educations.length, degree:"", institute:"", description:"", startdate:"", enddate:""});
   }
+
+  // Skill PillBox methods
+  if ($scope.user.skills == undefined){
+    $scope.user.skills = [
+                ]
+  }
+
+  $('#skillPillbox').pillbox();
+
+  $('#skillPillbox').pillbox('addItems', $scope.user.skills);
 
   // Form submission related methods
 
@@ -561,6 +575,7 @@ app.controller('QuizResumeController', function($scope, $localStorage, $sessionS
   }
 
   $scope.submitForm = function() {
+    $scope.user.skills = $('#skillPillbox').pillbox('items');
     $scope.user.quiz.activeSection = 4;
     $location.path('/quiz');
   }

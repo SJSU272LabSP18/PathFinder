@@ -29,7 +29,6 @@
           <label>Role</label><br>
           <input name="{{experience.id}}role"  class="form-control" ng-model="experience.role" type="text" required>
 
-
           <div class="row">
             <div class="col-6">
               <label>Start Date:</label><br>
@@ -42,6 +41,7 @@
           </div>
 
           <textarea class="form-control" ng-model="experience.description" rows="3" placeholder="Enter details here"></textarea>
+
           <button class="btn btn-danger" ng-click="removeExperience(experience.id)">Remove</button>
           <br><br>
         </div>
@@ -61,11 +61,44 @@
           <label>Degree:</label><br>
           <input name="{{education.id}}degree"  class="form-control" ng-model="education.degree" type="text" required>
 
+          <div class="row">
+            <div class="col-6">
+              <label>Start Date:</label><br>
+              <input class="form-control" type="text" ng-model="education.startdate" required>
+            </div>
+            <div class="col-6">
+              <label>End Date:</label><br>
+              <input class="form-control" type="text" ng-model="education.enddate", placeholder="Leave blank for present">
+            </div>
+          </div>
+
           <textarea class="form-control" ng-model="education.description" rows="3" placeholder="Enter details here"></textarea>
+
           <button class="btn btn-danger" ng-click="removeEducation(education.id)">Remove</button>
           <br><br>
         </div>
 
+        <div class="row">
+          <h3>Skills</h3>
+        </div>
+
+        <div class="fuelux">
+          <div class="pillbox" data-initialize="pillbox" id="skillPillbox">
+            <ul class="clearfix pill-group">
+              <li class="pillbox-input-wrap btn-group">
+                <a class="pillbox-more">and <span class="pillbox-more-count"></span> more...</a>
+                <input type="text" class="form-control dropdown-toggle pillbox-add-item" placeholder="add item">
+                <button type="button" class="dropdown-toggle sr-only">
+                  <span class="caret"></span>
+                  <span class="sr-only">Toggle Dropdown</span>
+                </button>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <br>
+        <br>
         <div class="form-group">
           <button class="btn btn-default" ng-click="back()">Back</button>
           <button class="btn btn-primary" ng-disabled="resumeForm.$invalid" type="submit">Update</button>
@@ -73,6 +106,8 @@
 
       </fieldset>
     </form>
+
+
     <!-- End Resume Card -->
   </div>
 
