@@ -577,7 +577,7 @@ app.controller('QuizResumeController', function($scope, $localStorage, $sessionS
   $scope.submitForm = function() {
     $scope.user.skills = $('#skillPillbox').pillbox('items');
     $scope.user.quiz.activeSection = 4;
-    $location.path('/quiz');
+    $location.path('/');
   }
 
 });
