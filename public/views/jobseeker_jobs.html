@@ -5,28 +5,20 @@
   </div>
 </div>
 
-<div>
+<div class="card container">
+  <div class="card-body">
 
-
-    <table class="table table-striped table-condensed table-hover">
+    <table class="table table-hover table-striped">
         <thead>
+
             <tr>
-                <th class="Company" custom-sort order="'Company'" sort="sort">Company&nbsp;</th>
-                <th class="Job Title" custom-sort order="'Job_Title'" sort="sort">Job Title&nbsp;</th>
-                <th class="City" custom-sort order="'City'" sort="sort">City&nbsp;</th>
-                <th class="State" custom-sort order="'State'" sort="sort">State&nbsp;</th>
-                <th class="Ranking" custom-sort order="'Ranking'" sort="sort">Ranking&nbsp;</th>
+                <th class="" custom-sort order="'Company'" sort="sort">Company&nbsp;</th>
+                <th class="" custom-sort order="'Job_Title'" sort="sort">Job Title&nbsp;</th>
+                <th class="" custom-sort order="'City'" sort="sort">City&nbsp;</th>
+                <th class="" custom-sort order="'State'" sort="sort">State&nbsp;</th>
+                <th class="" custom-sort order="'Ranking'" sort="sort">Ranking&nbsp;</th>
             </tr>
         </thead>
-        <tbody>
-            <tr ng-repeat="item in pagedItems[currentPage] | orderBy:sort.sortingOrder:sort.reverse" ng-click="goToJob(item.id)">
-                <td>{{item.Company}}</td>
-                <td>{{item.Job_Title}}</td>
-                <td>{{item.City}}</td>
-                <td>{{item.State}}</td>
-                <td>{{item.Ranking}}</td>
-            </tr>
-        </tbody>
         <tfoot>
             <td colspan="12">
                 <div>
@@ -49,7 +41,18 @@
             </td>
 
         </tfoot>
+        <tbody>
+            <tr ng-repeat="item in pagedItems[currentPage] | orderBy:sort.sortingOrder:sort.reverse" ng-click="goToJob(item.id)">
+                <td>{{item.Company}}</td>
+                <td>{{item.Job_Title}}</td>
+                <td>{{item.City}}</td>
+                <td>{{item.State}}</td>
+                <td>{{item.Ranking}}</td>
+            </tr>
+        </tbody>
     </table>
+
+  <div>
 </div>
 
 <!--/jobseeker_jobs.html-->
