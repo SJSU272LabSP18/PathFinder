@@ -5,11 +5,11 @@
   </div>
 </div>
 
-<div class="container">
+<div class="card container">
 
-  <div class="container">
+  <div class="card-body">
     <!-- Resume Card -->
-    <h2>Tell us about your relevant work experience/education/skills!</h2>
+    <h2>Tell us about your resume!</h2>
     <form class="form-horizontal needs-validation"  novalidate ng-submit="submitForm()" name="resumeForm" novalidate>
       <fieldset>
 
@@ -21,29 +21,31 @@
           </button>
         </div>
 
-        <div ng-form="subFormExperience" ng-repeat="experience in formExperiences">
+        <div ng-form="subFormExperience" class="card container" ng-repeat="experience in formExperiences">
+          <div class="card-body">
 
-          <label>Company:</label><br>
-          <input name="{{experience.id}}company"  class="form-control" ng-model="experience.company" type="text" required>
+            <label>Company:</label><br>
+            <input name="{{experience.id}}company"  class="form-control" ng-model="experience.company" type="text" required>
 
-          <label>Role</label><br>
-          <input name="{{experience.id}}role"  class="form-control" ng-model="experience.role" type="text" required>
+            <label>Role</label><br>
+            <input name="{{experience.id}}role"  class="form-control" ng-model="experience.role" type="text" required>
 
-          <div class="row">
-            <div class="col-6">
-              <label>Start Date:</label><br>
-              <input class="form-control" type="text" ng-model="experience.startdate" required>
+            <div class="row">
+              <div class="col-6">
+                <label>Start Date:</label><br>
+                <input class="form-control" type="text" ng-model="experience.startdate" required>
+              </div>
+              <div class="col-6">
+                <label>End Date:</label><br>
+                <input class="form-control" type="text" ng-model="experience.enddate", placeholder="Leave blank for present">
+              </div>
             </div>
-            <div class="col-6">
-              <label>End Date:</label><br>
-              <input class="form-control" type="text" ng-model="experience.enddate", placeholder="Leave blank for present">
-            </div>
+
+            <textarea class="form-control" ng-model="experience.description" rows="3" placeholder="Enter details here"></textarea>
+
+            <button class="btn btn-danger" ng-click="removeExperience(experience.id)">Remove</button>
+            <br><br>
           </div>
-
-          <textarea class="form-control" ng-model="experience.description" rows="3" placeholder="Enter details here"></textarea>
-
-          <button class="btn btn-danger" ng-click="removeExperience(experience.id)">Remove</button>
-          <br><br>
         </div>
 
         <div class="row">
@@ -53,28 +55,30 @@
           </button>
         </div>
 
-        <div ng-form="subFormEducation" ng-repeat="education in formEducations">
+        <div ng-form="subFormEducation" class="card container" ng-repeat="education in formEducations">
+          <div class="card-body">
 
-          <label>Institute:</label><br>
-          <input name="{{education.id}}institute"  class="form-control" ng-model="education.institute" type="text" required>
+            <label>Institute:</label><br>
+            <input name="{{education.id}}institute"  class="form-control" ng-model="education.institute" type="text" required>
 
-          <label>Degree:</label><br>
-          <input name="{{education.id}}degree"  class="form-control" ng-model="education.degree" type="text" required>
+            <label>Degree:</label><br>
+            <input name="{{education.id}}degree"  class="form-control" ng-model="education.degree" type="text" required>
 
-          <div class="row">
-            <div class="col-6">
-              <label>Start Date:</label><br>
-              <input class="form-control" type="text" ng-model="education.startdate" required>
+            <div class="row">
+              <div class="col-6">
+                <label>Start Date:</label><br>
+                <input class="form-control" type="text" ng-model="education.startdate" required>
+              </div>
+              <div class="col-6">
+                <label>End Date:</label><br>
+                <input class="form-control" type="text" ng-model="education.enddate", placeholder="Leave blank for present">
+              </div>
             </div>
-            <div class="col-6">
-              <label>End Date:</label><br>
-              <input class="form-control" type="text" ng-model="education.enddate", placeholder="Leave blank for present">
-            </div>
+            <textarea class="form-control" ng-model="education.description" rows="3" placeholder="Enter details here"></textarea>
+
+            <button class="btn btn-danger" ng-click="removeEducation(education.id)">Remove</button>
+            <br><br>
           </div>
-          <textarea class="form-control" ng-model="education.description" rows="3" placeholder="Enter details here"></textarea>
-
-          <button class="btn btn-danger" ng-click="removeEducation(education.id)">Remove</button>
-          <br><br>
         </div>
 
         <div class="row">
