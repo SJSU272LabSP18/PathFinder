@@ -1,6 +1,6 @@
 // See LICENSE.MD for license information.
 
-var app = angular.module('MEANapp', ['ngRoute', 'ngStorage']);
+var app = angular.module('MEANapp', ['ngRoute', 'ngStorage','ngSanitize']);
 
 /*********************************
  Controllers
@@ -746,15 +746,27 @@ app.controller('JobseekerJobViewController', function($scope, $localStorage, $lo
 
   // Set local scope to persisted user data
   $scope.user = $localStorage;
-  console.log($routeParams);
 
   // Pull this from db in future
   $scope.items = [
-    {"id":1,"Company":"Spotify","Job_Title":"Front-End Engineer","City":"New York City","State":"NY","Ranking":99},
-    {"id":2,"Company":"Soundcloud","Job_Title":"Back-End Engineer","City":"New York City","State":"NY","Ranking":60},
-    {"id":3,"Company":"Pandora","Job_Title":"Full-Stack Engineer","City":"Oakland","State":"CA","Ranking":75},
-    {"id":4,"Company":"Apple Music","Job_Title":"Front-End Engineer","City":"Cupertino","State":"CA","Ranking":90},
-    {"id":5,"Company":"Tidal","Job_Title":"UX Engineer","City":"Chicago","State":"IL","Ranking":80},
+    {
+
+      "id":1,
+      "Company":"Spotify",
+      "CompanyLogo": "https://media.licdn.com/mpr/mpr/shrink_200_200/gcrc/dms/image/C560BAQFkDzx_7dqq3A/company-logo_400_400/0?e=2124345600&v=beta&t=7zBkFJuVSz8lK8i46oS-J7_QUNF-NjPoyRShTdu-9vY",
+      "Job_Title":"Front-End Engineer",
+      "City":"New York City",
+      "State":"NY",
+      "Ranking":99,
+      "Job_Summary":"Spotify is looking for a Software Engineer to join our Engineering org.\nYou will build data solutions and distributed services to bring music and digital media experiences to our 100 million active users and millions of artists, either by working directly on product features, publishing and insight tools for artists, or by improving the quality of our software tools and large scale infrastructure.\n You will take on complex data and distributed systems problems using some of the most diverse datasets available — user behaviors, acoustical analysis, revenue streams, cultural and contextual data, and other signals across our broad range of mobile and connected platforms.\n Above all, your work will impact the way the world experiences music.",
+      "Job_Type": "Entry Level",
+      "Key_Skills": [
+        {"text":"JavaScript", "value":"JavaScript"},
+        {"text":"Python", "value":"Python"},
+        {"text":"HTML", "value":"HTML"}
+      ],
+      "Description": "What you’ll do:\nBuild large-scale batch and real-time data pipelines with data processing frameworks like Scalding, Scio, Storm, Spark and the Google Cloud Platform.\n\nArchitect, design, develop, deploy and operate services that support millions of users.\n\nLeverage best practices in continuous integration and delivery.\n\nHelp drive optimization, testing and tooling to improve data and systems quality.\n\nCollaborate with other engineers, ML experts and stakeholders, taking learning and leadership opportunities that will arise every single day.\n\nWork in cross functional agile teams to continuously experiment, iterate and deliver on new product objectives."
+    },
   ];
 
   $scope.job = $scope.items.find(function(element) {
@@ -766,7 +778,15 @@ app.controller('JobseekerJobViewController', function($scope, $localStorage, $lo
     $location.path('/jobseeker/jobs');
   }
 
-  console.log($scope.job);
+  $('#skillPillbox').pillbox();
+  $('#skillPillbox').pillbox('addItems', $scope.job.Key_Skills);
+
+  $scope.user.skillgap = [
+    {"text":"Python", "value":"Python"},
+  ]
+
+  $('#skillgapPillbox').pillbox();
+  $('#skillgapPillbox').pillbox('addItems', $scope.user.skillgap);
 
 
 });

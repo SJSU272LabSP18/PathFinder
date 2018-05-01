@@ -1,8 +1,107 @@
 <!--jobseeker_job_view.html-->
-<div class="row" id="header">
-  <div class="col-md-12">
-      <h2>{{job.Job_Title}} @ {{job.Company}}</h2>
-      <h3>Location:{{job.City}},{{job.State}}</h3>
+<div class="card container">
+  <div class="card-body">
+    <div class="row">
+        <div id="companylogo" class="d-none d-sm-block col-md-2">
+          <img src="{{job.CompanyLogo}}"/>
+        </div>
+        <div id="jobtitle" class="col-sm-12 col-md-10">
+          <div class="row">
+            <h2>{{job.Job_Title}}</h2>
+          </div>
+          <div class="row">
+            <h3>{{job.Company}} in {{job.City}}, {{job.State}}</h3>
+          </div>
+        </div>
+    </div>
   </div>
 </div>
+
+<div class="card container">
+  <div class="card-body">
+    <div class="row">
+        <h2>At a glance...</h2>
+        <div id="jobsummary" class="col-sm-12 col-md-12">
+          <div class="row">
+            <h3>Job Summary</h3>
+          </div>
+          <div style="white-space: pre-line;">{{job.Job_Summary}}</div>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div id="jobtype" class="col-sm-12 col-md-12">
+          <div class="row">
+            <h3>Job Type</h3>
+          </div>
+          <div style="white-space: pre-line;">{{job.Job_Type}}</div>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div id="jobskills" class="col-sm-12 col-md-12">
+          <div class="row">
+            <h3>Key Skills</h3>
+          </div>
+          <div class="fuelux">
+            <div class="pillbox" data-initialize="pillbox" data-readonly="readonly" id="skillPillbox">
+              <ul class="clearfix pill-group">
+                <li class="pillbox-input-wrap btn-group">
+                  <a class="pillbox-more">and <span class="pillbox-more-count"></span> more...</a>
+                  <input type="text" class="form-control dropdown-toggle pillbox-add-item" placeholder="add item">
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+<div class="card container">
+  <div class="card-body">
+    <div class="row">
+        <h2>Full Job Description</h2>
+        <div id="jobdescription" class="col-12">
+          <div style="white-space: pre-line;">{{job.Description}}</div>
+        </div>
+    </div>
+  </div>
+</div>
+
+<div class="card container">
+  <div class="card-body">
+    <div class="row">
+        <h2>How You Stack Up</h2>
+        <div id="skillgap" class="col-12">
+          <div class="row">
+            <h3>We found a skill gap in the following (Click for Trainings!)</h3>
+          </div>
+          <div class="fuelux">
+            <div class="pillbox" data-initialize="pillbox" data-readonly="readonly" id="skillgapPillbox">
+              <ul class="clearfix pill-group">
+                <li class="pillbox-input-wrap btn-group">
+                  <a class="pillbox-more">and <span class="pillbox-more-count"></span> more...</a>
+                  <input type="text" class="form-control dropdown-toggle pillbox-add-item" placeholder="add item">
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="card container">
+  <div class="card-body">
+    <div class="row">
+      <h3>Interested?</h3>
+    </div>
+    <div class="row">
+        <button class="btn btn-info" type="button" ng-click="">Notify Jobposter</button>
+    </div>
+  </div>
+</div>
+
 <!--/jobseeker_job_view.html-->
