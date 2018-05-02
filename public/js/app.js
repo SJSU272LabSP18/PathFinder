@@ -763,7 +763,8 @@ app.controller('JobseekerJobViewController', function($scope, $localStorage, $lo
       "Key_Skills": [
         {"text":"JavaScript", "value":"JavaScript"},
         {"text":"Python", "value":"Python"},
-        {"text":"HTML", "value":"HTML"}
+        {"text":"HTML", "value":"HTML"},
+        {"text":"React", "value":"React"}
       ],
       "Description": "What you’ll do:\nBuild large-scale batch and real-time data pipelines with data processing frameworks like Scalding, Scio, Storm, Spark and the Google Cloud Platform.\n\nArchitect, design, develop, deploy and operate services that support millions of users.\n\nLeverage best practices in continuous integration and delivery.\n\nHelp drive optimization, testing and tooling to improve data and systems quality.\n\nCollaborate with other engineers, ML experts and stakeholders, taking learning and leadership opportunities that will arise every single day.\n\nWork in cross functional agile teams to continuously experiment, iterate and deliver on new product objectives."
     },
@@ -781,12 +782,32 @@ app.controller('JobseekerJobViewController', function($scope, $localStorage, $lo
   $('#skillPillbox').pillbox();
   $('#skillPillbox').pillbox('addItems', $scope.job.Key_Skills);
 
-  $scope.user.skillgap = [
-    {"text":"Python", "value":"Python"},
+  $scope.user.skillgaps = [
+    {
+      "text":"Python",
+      "value":"Python",
+      "trainings": [
+        {
+          title: "Complete Python Bootcamp: Go from zero to hero in Python 3",
+          link: "https://www.udemy.com/complete-python-bootcamp/"
+        },
+        {
+          title: "Introduction To Python Programming",
+          link: "https://www.udemy.com/pythonforbeginnersintro/"
+        }
+      ]
+    },
+    {
+      "text":"React",
+      "value":"React",
+      "trainings": [
+        {
+          title: "Master ReactJS: Learn React JS from Scratch",
+          link: "https://www.udemy.com/master-reactjs/"
+        }
+      ]
+    },
   ]
-
-  $('#skillgapPillbox').pillbox();
-  $('#skillgapPillbox').pillbox('addItems', $scope.user.skillgap);
 
 
 });
