@@ -1,17 +1,13 @@
 <!--jobseeker_job_view.html-->
 <div class="card container">
-  <div class="card-body">
+  <div class="card-body d-flex h-100">
     <div class="row">
-        <div id="companylogo" class="d-none d-sm-block col-md-2">
-          <img src="{{job.CompanyLogo}}"/>
+        <div id="companylogo" class="col-md-3">
+          <img src="{{job.CompanyLogo}}" class="rounded-circle img-raised"/>
         </div>
-        <div id="jobtitle" class="col-sm-12 col-md-10">
-          <div class="row">
-            <h2>{{job.Job_Title}}</h2>
-          </div>
-          <div class="row">
-            <h3>{{job.Company}} in {{job.City}}, {{job.State}}</h3>
-          </div>
+        <div id="jobtitle" class="col-md-9 align-middle">
+          <h2>{{job.Job_Title}}</h2>
+          <h3>{{job.Company}} in {{job.City}}, {{job.State}}</h3>
         </div>
     </div>
   </div>
@@ -79,7 +75,9 @@
 
 
           <div ng-repeat="gap in user.skillgaps">
-            <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#{{gap.value}}">{{gap.text}}</button>
+            <div class="col-xs-12 col-sm-6 col-md-3">
+              <button type="button" class="btn btn-primary btn-block" data-toggle="collapse" data-target="#{{gap.value}}">{{gap.text}}</button>
+            </div>
             <div id="{{gap.value}}" class="collapse">
               <div ng-repeat="training in gap.trainings">
                 <h4>{{training.title}}</h4>
@@ -89,7 +87,6 @@
             <br>
             <br>
           </div>
-
 
         </div>
     </div>
@@ -102,8 +99,8 @@
     <div class="row">
       <h3>Interested?</h3>
     </div>
-    <div class="row">
-        <button class="btn btn-info" type="button" ng-click="">Notify Jobposter</button>
+    <div class="col-xs-12 col-sm-6 col-md-3">
+        <button class="btn btn-info btn-block" type="button" ng-click="">Notify Jobposter</button>
     </div>
   </div>
 </div>
