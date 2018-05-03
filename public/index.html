@@ -20,7 +20,7 @@
 
 
 </head>
-<body ng-app="MEANapp" class="sidebar-collapse">
+<body ng-app="MEANapp" class="index-page sidebar-collapse">
 
     <!-- Navbar -->
     <div ng-controller="HeaderController">
@@ -93,47 +93,49 @@
         <!-- End Navbar -->
 
         <!-- 'Home' Header Image -->
-        <div class="page-header clear-filter" filter-color="orange" ng-show="!user.status && (loc.path() == '/')">
-          <div class="page-header-image" data-parallax="true" style="background-image: url('./assets/img/landingpage1.jpg');">
-          </div>
-          <div class="container">
-              <div class="content-center brand">
-
-                 <!-- Pathfinder Logo SVG -->
-                  <svg width="42px" height="100px" viewBox="0 0 42 50" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                    <!-- Generator: Sketch 49.3 (51167) - http://www.bohemiancoding.com/sketch -->
-                    <desc>Created with Sketch.</desc>
-                    <defs>
-                        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-1">
-                            <stop stop-color="#FFFFFF" offset="0%"></stop
-                            <stop stop-color="#D8D8D8" offset="100%"></stop>
-                        </linearGradient>
-                    </defs>
-                    <g id="Logo" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" font-family="WildArrows, Wild Arrows" font-size="72" font-weight="400">
-                        <text id="P" fill="url(#linearGradient-1)">
-                            <tspan x="-1" y="48">P</tspan>
-                        </text>
-                    </g>
-                  </svg>
-                  <!-- End Pathfinder Logo SVG -->
-
-                  <h1 class="h1-seo">Pathfinder</h1>
-                  <h3>The Cognitive Engine for Job Seekers and Job Posters</h3>
-              </div>
-              <h6 class="category category-absolute">
-                <div class="down-arrow bounce">
+        <div class="wrapper">
+          <div class="page-header clear-filter" filter-color="orange" ng-show="!user.status && (loc.path() == '/')">
+                <div class="page-header-image" data-parallax="true" style="background-image: url('./assets/img/landingpage1.jpg');">
                 </div>
-              </h6>
+                <div class="container">
+                    <div class="content-center brand">
 
-          </div>
+                       <!-- Pathfinder Logo SVG -->
+                        <svg width="42px" height="100px" viewBox="0 0 42 50" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                          <!-- Generator: Sketch 49.3 (51167) - http://www.bohemiancoding.com/sketch -->
+                          <desc>Created with Sketch.</desc>
+                          <defs>
+                              <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-1">
+                                  <stop stop-color="#FFFFFF" offset="0%"></stop
+                                  <stop stop-color="#D8D8D8" offset="100%"></stop>
+                              </linearGradient>
+                          </defs>
+                          <g id="Logo" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" font-family="WildArrows, Wild Arrows" font-size="72" font-weight="400">
+                              <text id="P" fill="url(#linearGradient-1)">
+                                  <tspan x="-1" y="48">P</tspan>
+                              </text>
+                          </g>
+                        </svg>
+                        <!-- End Pathfinder Logo SVG -->
+
+                        <h1 class="h1-seo">Pathfinder</h1>
+                        <h3>The Cognitive Engine for Job Seekers and Job Posters</h3>
+                    </div>
+                    <h6 class="category category-absolute">
+                      <div class="down-arrow bounce">
+                      </div>
+                    </h6>
+
+                </div>
+            </div>
         </div>
-        <!-- End 'Home' Header Image -->
+          <!-- End 'Home' Header Image -->
 
     </div>
 
 
     <div class="section content">
-      <div class="container" ng-view>
+      <div class="container" autoscroll="true" ng-view>
           <!--Views loaded here via $routeProvider in app.js-->
       </div>
     </div>
