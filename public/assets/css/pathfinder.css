@@ -1,6 +1,10 @@
 @font-face {
-  font-family: 'WildArrows';
-  src: URL('../fonts/wildarrows.ttf') format('ttf');
+    font-family: 'wild_arrowsmedium';
+    src: url('../fonts/wildarrows-webfont.woff2') format('woff2'),
+         url('../fonts/wildarrows-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
 }
 
 .down-arrow{
