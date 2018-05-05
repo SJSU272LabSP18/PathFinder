@@ -366,9 +366,15 @@ app.controller('QuizPersonaController', function($scope, $localStorage, $session
   // Set local scope to persisted user data
   $scope.user = $localStorage;
 
+  // Set default personal
+  if ($scope.user.persona == undefined){
+    $scope.user.persona = "intern";
+  }
+
   $('#tab_selector').on('change', function (e) {
 	    $('.nav-tabs li a').eq($(this).val()).tab('show');
 	});
+
 
   $scope.cancel = function() {
     $location.path('/');
@@ -401,6 +407,11 @@ app.controller('QuizIndustryController', function($scope, $localStorage, $sessio
 
   // Set local scope to persisted user data
   $scope.user = $localStorage;
+
+  // Set default industry
+  if ($scope.user.industry == undefined){
+    $scope.user.industry = "software_engineering";
+  }
 
   $('#tab_selector').on('change', function (e) {
 	    $('.nav-tabs li a').eq($(this).val()).tab('show');
@@ -838,7 +849,7 @@ app.controller('JobposterPostJobController', function($scope, $localStorage, $se
   $(document).on("keypress", ":input:not(textarea)", function(event) {
       return event.keyCode != 13;
   });
-  
+
   // Experience related methods
   if ($scope.user.experiences == undefined){
     $scope.user.experiences = [

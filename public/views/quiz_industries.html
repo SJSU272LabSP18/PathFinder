@@ -16,25 +16,25 @@
             <!-- Industry Options -->
             <div class="d-none d-md-block">
               <ul class="nav nav-tabs justify-content-center image_section form-group" id="industries" role="tablist">
-                  <li class="nav-item col-sm-12 col-md-4 col-lg-2">
-                      <a class="nav-link active" data-toggle="tab" id="software_engineering" data-target="#option1" role="tab">
+                  <li class="nav-item col-sm-12 col-md-4 col-lg-3">
+                      <a class="nav-link" ng-class="{active: user.industry == 'software_engineering'}" data-toggle="tab" id="software_engineering" data-target="#option1" role="tab">
                         <img src="assets/img/placeholderimg2.png" alt="Thumbnail Image" class="rounded-circle img-raised d-none d-md-block">
                         <p>Software Engineering</p>
                       </a>
                   </li>
-                  <li class="nav-item col-sm-12 col-md-4 col-lg-2">
-                      <a class="nav-link" data-toggle="tab" id="office_assistant" data-target="#option2" role="tab">
+                  <li class="nav-item col-sm-12 col-md-4 col-lg-3">
+                      <a class="nav-link" ng-class="{active: user.industry == 'office_assistant'}" data-toggle="tab" id="office_assistant" data-target="#option2" role="tab">
                         <img src="assets/img/placeholderimg2.png" alt="Thumbnail Image" class="rounded-circle img-raised d-none d-md-block">
                         <p>Office Assistant</p>
                       </a>
                   </li>
-                  <li class="nav-item col-sm-12 col-md-4 col-lg-2">
-                      <a class="nav-link" data-toggle="tab" id="electrician" data-target="#option3" role="tab">
+                  <li class="nav-item col-sm-12 col-md-4 col-lg-3">
+                      <a class="nav-link" ng-class="{active: user.industry == 'electrician'}" data-toggle="tab" id="electrician" data-target="#option3" role="tab">
                         <img src="assets/img/placeholderimg2.png" alt="Thumbnail Image" class="rounded-circle img-raised d-none d-md-block">
                         <p>Electrician</p>
                       </a>
                   </li>
-                  <li class="nav-item col-sm-12 col-md-4 col-lg-2">
+                  <li class="nav-item col-sm-12 col-md-4 col-lg-3">
                       <a class="nav-link disabled" data-toggle="tab" data-target="#option3" role="tab">
                         <img src="assets/img/placeholderimg2.png" alt="Thumbnail Image" class="rounded-circle img-grayscale img-raised d-none d-md-block">
                         <p>More Coming Soon</p>
@@ -43,15 +43,15 @@
               </ul>
             </div>
             <select class="form-control d-md-none" id="tab_selector">
-                <option value="0">Software Engineering</option>
-                <option value="1">Office Assistant</option>
-                <option value="2">Electrician</option>
+                <option value="0" ng-selected="{{user.industry == 'software_engineering'}}">Software Engineering</option>
+                <option value="1" ng-selected="{{user.industry == 'office_assistant'}}">Office Assistant</option>
+                <option value="2" ng-selected="{{user.industry == 'electrician'}}">Electrician</option>
             </select>
             <!--/ Industry Options -->
             <div class="card-body">
                 <!-- Tab panes -->
                 <div class="tab-content text-center">
-                    <div class="tab-pane active" id="option1" role="tabpanel">
+                    <div class="tab-pane" ng-class="{active: user.industry == 'software_engineering'}" id="option1" role="tabpanel">
                         <h2>Software Engineering</h2>
                         <div class="offset-sm-3 col-sm-6 d-md-none">
                           <img src="assets/img/placeholderimg2.png" alt="Thumbnail Image" class="rounded-circle img-raised">
@@ -60,7 +60,7 @@
                           Software engineers apply the principles and techniques of computer science, engineering, and mathematical analysis to the design, development, testing, and evaluation of the software and the systems that enable computers to perform their many applications.
                         </p>
                     </div>
-                    <div class="tab-pane" id="option2" role="tabpanel">
+                    <div class="tab-pane" ng-class="{active: user.industry == 'office_assistant'}" id="option2" role="tabpanel">
                         <h2>Office Assistant</h2>
                         <div class="offset-sm-3 col-sm-6 d-md-none">
                           <img src="assets/img/placeholderimg2.png" alt="Thumbnail Image" class="rounded-circle img-raised">
@@ -68,7 +68,7 @@
                         <p>
                           Office assistants' job duties usually include tasks like typing, filing, taking inventory, keeping records and sorting checks. They may also prepare documents, process mail and answer telephones.                        </p>
                     </div>
-                    <div class="tab-pane" id="option3" role="tabpanel">
+                    <div class="tab-pane" ng-class="{active: user.industry == 'electrician'}" id="option3" role="tabpanel">
                         <h2>Electrician</h2>
                         <div class="offset-sm-3 col-sm-6 d-md-none">
                           <img src="assets/img/placeholderimg2.png" alt="Thumbnail Image" class="rounded-circle img-raised">

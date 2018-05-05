@@ -16,38 +16,38 @@
             <!-- Persona Options -->
             <div class="d-none d-md-block">
               <ul class="nav nav-tabs justify-content-center image_section form-group" id="personas" role="tablist">
-                  <li class="nav-item col-sm-12 col-md-4 col-lg-2">
-                      <a class="nav-link active" data-toggle="tab" id="intern" data-target="#option1" role="tab">
+                  <li class="nav-item col-sm-12 col-md-4 col-lg-3">
+                      <a class="nav-link" ng-class="{active: user.persona == 'intern'}" data-toggle="tab" id="intern" data-target="#option1" role="tab">
                         <img src="assets/img/placeholderimg.png" alt="Thumbnail Image" class="rounded-circle img-raised d-none d-md-block">
                         <p>Looking for Internship</p>
                       </a>
                   </li>
-                  <li class="nav-item col-sm-12 col-md-4 col-lg-2">
-                      <a class="nav-link" data-toggle="tab" id="new_grad" data-target="#option2" role="tab">
+                  <li class="nav-item col-sm-12 col-md-4 col-lg-3">
+                      <a class="nav-link" ng-class="{active: user.persona == 'new_grad'}" data-toggle="tab" id="new_grad" data-target="#option2" role="tab">
                         <img src="assets/img/placeholderimg.png" alt="Thumbnail Image" class="rounded-circle img-raised d-none d-md-block">
                         <p>New College Grad</p>
                       </a>
                   </li>
-                  <li class="nav-item col-sm-12 col-md-4 col-lg-2">
-                      <a class="nav-link" data-toggle="tab" id="fresher" data-target="#option3" role="tab">
+                  <li class="nav-item col-sm-12 col-md-4 col-lg-3">
+                      <a class="nav-link" ng-class="{active: user.persona == 'fresher'}" data-toggle="tab" id="fresher" data-target="#option3" role="tab">
                         <img src="assets/img/placeholderimg.png" alt="Thumbnail Image" class="rounded-circle img-raised d-none d-md-block">
                         <p>1-3 Years Experience</p>
                       </a>
                   </li>
-                  <li class="nav-item col-sm-12 col-md-4 col-lg-2">
-                      <a class="nav-link" data-toggle="tab" id="experienced" data-target="#option4" role="tab">
+                  <li class="nav-item col-sm-12 col-md-4 col-lg-3">
+                      <a class="nav-link" ng-class="{active: user.persona == 'experienced'}" data-toggle="tab" id="experienced" data-target="#option4" role="tab">
                         <img src="assets/img/placeholderimg.png" alt="Thumbnail Image" class="rounded-circle img-raised d-none d-md-block">
                         <p>3+ Years Experience</p>
                       </a>
                   </li>
-                  <li class="nav-item col-sm-12 col-md-4 col-lg-2">
-                      <a class="nav-link" data-toggle="tab" id="unemployed" data-target="#option5" role="tab">
+                  <li class="nav-item col-sm-12 col-md-4 col-lg-3">
+                      <a class="nav-link" ng-class="{active: user.persona == 'unemployed'}" data-toggle="tab" id="unemployed" data-target="#option5" role="tab">
                         <img src="assets/img/placeholderimg.png" alt="Thumbnail Image" class="rounded-circle img-raised d-none d-md-block">
                         <p>Unemployed (Long-Term)</p>
                       </a>
                   </li>
-                  <li class="nav-item col-sm-12 col-md-4 col-lg-2">
-                      <a class="nav-link" data-toggle="tab" id="other" data-target="#option6" role="tab">
+                  <li class="nav-item col-sm-12 col-md-4 col-lg-3">
+                      <a class="nav-link" ng-class="{active: user.persona == 'other'}" data-toggle="tab" id="other" data-target="#option6" role="tab">
                         <img src="assets/img/placeholderimg.png" alt="Thumbnail Image" class="rounded-circle img-raised d-none d-md-block">
                         <p>Other</p>
                       </a>
@@ -55,18 +55,18 @@
               </ul>
             </div>
             <select class="form-control d-md-none" id="tab_selector">
-                <option value="0">Looking For Internship</option>
-                <option value="1">New College Grad</option>
-                <option value="2">1-3 Years Experience</option>
-                <option value="3">3+ Years Experience</option>
-                <option value="4">Unemployed (Long-Term)</option>
-                <option value="5">Other</option>
+                <option value="0" ng-selected="{{user.persona == 'intern'}}" >Looking For Internship</option>
+                <option value="1" ng-selected="{{user.persona == 'new_grad'}}">New College Grad</option>
+                <option value="2" ng-selected="{{user.persona == 'fresher'}}">1-3 Years Experience</option>
+                <option value="3" ng-selected="{{user.persona == 'experienced'}}">3+ Years Experience</option>
+                <option value="4" ng-selected="{{user.persona == 'unemployed'}}" >Unemployed (Long-Term)</option>
+                <option value="5" ng-selected="{{user.persona == 'other'}}">Other</option>
             </select>
             <!--/ Persona Options -->
             <div class="card-body">
                 <!-- Tab panes -->
-                <div class="tab-content text-center">
-                    <div class="tab-pane active" id="option1" role="tabpanel">
+                <div class="tab-content text-center" id="tabcontent">
+                    <div class="tab-pane" ng-class="{active: user.persona == 'intern'}" id="option1" role="tabpanel">
                         <h2>Looking for Internship</h2>
                         <div class="offset-sm-3 col-sm-6 d-md-none">
                           <img src="assets/img/placeholderimg.png" alt="Thumbnail Image" class="rounded-circle img-raised">
@@ -75,7 +75,7 @@
                           I'm looking for an internship and have little to no experience. I'm looking at getting some experience under my belt for future job prospects!
                         </p>
                     </div>
-                    <div class="tab-pane" id="option2" role="tabpanel">
+                    <div class="tab-pane" ng-class="{active: user.persona == 'new_grad'}" id="option2" role="tabpanel">
                         <h2>New College Grad</h2>
                         <div class="offset-sm-3 col-sm-6 d-md-none">
                           <img src="assets/img/placeholderimg.png" alt="Thumbnail Image" class="rounded-circle img-raised">
@@ -84,7 +84,7 @@
                           I just graduated from college and looking to land my first job. I have a degree and am ready to join the workforce.
                         </p>
                     </div>
-                    <div class="tab-pane" id="option3" role="tabpanel">
+                    <div class="tab-pane" ng-class="{active: user.persona == 'fresher'}" id="option3" role="tabpanel">
                         <h2>1-3 Years Experience</h2>
                         <div class="offset-sm-3 col-sm-6 d-md-none">
                           <img src="assets/img/placeholderimg.png" alt="Thumbnail Image" class="rounded-circle img-raised">
@@ -93,7 +93,7 @@
                           I have some experience and am looking to change jobs.
                         </p>
                     </div>
-                    <div class="tab-pane" id="option4" role="tabpanel">
+                    <div class="tab-pane" ng-class="{active: user.persona == 'experienced'}" id="option4" role="tabpanel">
                         <h2>3+ Years Experience</h2>
                         <div class="offset-sm-3 col-sm-6 d-md-none">
                           <img src="assets/img/placeholderimg.png" alt="Thumbnail Image" class="rounded-circle img-raised">
@@ -102,7 +102,7 @@
                           I have plenty of experience and am looking to move to another job. I know the ins and outs of my area.
                         </p>
                     </div>
-                    <div class="tab-pane" id="option5" role="tabpanel">
+                    <div class="tab-pane" ng-class="{active: user.persona == 'unemployed'}" id="option5" role="tabpanel">
                         <h2>Unemployed (Long-Term)</h2>
                         <div class="offset-sm-3 col-sm-6 d-md-none">
                           <img src="assets/img/placeholderimg.png" alt="Thumbnail Image" class="rounded-circle img-raised">
@@ -111,7 +111,7 @@
                           I've been unemployed long term and looking for a new job. Because of circumstances I've been out of the workforce (i.e. being a stay at home parent, having difficulty finding a job, etc) for a while.
                         </p>
                     </div>
-                    <div class="tab-pane" id="option6" role="tabpanel">
+                    <div class="tab-pane" ng-class="{active: user.persona == 'other'}" id="option6" role="tabpanel">
                       <h2>Other</h2>
                       <div class="offset-sm-3 col-sm-6 d-md-none">
                         <img src="assets/img/placeholderimg.png" alt="Thumbnail Image" class="rounded-circle img-raised">
@@ -129,7 +129,6 @@
           </fieldset>
         </form>
         <!-- End Persona Card -->
-
       </div>
   </div>
 
