@@ -531,7 +531,7 @@ app.controller('QuizResumeController', function($scope, $localStorage, $sessionS
 
   // Disable hitting enter to submit
   $(document).on("keypress", "form", function(event) {
-      return event.keyCode != 13;
+      return event.keyCode != 13 && !$(document.activeElement).is('textarea');
   });
 
   // Experience related methods
@@ -812,6 +812,111 @@ app.controller('JobseekerJobViewController', function($scope, $localStorage, $lo
 
 });
 
+// Job Poster Specific controls
+
+
+app.controller('JobposterPostJobController', function($scope, $localStorage, $sessionStorage, $location, $http){
+
+  // Check if user is authorized to view page
+  $http({
+      method: 'GET',
+      url: '/protected'
+  })
+      .success(function(response){
+          $scope.message = response;
+      })
+      .error(function(response){
+          alert(response);
+          $location.path('/account/login');
+      }
+  );
+
+  // Set local scope to persisted user data
+  $scope.user = $localStorage;
+
+  // Disable hitting enter to submit
+  $(document).on("keypress", ":input:not(textarea)", function(event) {
+      return event.keyCode != 13;
+  });
+  
+  // Experience related methods
+  if ($scope.user.experiences == undefined){
+    $scope.user.experiences = [
+                 {id:'1', company:"", role:"", description:"", startdate:"", enddate:""}
+                ]
+  }
+
+  $scope.formExperiences= $.extend(true,[],$scope.user.experiences);
+
+
+  $scope.removeExperience = function(experience_id){
+    $scope.formExperiences = $scope.formExperiences.filter(e => e.id !== experience_id)
+  }
+
+  $scope.addExperience = function(){
+    $scope.formExperiences.push({id: $scope.formExperiences.length,  company:"", role:"", description:"", startdate:"", enddate:""});
+
+  }
+
+  // Education related methods
+  if ($scope.user.educations == undefined){
+    $scope.user.educations = [
+                 {id:'1', degree:"", institute:"", description:"", startdate:"", enddate:""}
+                ]
+  }
+
+  $scope.formEducations = $.extend(true,[],$scope.user.educations);
+
+  $scope.removeEducation = function(education_id){
+    $scope.formEducations = $scope.formEducations.filter(e => e.id !== education_id)
+  }
+
+  $scope.addEducation = function(){
+    $scope.formEducations.push({id: $scope.formEducations.length, degree:"", institute:"", description:"", startdate:"", enddate:""});
+  }
+
+  // Skill PillBox methods
+  if ($scope.user.skills == undefined){
+    $scope.user.skills = []
+  }
+
+  $scope.formSkills= $.extend(true,[],$scope.user.skills);
+
+
+  $('#skillPillbox').pillbox();
+
+  $('#skillPillbox').pillbox('addItems', $scope.formSkills);
+
+  // Form submission related methods
+
+  $scope.back = function() {
+    $scope.user.quiz.activeSection = 3;
+    $location.path('/quiz');
+  }
+
+  $scope.submitForm = function() {
+    $scope.user.experiences = $scope.formExperiences;
+    $scope.user.educations = $scope.formEducations;
+
+    // Remove Duplicates from PillBox
+    skillpills = $('#skillPillbox').pillbox('items');
+    var unique_skills = {};
+
+    for ( var i=0, len=skillpills.length; i < len; i++ )
+        unique_skills[skillpills[i]['value']] = skillpills[i];
+
+    finalskillpills = new Array();
+    for ( var key in unique_skills )
+        finalskillpills.push(unique_skills[key]);
+
+    $scope.user.skills = finalskillpills;
+    $scope.user.quiz.activeSection = 4;
+    $location.path('/');
+  }
+
+});
+
+
 
 /*********************************
  Routing
@@ -910,6 +1015,13 @@ app.config(function($routeProvider) {
             templateUrl: 'views/jobseeker_job_view.html',
             controller: 'JobseekerJobViewController'
         }).
+
+        //Job Poster Post Job Page
+        when('/post/job', {
+            templateUrl: 'views/jobposter_post_job.html',
+            controller: 'JobposterPostJobController'
+        }).
+
 
         //Create Account page
         when('/account/create', {

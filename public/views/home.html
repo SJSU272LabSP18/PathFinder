@@ -91,6 +91,14 @@
         <strong>Heads Up!</strong> You have some unfinished tasks! See the dashboard <a href="#/quiz">Click Here!</a>
     </div>
 </div>
+<div class="alert alert-warning" role="alert" ng-show="user.status">
+    <div class="container">
+        <div class="alert-icon">
+            <i class="now-ui-icons ui-1_bell-53"></i>
+        </div>
+        <strong>Heads Up!</strong> Post a job! <a href="#/post/job">Click Here!</a>
+    </div>
+</div>
 <div class="row" ng-show="user.status">
     <div class="jumbotron">
         <h2>Welcome, {{user.user.firstname}} {{user.user.lastname}}!</h2>

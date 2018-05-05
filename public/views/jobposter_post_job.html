@@ -1,0 +1,250 @@
+<!--jobseeker_job_view.html-->
+<div class="row" id="header">
+  <div class="col-md-12">
+      <h2>Post Joblisting</h2>
+  </div>
+</div>
+
+<div class="card container">
+
+  <div class="card-body">
+
+    <h2>Tell us about the job you're posting! </h2>
+    <form class="form-horizontal needs-validation"  novalidate ng-submit="submitForm()" name="jobpostForm" novalidate>
+      <fieldset>
+
+        <!-- Job Title -->
+        <div class="row">
+          <label>Job Title:</label><br>
+          <input name="jobTitle"  class="form-control" ng-model="jobpost.title" type="text" required>
+        </div>
+        <div class="row">
+          <label>Company Name:</label><br>
+          <input name="companyName"  class="form-control" ng-model="jobpost.company" type="text" required>
+        </div>
+        <div class="row" ng-class="{'has-success': jobpostForm.summary.$valid}">
+          <label>Provide a brief meaningful summary: </label><br>
+          <textarea class="form-control" ng-model="jobpost.summary" rows="3" placeholder="Enter a brief meaningful summary" name="summary" required wordcount-validate="5"></textarea>
+          <span ng-hide="jobpostForm.summary.$valid">Minimum # of words needed: {{jobpostForm.summary.$viewValue|wordCounter}}/5</span>
+          <span ng-show="jobpostForm.summary.$valid">Word requirement met!</span>
+        </div>
+        <br>
+
+        <!-- Persona Options -->
+        <div class="row">
+            <label>Who would this job cater to?</label>
+            <div class="d-none d-md-block">
+            <ul class="nav nav-tabs justify-content-center image_section form-group" id="personas" role="tablist">
+                <li class="nav-item col-sm-12 col-md-4 col-lg-2">
+                    <a class="nav-link active" data-toggle="tab" id="intern" data-target="#option1" role="tab">
+                      <img src="assets/img/placeholderimg.png" alt="Thumbnail Image" class="rounded-circle img-raised d-none d-md-block">
+                      <p>Student Looking for Internship</p>
+                    </a>
+                </li>
+                <li class="nav-item col-sm-12 col-md-4 col-lg-2">
+                    <a class="nav-link" data-toggle="tab" id="new_grad" data-target="#option2" role="tab">
+                      <img src="assets/img/placeholderimg.png" alt="Thumbnail Image" class="rounded-circle img-raised d-none d-md-block">
+                      <p>Fresh College Grad</p>
+                    </a>
+                </li>
+                <li class="nav-item col-sm-12 col-md-4 col-lg-2">
+                    <a class="nav-link" data-toggle="tab" id="unemployed" data-target="#option3" role="tab">
+                      <img src="assets/img/placeholderimg.png" alt="Thumbnail Image" class="rounded-circle img-raised d-none d-md-block">
+                      <p>Person with little to no experience (< 1 Year)</p>
+                    </a>
+                </li>
+                <li class="nav-item col-sm-12 col-md-4 col-lg-2">
+                    <a class="nav-link" data-toggle="tab" id="fresher" data-target="#option4" role="tab">
+                      <img src="assets/img/placeholderimg.png" alt="Thumbnail Image" class="rounded-circle img-raised d-none d-md-block">
+                      <p>Person with around 1-3 Years experience</p>
+                    </a>
+                </li>
+                <li class="nav-item col-sm-12 col-md-4 col-lg-2">
+                    <a class="nav-link" data-toggle="tab" id="experienced" data-target="#option5" role="tab">
+                      <img src="assets/img/placeholderimg.png" alt="Thumbnail Image" class="rounded-circle img-raised d-none d-md-block">
+                      <p>Person with 3+ Years experience</p>
+                    </a>
+                </li>
+                <li class="nav-item col-sm-12 col-md-4 col-lg-2">
+                    <a class="nav-link" data-toggle="tab" id="other" data-target="#option6" role="tab">
+                      <img src="assets/img/placeholderimg.png" alt="Thumbnail Image" class="rounded-circle img-raised d-none d-md-block">
+                      <p>Other</p>
+                    </a>
+                </li>
+            </ul>
+          </div>
+          <select class="form-control d-md-none" id="tab_selector">
+              <option value="0">Student Looking for Internship</option>
+              <option value="1">A Fresh College Grad</option>
+              <option value="2">Little to no experience (< 1 Year)</option>
+              <option value="3">1-3 Years Experience</option>
+              <option value="4">3+ Years Experience</option>
+              <option value="5">Other</option>
+          </select>
+        </div>
+        <div class="tab-content text-center">
+            <div class="tab-pane active" id="option1" role="tabpanel">
+                <h4>Student Looking for Internship</h4>
+                <div class="offset-sm-3 col-sm-6 d-md-none">
+                  <img src="assets/img/placeholderimg.png" alt="Thumbnail Image" class="rounded-circle img-raised">
+                </div>
+                <p>
+                  This job would be perfect for a student looking for an internship!
+                </p>
+            </div>
+            <div class="tab-pane" id="option2" role="tabpanel">
+                <h4>A Fresh College Grad</h4>
+                <div class="offset-sm-3 col-sm-6 d-md-none">
+                  <img src="assets/img/placeholderimg.png" alt="Thumbnail Image" class="rounded-circle img-raised">
+                </div>
+                <p>
+                  This job would be awesome for a fresh graduate from a University/Credential program.
+                </p>
+            </div>
+            <div class="tab-pane" id="option3" role="tabpanel">
+                <h4>Little to no experience (< 1 Year)</h4>
+                <div class="offset-sm-3 col-sm-6 d-md-none">
+                  <img src="assets/img/placeholderimg.png" alt="Thumbnail Image" class="rounded-circle img-raised">
+                </div>
+                <p>
+                  A person with little to no experience would be suitable for this role, this is as an opportunity for them to grow!
+                </p>
+            </div>
+            <div class="tab-pane" id="option4" role="tabpanel">
+                <h4>3+ Years Experience</h4>
+                <div class="offset-sm-3 col-sm-6 d-md-none">
+                  <img src="assets/img/placeholderimg.png" alt="Thumbnail Image" class="rounded-circle img-raised">
+                </div>
+                <p>
+                  Looking for a person that has some experience but is relatively early in their career!
+                </p>
+            </div>
+            <div class="tab-pane" id="option5" role="tabpanel">
+                <h4>3+ Years Experience</h4>
+                <div class="offset-sm-3 col-sm-6 d-md-none">
+                  <img src="assets/img/placeholderimg.png" alt="Thumbnail Image" class="rounded-circle img-raised">
+                </div>
+                <p>
+                  Somebody with 3 or more years experience would be perfect!
+                </p>
+            </div>
+            <div class="tab-pane" id="option6" role="tabpanel">
+              <h2>Other</h2>
+              <div class="offset-sm-3 col-sm-6 d-md-none">
+                <img src="assets/img/placeholderimg.png" alt="Thumbnail Image" class="rounded-circle img-raised">
+              </div>
+              <p>
+                Other, please specify!
+              </p>
+            </div>
+        </div>
+        <br>
+
+
+        <!-- Industry Options -->
+        <div class="row">
+            <label>What type of job is this specifically?</label>
+            <div class="d-none d-md-block">
+              <ul class="nav nav-tabs justify-content-center image_section form-group" id="industries" role="tablist">
+                  <li class="nav-item col-sm-12 col-md-4 col-lg-2">
+                      <a class="nav-link active" data-toggle="tab" id="software_engineering" data-target="#industry1" role="tab">
+                        <img src="assets/img/placeholderimg2.png" alt="Thumbnail Image" class="rounded-circle img-raised d-none d-md-block">
+                        <p>Software Engineering</p>
+                      </a>
+                  </li>
+                  <li class="nav-item col-sm-12 col-md-4 col-lg-2">
+                      <a class="nav-link" data-toggle="tab" id="office_assistant" data-target="#industry2" role="tab">
+                        <img src="assets/img/placeholderimg2.png" alt="Thumbnail Image" class="rounded-circle img-raised d-none d-md-block">
+                        <p>Office Assistant</p>
+                      </a>
+                  </li>
+                  <li class="nav-item col-sm-12 col-md-4 col-lg-2">
+                      <a class="nav-link" data-toggle="tab" id="electrician" data-target="#industry3" role="tab">
+                        <img src="assets/img/placeholderimg2.png" alt="Thumbnail Image" class="rounded-circle img-raised d-none d-md-block">
+                        <p>Electrician</p>
+                      </a>
+                  </li>
+                  <li class="nav-item col-sm-12 col-md-4 col-lg-2">
+                      <a class="nav-link disabled" data-toggle="tab" role="tab">
+                        <img src="assets/img/placeholderimg2.png" alt="Thumbnail Image" class="rounded-circle img-grayscale img-raised d-none d-md-block">
+                        <p>More Coming Soon</p>
+                      </a>
+                  </li>
+              </ul>
+            </div>
+            <select class="form-control d-md-none" id="tab_selector">
+                <option value="0">Software Engineering</option>
+                <option value="1">Office Assistant</option>
+                <option value="2">Electrician</option>
+            </select>
+        </div>
+        <div class="tab-content text-center">
+            <div class="tab-pane active" id="industry1" role="tabpanel">
+                <h4>Software Engineering</h4>
+                <div class="offset-sm-3 col-sm-6 d-md-none">
+                  <img src="assets/img/placeholderimg2.png" alt="Thumbnail Image" class="rounded-circle img-raised">
+                </div>
+                <p>
+                  Software engineers apply the principles and techniques of computer science, engineering, and mathematical analysis to the design, development, testing, and evaluation of the software and the systems that enable computers to perform their many applications.
+                </p>
+            </div>
+            <div class="tab-pane" id="industry2" role="tabpanel">
+                <h4>Office Assistant</h4>
+                <div class="offset-sm-3 col-sm-6 d-md-none">
+                  <img src="assets/img/placeholderimg2.png" alt="Thumbnail Image" class="rounded-circle img-raised">
+                </div>
+                <p>
+                  Office assistants' job duties usually include tasks like typing, filing, taking inventory, keeping records and sorting checks. They may also prepare documents, process mail and answer telephones.                        </p>
+            </div>
+            <div class="tab-pane" id="industry3" role="tabpanel">
+                <h4>Electrician</h4>
+                <div class="offset-sm-3 col-sm-6 d-md-none">
+                  <img src="assets/img/placeholderimg2.png" alt="Thumbnail Image" class="rounded-circle img-raised">
+                </div>
+                <p>
+                  An electrician is a tradesman specializing in electrical wiring of buildings, stationary machines, and related equipment. Electricians may be employed in the installation of new electrical components or the maintenance and repair of existing electrical infrastructure.
+                </p>
+            </div>
+        </div>
+        <br>
+
+        <!-- Skills -->
+        <div class="row">
+          <label>What are the skills necessary for this job?</label><br>
+        </div>
+        <div class="fuelux">
+          <div class="pillbox" data-initialize="pillbox" id="skillPillbox">
+            <ul class="clearfix pill-group">
+              <li class="pillbox-input-wrap btn-group">
+                <a class="pillbox-more">and <span class="pillbox-more-count"></span> more...</a>
+                <input type="text" class="form-control dropdown-toggle pillbox-add-item" placeholder="add item">
+              </li>
+            </ul>
+          </div>
+        </div>
+        <br>
+
+        <!-- Description -->
+        <div class="row" ng-class="{'has-success': jobpostForm.description.$valid}">
+          <label>Provide a more thorough job description:</label><br>
+          <textarea class="form-control" name="description" ng-model="jobpost.description" rows="10" placeholder="Enter thorough job description here!" required wordcount-validate="5"></textarea>
+          <span ng-hide="jobpostForm.description.$valid">Minimum # of words needed: {{jobpostForm.description.$viewValue|wordCounter}}/5</span>
+          <span ng-show="jobpostForm.description.$valid">Word requirement met!</span>
+        </div>
+        <br>
+
+        <!-- Submission -->
+        <div class="form-group">
+          <button class="btn btn-default" ng-click="back()">Back</button>
+          <button class="btn btn-primary" ng-disabled="jobpostForm.$invalid" type="submit">Update</button>
+        </div>
+
+      </fieldset>
+    </form>
+    <!-- End Resume Card -->
+
+  </div>
+
+</div>
+
+<!--/jobseeker_job_view.html-->
