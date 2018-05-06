@@ -83,34 +83,27 @@
 
 
 <!-- When User Is Logged in -->
-<div class="alert alert-warning" role="alert" ng-show="user.status">
+<div class="alert alert-warning" role="alert" ng-show="user.status && user.user.role == 'Jobseeker'">
     <div class="container">
         <div class="alert-icon">
             <i class="now-ui-icons ui-1_bell-53"></i>
         </div>
-        <strong>Heads Up!</strong> You have some unfinished tasks! See the dashboard <a href="#/quiz">Click Here!</a>
+        <strong>Heads Up!</strong> Before you can do any job searching you must answer our quiz!<a href="#/quiz">Click Here!</a>
     </div>
 </div>
-<div class="alert alert-warning" role="alert" ng-show="user.status">
+<div class="alert alert-warning" role="alert" ng-show="user.status && user.user.role == 'Jobposter'">
     <div class="container">
         <div class="alert-icon">
             <i class="now-ui-icons ui-1_bell-53"></i>
         </div>
-        <strong>Heads Up!</strong> Post a job! <a href="#/post/job">Click Here!</a>
+        <strong>Heads Up!</strong> Post a job by clicking here! <a href="#/post/job">Click Here!</a>
     </div>
 </div>
 <div class="row" ng-show="user.status">
     <div class="jumbotron">
         <h2>Welcome, {{user.user.firstname}} {{user.user.lastname}}!</h2>
         <p>You are a {{user.user.role}}.</p>
-        <p>You're logged in! The homepage is different when logged in</p>
-    </div>
-</div>
-
-<div class="row" ng-show="user.status">
-    <div class="jumbotron">
-        <h2>Welcome</h2>
-        <p>Persona:  {{user.persona}} person <br>Industry: {{user.industry}}</p>
+        <p>You're logged in! Feel free to look around.</p>
     </div>
 </div>
 

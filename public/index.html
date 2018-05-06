@@ -52,9 +52,9 @@
                           </a>
                       </li>
                       <li class="nav-item">
-                          <a class="nav-link" href="#/protected" ng-show="user.status">
-                              <i class="now-ui-icons files_paper"></i>
-                              <p>User Content</p>
+                          <a class="nav-link" href="#/jobseeker/jobs" ng-show="user.status && user.user.role=='Jobposter'">
+                              <i class="fa fa-briefcase"></i>
+                              <p>My Job Posts</p>
                           </a>
                       </li>
                       <li class="nav-item">
