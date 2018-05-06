@@ -9,6 +9,13 @@
 
 form label {font-weight:bold}
 
+.link
+{
+   color:aqua;
+   text-decoration: none;
+   background-color: none;
+}
+
 .down-arrow{
   position: fixed;
   bottom: 0;

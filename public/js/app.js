@@ -392,6 +392,7 @@ app.controller('QuizPersonaController', function($scope, $localStorage, $session
         url: '/quiz/persona',
         data: {
                 'username': $scope.user.user.username,
+                'email': $scope.user.user.email,
                 'persona': $scope.user.persona
             }
         })
@@ -1139,6 +1140,7 @@ app.controller('JobposterPostJobController', function($scope, $localStorage, $se
         url: '/post/job',
         data: {
                 'username': $scope.user.user.username,
+                'email': $scope.user.user.email,
                 'title': $scope.user.jobpost.title,
                 'company': $scope.user.jobpost.company,
                 'logourl': $scope.user.jobpost.logourl,

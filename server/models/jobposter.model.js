@@ -11,6 +11,7 @@ var mongoose = require('mongoose'),
  ********************************/
 var questionsSchema = new mongoose.Schema({
     username: {type: String, required: true},
+    email: {type: String, required: true, unique: true},
     title: {type: String},
     company: {type: String},
     logourl: {type: String},

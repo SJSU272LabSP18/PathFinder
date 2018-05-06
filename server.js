@@ -316,6 +316,7 @@ app.post('/quiz/persona', authorizeRequest, function(req,res){
 
     // 1. Input validation. Front end validation exists, but this functions as a fail-safe
     req.checkBody('username', 'Username is required').notEmpty();
+    req.checkBody('email', 'Email is required').notEmpty();
     req.checkBody('persona', 'Persona is required').notEmpty();
 
     var errors = req.validationErrors(); // returns an object with results of validation check
@@ -335,6 +336,7 @@ app.post('/quiz/persona', authorizeRequest, function(req,res){
           // Create new object that store's new user data
           var user = new Jobseeker({
               username: req.body.username,
+              email: req.body.email,
               persona: req.body.persona
           });
         }
@@ -694,6 +696,7 @@ app.post('/post/job', authorizeRequest, function(req,res){
 
     // 1. Input validation. Front end validation exists, but this functions as a fail-safe
     req.checkBody('username', 'Username is required').notEmpty();
+    req.checkBody('email', 'Email is required').notEmpty();
     req.checkBody('title', 'Title is required').notEmpty();
     req.checkBody('company', 'Company is required').notEmpty();
     req.checkBody('summary', 'Summary is required').notEmpty();
@@ -717,9 +720,10 @@ app.post('/post/job', authorizeRequest, function(req,res){
         res.status(400).send(errors);
         return;
     }
-    // 3. Create new object that store's new user data
+    // 2. Create new object that store's new user data
     var jobpost = new Jobposter({
         username: req.body.username,
+        email: req.body.email,
         title: req.body.title,
         company: req.body.company,
         logourl: req.body.logourl,
