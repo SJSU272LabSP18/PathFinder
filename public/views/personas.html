@@ -29,27 +29,21 @@
                       </a>
                   </li>
                   <li class="nav-item col-sm-12 col-md-4 col-lg-2">
-                      <a class="nav-link" data-toggle="tab" id="fresher" data-target="#option3" role="tab">
+                      <a class="nav-link" data-toggle="tab" id="0-2years" data-target="#option3" role="tab">
                         <img src="assets/img/placeholderimg.png" alt="Thumbnail Image" class="rounded-circle img-raised d-none d-md-block">
-                        <p>1-3 Years Experience</p>
+                        <p>0-2 Years Experience</p>
                       </a>
                   </li>
                   <li class="nav-item col-sm-12 col-md-4 col-lg-2">
-                      <a class="nav-link" data-toggle="tab" id="experienced" data-target="#option4" role="tab">
+                      <a class="nav-link" data-toggle="tab" id="2-6years" data-target="#option4" role="tab">
                         <img src="assets/img/placeholderimg.png" alt="Thumbnail Image" class="rounded-circle img-raised d-none d-md-block">
-                        <p>3+ Years Experience</p>
+                        <p>2-6 Years Experience</p>
                       </a>
                   </li>
                   <li class="nav-item col-sm-12 col-md-4 col-lg-2">
-                      <a class="nav-link" data-toggle="tab" id="unemployed" data-target="#option5" role="tab">
+                      <a class="nav-link" data-toggle="tab" id="6+years" data-target="#option5" role="tab">
                         <img src="assets/img/placeholderimg.png" alt="Thumbnail Image" class="rounded-circle img-raised d-none d-md-block">
-                        <p>Unemployed (Long-Term)</p>
-                      </a>
-                  </li>
-                  <li class="nav-item col-sm-12 col-md-4 col-lg-2">
-                      <a class="nav-link" data-toggle="tab" id="other" data-target="#option6" role="tab">
-                        <img src="assets/img/placeholderimg.png" alt="Thumbnail Image" class="rounded-circle img-raised d-none d-md-block">
-                        <p>Other</p>
+                        <p>6+ Years experience</p>
                       </a>
                   </li>
               </ul>
@@ -57,10 +51,9 @@
             <select class="form-control d-md-none" id="tab_selector">
                 <option value="0">Looking For Internship</option>
                 <option value="1">New College Grad</option>
-                <option value="2">1-3 Years Experience</option>
-                <option value="3">3+ Years Experience</option>
-                <option value="4">Unemployed (Long-Term)</option>
-                <option value="5">Other</option>
+                <option value="2">0-2 Years Experience</option>
+                <option value="3">2-6 Years Experience</option>
+                <option value="4">6+ Years Experience</option>
             </select>
             <!--/ Persona Options -->
             <div class="card-body">
@@ -85,40 +78,31 @@
                         </p>
                     </div>
                     <div class="tab-pane" id="option3" role="tabpanel">
-                        <h2>1-3 Years Experience</h2>
+                        <h2>0-2 Years Experience</h2>
                         <div class="offset-sm-3 col-sm-6 d-md-none">
                           <img src="assets/img/placeholderimg.png" alt="Thumbnail Image" class="rounded-circle img-raised">
                         </div>
                         <p>
-                          I have some experience and am looking to change jobs.
+                          I have little to no experience and am looking for a job!
                         </p>
                     </div>
                     <div class="tab-pane" id="option4" role="tabpanel">
-                        <h2>3+ Years Experience</h2>
+                        <h2>2-6 Years Experience</h2>
+                        <div class="offset-sm-3 col-sm-6 d-md-none">
+                          <img src="assets/img/placeholderimg.png" alt="Thumbnail Image" class="rounded-circle img-raised">
+                        </div>
+                        <p>
+                          I have a good amount of experience and am looking to swith roles!
+                        </p>
+                    </div>
+                    <div class="tab-pane" id="option5" role="tabpanel">
+                        <h2>6+ Years Experience</h2>
                         <div class="offset-sm-3 col-sm-6 d-md-none">
                           <img src="assets/img/placeholderimg.png" alt="Thumbnail Image" class="rounded-circle img-raised">
                         </div>
                         <p>
                           I have plenty of experience and am looking to move to another job. I know the ins and outs of my area.
                         </p>
-                    </div>
-                    <div class="tab-pane" id="option5" role="tabpanel">
-                        <h2>Unemployed (Long-Term)</h2>
-                        <div class="offset-sm-3 col-sm-6 d-md-none">
-                          <img src="assets/img/placeholderimg.png" alt="Thumbnail Image" class="rounded-circle img-raised">
-                        </div>
-                        <p>
-                          I've been unemployed long term and looking for a new job. Because of circumstances I've been out of the workforce (i.e. being a stay at home parent, having difficulty finding a job, etc) for a while.
-                        </p>
-                    </div>
-                    <div class="tab-pane" id="option6" role="tabpanel">
-                      <h2>Other</h2>
-                      <div class="offset-sm-3 col-sm-6 d-md-none">
-                        <img src="assets/img/placeholderimg.png" alt="Thumbnail Image" class="rounded-circle img-raised">
-                      </div>
-                      <p>
-                        I'm looking to change jobs to a completely different area!
-                      </p>
                     </div>
                     <div class="form-group">
                       <button class="btn btn-default" ng-click="cancel()">Cancel</button>
