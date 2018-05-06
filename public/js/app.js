@@ -942,6 +942,7 @@ app.controller('JobseekerJobViewController', function($scope, $localStorage, $lo
 
 });
 
+
 //
 //
 // Job Poster Specific controls
@@ -972,14 +973,105 @@ app.controller('JobposterPostJobController', function($scope, $localStorage, $se
       return event.keyCode != 13;
   });
 
+  $('#tab_selector_personas').on('change', function (e) {
+	    $('#personas li a').eq($(this).val()).tab('show');
+	});
+
+  $('#tab_selector_industry').on('change', function (e) {
+      $('#industries li a').eq($(this).val()).tab('show');
+  });
+
+
   // Create job dict
   $scope.user.jobpost = {}
   $scope.user.jobpost.skills = []
 
+  // Init Sliders
+  var slider1 = document.getElementById('emotionalSlider');
+  noUiSlider.create(slider1,{
+  	start: 50,
+  	connect: "lower",
+  	range: {
+  	    min: 0,
+  	    max: 100
+  	}
+  });
+
+
+  var slider2 = document.getElementById('extrovertSlider');
+  noUiSlider.create(slider2,{
+  	start: 50,
+  	connect: "lower",
+  	range: {
+  	    min: 0,
+  	    max: 100
+  	}
+  });
+
+  var slider3 = document.getElementById('unplannedSlider');
+  noUiSlider.create(slider3,{
+  	start: 50,
+  	connect: "lower",
+  	range: {
+  	    min: 0,
+  	    max: 100
+  	}
+  });
+
+  var slider4 = document.getElementById('orgSlider');
+  noUiSlider.create(slider4,{
+  	start: 50,
+  	connect: "lower",
+  	range: {
+  	    min: 0,
+  	    max: 100
+  	}
+  });
+
+  var slider5 = document.getElementById('growthSlider');
+  noUiSlider.create(slider5,{
+  	start: 50,
+  	connect: "lower",
+  	range: {
+  	    min: 0,
+  	    max: 100
+  	}
+  });
+
+  var slider6 = document.getElementById('challengeSlider');
+  noUiSlider.create(slider6,{
+  	start: 50,
+  	connect: "lower",
+  	range: {
+  	    min: 0,
+  	    max: 100
+  	}
+  });
+
+  var slider7 = document.getElementById('noveltySlider');
+  noUiSlider.create(slider7,{
+  	start: 50,
+  	connect: "lower",
+  	range: {
+  	    min: 0,
+  	    max: 100
+  	}
+  });
+
+  var slider8 = document.getElementById('helpSlider');
+  noUiSlider.create(slider8,{
+  	start: 50,
+  	connect: "lower",
+  	range: {
+  	    min: 0,
+  	    max: 100
+  	}
+  });
 
   // Skill Pillbox Init
   $('#skillPillbox').pillbox();
 
+  $('#perkPillbox').pillbox();
 
   // Form submission related methods
   $scope.cancel = function() {
@@ -989,9 +1081,15 @@ app.controller('JobposterPostJobController', function($scope, $localStorage, $se
   $scope.submitForm = function() {
     $scope.user.jobpost.title = $scope.jobpost.title;
     $scope.user.jobpost.company = $scope.jobpost.company;
+    $scope.user.jobpost.logourl = $scope.jobpost.logourl;
     $scope.user.jobpost.summary = $scope.jobpost.summary;
+    $scope.user.jobpost.description = $scope.jobpost.description;
+    $scope.user.jobpost.city = $scope.jobpost.city;
+    $scope.user.jobpost.state = $scope.jobpost.state;
+    $scope.user.jobpost.persona =  $("#personas a.active").attr("id");
+    $scope.user.jobpost.industry = $("#industries a.active").attr("id");
 
-    // Remove Duplicates from PillBox
+    // Remove Duplicates from Skill PillBox
     skillpills = $('#skillPillbox').pillbox('items');
     var unique_skills = {};
 
@@ -1002,7 +1100,63 @@ app.controller('JobposterPostJobController', function($scope, $localStorage, $se
     for ( var key in unique_skills )
         finalskillpills.push(unique_skills[key]);
 
+    // Remove Duplicates from Perk PillBox
+    perkpills = $('#perkPillbox').pillbox('items');
+    var unique_perks = {};
+
+    for ( var i=0, len=perkpills.length; i < len; i++ )
+        unique_perks[perkpills[i]['value']] = perkpills[i];
+
+    finalperkpills = [];
+    for ( var key in unique_perks )
+        finalperkpills.push(unique_perks[key]);
+
     $scope.user.jobpost.skills = finalskillpills;
+    $scope.user.jobpost.perks = finalperkpills;
+    $scope.user.jobpost.emotionalSlider = $('#emotionalSlider')[0].noUiSlider.get();
+    $scope.user.jobpost.extrovertSlider = $('#extrovertSlider')[0].noUiSlider.get();
+    $scope.user.jobpost.unplannedSlider = $('#unplannedSlider')[0].noUiSlider.get();
+    $scope.user.jobpost.orgSlider = $('#orgSlider')[0].noUiSlider.get();
+    $scope.user.jobpost.growthSlider = $('#growthSlider')[0].noUiSlider.get();
+    $scope.user.jobpost.challengeSlider = $('#challengeSlider')[0].noUiSlider.get();
+    $scope.user.jobpost.noveltySlider = $('#noveltySlider')[0].noUiSlider.get();
+    $scope.user.jobpost.helpSlider = $('#helpSlider')[0].noUiSlider.get();
+
+
+    console.log($scope.user.jobpost);
+
+    $http({
+        method: 'POST',
+        url: '/post/job',
+        data: {
+                'username': $scope.user.user.username,
+                'title': $scope.user.jobpost.title,
+                'logourl': $scope.user.jobpost.logourl,
+                'summary': $scope.user.jobpost.summary,
+                'description': $scope.user.jobpost.description,
+                'city': $scope.user.jobpost.city,
+                'state': $scope.user.jobpost.state,
+                'persona': $scope.user.jobpost.persona,
+                'industry': $scope.user.jobpost.industry,
+                'skills': $scope.user.jobpost.skills,
+                'perks': $scope.user.jobpost.perks,
+                'emotionalSlider': $scope.user.jobpost.emotionalSlider,
+                'extrovertSlider': $scope.user.jobpost.extrovertSlider,
+                'unplannedSlider': $scope.user.jobpost.unplannedSlider,
+                'orgSlider': $scope.user.jobpost.orgSlider,
+                'growthSlider': $scope.user.jobpost.growthSlider,
+                'challengeSlider': $scope.user.jobpost.challengeSlider,
+                'noveltySlider': $scope.user.jobpost.noveltySlider,
+                'helpSlider':$scope.user.jobpost.helpSlider
+
+            }
+        })
+        .success(function(response){
+          alert(response);
+          $location.path('/');
+        })
+
+    return;
     $location.path('/');
   }
 

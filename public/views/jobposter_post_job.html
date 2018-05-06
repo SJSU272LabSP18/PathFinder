@@ -27,6 +27,12 @@
           </div>
         </div>
         <div class="row">
+          <div class="col-12">
+            <label>Company Logo (URL Only):</label><br>
+            <input name="companyLogo"  class="form-control" ng-model="jobpost.logourl" type="text">
+          </div>
+        </div>
+        <div class="row">
           <div class="col-6">
             <label>City:</label><br>
             <input name="companyCity"  class="form-control" ng-model="jobpost.city" type="text" required>
@@ -36,6 +42,14 @@
             <input name="companyState"  class="form-control" ng-model="jobpost.state" type="text" required>
           </div>
         </div>
+        <!-- Description -->
+        <div class="row" ng-class="{'has-success': jobpostForm.summary.$valid}">
+          <label>Provide a brief meaninful job summary:</label><br>
+          <textarea class="form-control" name="summary" ng-model="jobpost.summary" rows="5" placeholder="Enter meaninful job summary here!" required wordcount-validate="5"></textarea>
+          <span ng-hide="jobpostForm.summary.$valid">Minimum # of words needed: {{jobpostForm.summary.$viewValue|wordCounter}}/5</span>
+          <span ng-show="jobpostForm.summary.$valid">Word requirement met!</span>
+        </div>
+        <br>
         <br>
 
         <!-- Persona Options -->
@@ -75,7 +89,7 @@
                 </li>
             </ul>
           </div>
-          <select class="form-control d-md-none" id="tab_selector">
+          <select class="form-control d-md-none" id="tab_selector_personas">
               <option value="0">Student Looking for Internship</option>
               <option value="1">A Fresh College Grad</option>
               <option value="2">0-2 Years Experience</option>
@@ -129,15 +143,6 @@
                   Somebody with 6 or more years experience would be perfect!
                 </p>
             </div>
-            <div class="tab-pane" id="option6" role="tabpanel">
-              <h2>Other</h2>
-              <div class="offset-sm-3 col-sm-6 d-md-none">
-                <img src="assets/img/placeholderimg.png" alt="Thumbnail Image" class="rounded-circle img-raised">
-              </div>
-              <p>
-                Other, please specify!
-              </p>
-            </div>
         </div>
         <br>
 
@@ -167,7 +172,7 @@
                   </li>
               </ul>
             </div>
-            <select class="form-control d-md-none" id="tab_selector">
+            <select class="form-control d-md-none" id="tab_selector_industry">
                 <option value="0">Software Engineering</option>
                 <option value="1">Office Assistant</option>
             </select>
@@ -202,7 +207,23 @@
             <ul class="clearfix pill-group">
               <li class="pillbox-input-wrap btn-group">
                 <a class="pillbox-more">and <span class="pillbox-more-count"></span> more...</a>
-                <input type="text" class="form-control dropdown-toggle pillbox-add-item" placeholder="add item">
+                <input type="text" class="form-control dropdown-toggle pillbox-add-item" placeholder="add skill">
+              </li>
+            </ul>
+          </div>
+        </div>
+        <br>
+
+        <!-- Skills -->
+        <div class="row">
+          <label>What are some perks for this position?</label><br>
+        </div>
+        <div class="fuelux">
+          <div class="pillbox" data-initialize="pillbox" id="perkPillbox">
+            <ul class="clearfix pill-group">
+              <li class="pillbox-input-wrap btn-group">
+                <a class="pillbox-more">and <span class="pillbox-more-count"></span> more...</a>
+                <input type="text" class="form-control dropdown-toggle pillbox-add-item" placeholder="add perk">
               </li>
             </ul>
           </div>
@@ -219,10 +240,62 @@
         <br>
 
 
+        <!-- Personality Sliders -->
+        <label>Personality Sliders</label>
+        <br>
+        <br>
+        <div class="col-12">
+            <label>How emotionally demanding is this job?</label><br>
+            <div id="emotionalSlider" class="slider slider-primary"></div>
+        </div>
+        <br>
+        <br>
+        <div class="col-12">
+            <label>What level of extraversion is ideal for this job?</label><br>
+            <div id="extrovertSlider" class="slider slider-primary"></div>
+        </div>
+        <br>
+        <br>
+        <div class="col-12">
+            <label>How often do unplanned or unexpected tasks come up?</label><br>
+            <div id="unplannedSlider" class="slider slider-primary"></div>
+        </div>
+        <br>
+        <br>
+        <div class="col-12">
+            <label>Does the job have organization, planning, and things that have a clear purpose?</label><br>
+            <div id="orgSlider" class="slider slider-primary"></div>
+        </div>
+        <br>
+        <br>
+        <div class="col-12">
+            <label>Does this position foster learning, exploration, and growth?</label><br>
+            <div id="growthSlider" class="slider slider-primary"></div>
+        </div>
+        <br>
+        <br>
+        <div class="col-12">
+            <label>What level of challenge does this job offer?</label><br>
+            <div id="challengeSlider" class="slider slider-primary"></div>
+        </div>
+        <br>
+        <br>
+        <div class="col-12">
+            <label>How much novelty and excitement does the job offer?</label><br>
+            <div id="noveltySlider" class="slider slider-primary"></div>
+        </div>
+        <br>
+        <br>
+        <div class="col-12">
+            <label>How often will the job duties require helping others?</label><br>
+            <div id="helpSlider" class="slider slider-primary"></div>
+        </div>
+        <br>
+        <br>
         <!-- Submission -->
         <div class="form-group">
           <button class="btn btn-default" ng-click="cancel()">Cancel</button>
-          <button class="btn bt`n-primary" ng-disabled="jobpostForm.$invalid" type="submit">Post</button>
+          <button class="btn btn-primary" ng-disabled="jobpostForm.$invalid" type="submit">Post</button>
         </div>
 
       </fieldset>

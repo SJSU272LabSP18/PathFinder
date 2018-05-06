@@ -21,7 +21,8 @@ var express = require('express'),// server middleware
     appEnv = cfenv.getAppEnv(),// Grab environment variables
 
     User = require('./server/models/user.model'),
-    Jobseeker = require('./server/models/jobseeker.model');
+    Jobseeker = require('./server/models/jobseeker.model'),
+    Jobposter = require('./server/models/jobposter.model')
 
 
 /********************************
@@ -308,7 +309,7 @@ app.get('/account/logout', function(req,res){
 });
 
 
-// JOB POSTER STUFFS
+// JOB SEEKER STUFFS
 
 // Persona Update
 app.post('/quiz/persona', authorizeRequest, function(req,res){
@@ -572,6 +573,70 @@ app.get('/quiz/resume', authorizeRequest, function(req,res){
 
 });
 
+
+// JOB POSTER STUFFS
+
+// Post Job
+app.post('/post/job', authorizeRequest, function(req,res){
+
+    // 1. Input validation. Front end validation exists, but this functions as a fail-safe
+    req.checkBody('username', 'Username is required').notEmpty();
+    req.checkBody('title', 'Title is required').notEmpty();
+    req.checkBody('summary', 'Summary is required').notEmpty();
+    req.checkBody('city', 'City is required').notEmpty();
+    req.checkBody('state', 'State is required').notEmpty();
+    req.checkBody('persona', 'Persona is required').notEmpty();
+    req.checkBody('industry', 'Industry is required').notEmpty();
+
+    req.checkBody('emotionalSlider', 'emotionalSlider is required').notEmpty();
+    req.checkBody('extrovertSlider', 'extrovertSlider is required').notEmpty();
+    req.checkBody('unplannedSlider', 'unplannedSlider is required').notEmpty();
+    req.checkBody('orgSlider', 'orgSlider is required').notEmpty();
+    req.checkBody('growthSlider', 'growthSlider is required').notEmpty();
+    req.checkBody('challengeSlider', 'challengeSlider is required').notEmpty();
+    req.checkBody('noveltySlider', 'noveltySlider is required').notEmpty();
+    req.checkBody('helpSlider', 'helpSlider is required').notEmpty();
+
+
+    var errors = req.validationErrors(); // returns an object with results of validation check
+    if (errors) {
+        res.status(400).send(errors);
+        return;
+    }
+    // 3. Create new object that store's new user data
+    var jobpost = new Jobposter({
+        username: req.body.username,
+        title: req.body.title,
+        logourl: req.body.logourl,
+        summary: req.body.summary,
+        description: req.body.description,
+        city: req.body.city,
+        state: req.body.state,
+        persona: req.body.persona,
+        industry: req.body.industry,
+        skills: req.body.skills,
+        perks: req.body.perks,
+        emotionalSlider: req.body.emotionalSlider,
+        extrovertSlider: req.body.extrovertSlider,
+        unplannedSlider: req.body.unplannedSlider,
+        orgSlider: req.body.orgSlider,
+        growthSlider: req.body.growthSlider,
+        challengeSlider: req.body.challengeSlider,
+        noveltySlider: req.body.noveltySlider,
+        helpSlider: req.body.helpSlider
+    });
+
+    jobpost.save(function(err) {
+        if (err) {
+            console.log(err);
+            res.status(500).send('Error saving post.');
+            return;
+        }
+        res.status(200).send('Job post saved!');
+    });
+
+
+});
 
 
 // Custom middleware to check if user is logged-in
