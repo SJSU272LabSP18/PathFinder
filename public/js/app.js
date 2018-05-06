@@ -567,16 +567,25 @@ app.controller('QuizPerksController', function($scope, $localStorage, $sessionSt
 
   // GET A LIST OF ALL THE PERKS FROM DB HERE
 
-  if ($scope.user.perks == undefined){
-    $scope.user.perks = [
-                 {id:'Perk1', perk:"Food Provided", checked: false},
-                 {id:'Perk2', perk:"Transportation Provided", checked: false},
-                 {id:'Perk3', perk:"Gym Provided", checked: false},
-                 {id:'Perk4', perk:"Unlimited PTO", checked: false},
-                ]
-  }
 
-  $scope.formPerks = $.extend(true,{},$scope.user.perks);
+  // Check if user is authorized to view page
+  $http({
+      method: 'GET',
+      url: '/quiz/perks',
+      params: {
+        'username': $scope.user.user.username,
+        'persona': $scope.user.persona,
+        'industry': $scope.user.industry,
+        }
+      })
+      .success(function(response){
+          $scope.user.perks = response;
+          $scope.formPerks = $.extend(true,{},$scope.user.perks);
+
+      })
+
+
+
 
   $scope.back = function() {
     $scope.user.quiz.activeSection = 2;

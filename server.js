@@ -518,6 +518,62 @@ app.post('/quiz/perks', authorizeRequest, function(req,res){
 
 });
 
+// Get Personality
+app.get('/quiz/perks', authorizeRequest, function(req,res){
+
+
+    console.log("Username: " + req.query.username);
+    console.log("Persona: " + req.query.persona);
+    console.log("Industry: " + req.query.industry);
+
+    // 1. Get data in MongoDB
+    Promise.all(
+      [
+        Jobseeker.findOne({ username: req.query.username}, {perks: 1}),
+        Jobposter.find({persona:req.query.persona, industry: req.query.industry}, {perks:1})
+      ]
+    ).then( ([ jobseeker_perks, jobposts ]) => {
+
+      // Get list of perks from jobseeker
+      console.log(jobseeker_perks);
+
+      // Get list of perks from Job Posts
+      var unique_perks = {};
+
+      for (var job in jobposts){
+        var perks = jobposts[job].perks;
+        for (var i=0; i < perks.length; i++){
+          unique_perks[perks[i].value] = perks[i].value;
+        }
+      }
+
+      var finalperks = [];
+      for ( var key in unique_perks )
+          finalperks.push({ id: unique_perks[key], perk: unique_perks[key], checked: false} );
+
+      console.log("Final Perks");
+      console.log(finalperks);
+
+      // Intersect perks from jobs and user
+      var perks = jobseeker_perks.perks;
+      for ( var i = 0; i < perks.length; i++){
+        console.log(perks[i])
+
+        for (var j = 0; j < finalperks.length; j++){
+          if (finalperks[j].perk == perks[i].perk){
+            console.log("FOUND MATCH");
+            finalperks[j].checked = perks[i].checked;
+          }
+        }
+      }
+
+      return res.json(finalperks);
+
+    });
+
+});
+
+
 // Resume Update
 app.post('/quiz/resume', authorizeRequest, function(req,res){
 
