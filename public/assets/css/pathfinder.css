@@ -7,6 +7,8 @@
 
 }
 
+form label {font-weight:bold}
+
 .down-arrow{
   position: fixed;
   bottom: 0;

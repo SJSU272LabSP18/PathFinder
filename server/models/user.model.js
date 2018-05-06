@@ -16,7 +16,7 @@ var accountSchema = new mongoose.Schema({
     firstname: {type: String, required: true},
     lastname: {type: String, required: true},
     role: {type: String, required: true},
-    tokens: Array
+    //tokens: Array
 });
 
 // Used by Passport middleware to validate password against what is stored in DB

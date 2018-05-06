@@ -20,7 +20,8 @@ var express = require('express'),// server middleware
     cfenv = require('cfenv'),// Cloud Foundry Environment Variables
     appEnv = cfenv.getAppEnv(),// Grab environment variables
 
-    User = require('./server/models/user.model');
+    User = require('./server/models/user.model'),
+    Jobseeker = require('./server/models/jobseeker.model');
 
 
 /********************************
@@ -303,14 +304,279 @@ app.get('/account/logout', function(req,res){
             res.status(200).send('Success logging user out!');
         });
     }
+
 });
+
+
+// JOB POSTER STUFFS
+
+// Persona Update
+app.post('/quiz/persona', authorizeRequest, function(req,res){
+
+    // 1. Input validation. Front end validation exists, but this functions as a fail-safe
+    req.checkBody('username', 'Username is required').notEmpty();
+    req.checkBody('persona', 'Persona is required').notEmpty();
+
+    var errors = req.validationErrors(); // returns an object with results of validation check
+    if (errors) {
+        res.status(400).send(errors);
+        return;
+    }
+
+    // 2. Store updated data in MongoDB
+    Jobseeker.findOne({ username: req.body.username }, function(err, user) {
+        if (err) {
+            console.log(err);
+            return res.status(400).send('Error updating account.');
+        }
+
+        if (user == null){
+          // Create new object that store's new user data
+          var user = new Jobseeker({
+              username: req.body.username,
+              persona: req.body.persona
+          });
+        }
+
+        user.persona = req.body.persona;
+
+        user.save(function(err) {
+            if (err) {
+                console.log(err);
+                res.status(500).send('Error updating account.');
+                return;
+            }
+            res.status(200).send('Persona updated!');
+        });
+    });
+
+});
+
+// Get Persona
+app.get('/quiz/persona', authorizeRequest, function(req,res){
+
+    // 1. Get data in MongoDB
+    Jobseeker.findOne({ username: req.query.username}, function(err, user) {
+
+        if (user == null){
+          return res.json("intern");
+        }
+
+        return res.json(user.persona);
+    });
+
+});
+
+// Industry Update
+app.post('/quiz/industry', authorizeRequest, function(req,res){
+
+    // 1. Input validation. Front end validation exists, but this functions as a fail-safe
+    req.checkBody('username', 'Username is required').notEmpty();
+    req.checkBody('industry', 'Industry is required').notEmpty();
+
+    var errors = req.validationErrors(); // returns an object with results of validation check
+    if (errors) {
+        res.status(400).send(errors);
+        return;
+    }
+
+    // 2. Store updated data in MongoDB
+    Jobseeker.findOne({ username: req.body.username }, function(err, user) {
+        if (err) {
+            console.log(err);
+            return res.status(400).send('Error updating account.');
+        }
+        user.industry = req.body.industry;
+
+        user.save(function(err) {
+            if (err) {
+                console.log(err);
+                res.status(500).send('Error updating account.');
+                return;
+            }
+            res.status(200).send('Industry updated!');
+        });
+    });
+
+});
+
+// Get Industry
+app.get('/quiz/industry', authorizeRequest, function(req,res){
+
+    // 1. Get data in MongoDB
+    Jobseeker.findOne({ username: req.query.username}, function(err, user) {
+
+        if (user == null){
+          return;
+        }
+
+        return res.json(user.industry);
+    });
+
+});
+
+// Personality Update
+app.post('/quiz/personality', authorizeRequest, function(req,res){
+
+    // 1. Input validation. Front end validation exists, but this functions as a fail-safe
+    req.checkBody('username', 'Username is required').notEmpty();
+    req.checkBody('q1', 'Q1 is required').notEmpty();
+    req.checkBody('q2', 'Q2 is required').notEmpty();
+    req.checkBody('q3', 'Q3 is required').notEmpty();
+    req.checkBody('q4', 'Q4 is required').notEmpty();
+    req.checkBody('q5', 'Q5 is required').notEmpty();
+    req.checkBody('q6', 'Q6 is required').notEmpty();
+
+    var errors = req.validationErrors(); // returns an object with results of validation check
+    if (errors) {
+        res.status(400).send(errors);
+        return;
+    }
+
+    // 2. Store updated data in MongoDB
+    Jobseeker.findOne({ username: req.body.username }, function(err, user) {
+        if (err) {
+            console.log(err);
+            return res.status(400).send('Error updating account.');
+        }
+
+        user.username = req.body.username;
+        user.q1 = req.body.q1;
+        user.q2 = req.body.q2;
+        user.q3 = req.body.q3;
+        user.q4 = req.body.q4;
+        user.q5 = req.body.q5;
+        user.q6 = req.body.q6;
+
+        user.save(function(err) {
+            if (err) {
+                console.log(err);
+                res.status(500).send('Error updating account.');
+                return;
+            }
+            res.status(200).send('Personality questions updated!');
+        });
+    });
+
+});
+
+// Get Personality
+app.get('/quiz/personality', authorizeRequest, function(req,res){
+
+    // 1. Get data in MongoDB
+    Jobseeker.findOne({ username: req.query.username}, function(err, user) {
+
+        if (user == null){
+          return res.json(undefined);
+        }
+
+        return res.json({
+          'q1': user.q1,
+          'q2': user.q2,
+          'q3': user.q3,
+          'q4': user.q4,
+          'q5': user.q5,
+          'q6': user.q6}
+        );
+    });
+
+});
+
+
+// Perk Update
+app.post('/quiz/perks', authorizeRequest, function(req,res){
+
+    // 1. Input validation. Front end validation exists, but this functions as a fail-safe
+    req.checkBody('username', 'Username is required').notEmpty();
+
+    var errors = req.validationErrors(); // returns an object with results of validation check
+    if (errors) {
+        res.status(400).send(errors);
+        return;
+    }
+
+    // 2. Store updated data in MongoDB
+    Jobseeker.findOne({ username: req.body.username }, function(err, user) {
+        if (err) {
+            console.log(err);
+            return res.status(400).send('Error updating account.');
+        }
+
+        user.username = req.body.username;
+        user.perks = req.body.perks;
+
+        user.save(function(err) {
+            if (err) {
+                console.log(err);
+                res.status(500).send('Error updating account.');
+                return;
+            }
+            res.status(200).send('Personality questions updated!');
+        });
+    });
+
+});
+
+// Resume Update
+app.post('/quiz/resume', authorizeRequest, function(req,res){
+
+    // 1. Input validation. Front end validation exists, but this functions as a fail-safe
+    req.checkBody('username', 'Username is required').notEmpty();
+
+    var errors = req.validationErrors(); // returns an object with results of validation check
+    if (errors) {
+        res.status(400).send(errors);
+        return;
+    }
+
+    // 2. Store updated data in MongoDB
+    Jobseeker.findOne({ username: req.body.username }, function(err, user) {
+        if (err) {
+            console.log(err);
+            return res.status(400).send('Error updating account.');
+        }
+
+        user.username = req.body.username;
+        user.experience = req.body.experience;
+        user.education = req.body.education;
+        user.skills = req.body.skills;
+
+        user.save(function(err) {
+            if (err) {
+                console.log(err);
+                res.status(500).send('Error updating account.');
+                return;
+            }
+            res.status(200).send('Personality questions updated!');
+        });
+    });
+
+});
+
+// Get Resume
+app.get('/quiz/resume', authorizeRequest, function(req,res){
+
+    // 1. Get data in MongoDB
+    Jobseeker.findOne({ username: req.query.username}, function(err, user) {
+
+        if (user == null){
+          return res.json(undefined);
+        }
+
+        return res.json({
+          'experience': user.experience,
+          'education': user.education,
+          'skills': user.skills}
+        );
+    });
+
+});
+
+
 
 // Custom middleware to check if user is logged-in
 function authorizeRequest(req, res, next) {
-    console.log("Req.User")
-    console.log(req.user);
-    console.log("Req")
-    console.log(req);
+
     if (req.user) {
         next();
     } else {

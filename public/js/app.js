@@ -362,19 +362,24 @@ app.controller('QuizPersonaController', function($scope, $localStorage, $session
       }
   );
 
-
   // Set local scope to persisted user data
   $scope.user = $localStorage;
 
-  // Set default personal
-  if ($scope.user.persona == undefined){
-    $scope.user.persona = "intern";
-  }
+  // Get User Persona from DB
+  $http({
+      method: 'GET',
+      url: '/quiz/persona',
+      params: {'username': $scope.user.user.username}
+
+      })
+      .success(function(response){
+          $scope.user.persona = response;
+      });
+
 
   $('#tab_selector').on('change', function (e) {
 	    $('.nav-tabs li a').eq($(this).val()).tab('show');
 	});
-
 
   $scope.cancel = function() {
     $location.path('/');
@@ -382,9 +387,18 @@ app.controller('QuizPersonaController', function($scope, $localStorage, $session
 
   $scope.submitForm = function() {
     $scope.user.persona = $("#personas a.active").attr("id")
-    $scope.user.quiz.activeSection = 1;
-    console.log($scope.user.quiz.activeSection);
-    $location.path('/quiz');
+    $http({
+        method: 'POST',
+        url: '/quiz/persona',
+        data: {
+                'username': $scope.user.user.username,
+                'persona': $scope.user.persona
+            }
+        })
+        .success(function(response){
+            $scope.user.quiz.activeSection = 1;
+            $location.path('/quiz');
+        })
   }
 
 });
@@ -408,10 +422,17 @@ app.controller('QuizIndustryController', function($scope, $localStorage, $sessio
   // Set local scope to persisted user data
   $scope.user = $localStorage;
 
-  // Set default industry
-  if ($scope.user.industry == undefined){
-    $scope.user.industry = "software_engineering";
-  }
+  // Get User Industry from DB
+  $http({
+      method: 'GET',
+      url: '/quiz/industry',
+      params: {'username': $scope.user.user.username}
+
+      })
+      .success(function(response){
+          $scope.user.industry = response;
+      })
+
 
   $('#tab_selector').on('change', function (e) {
 	    $('.nav-tabs li a').eq($(this).val()).tab('show');
@@ -424,9 +445,18 @@ app.controller('QuizIndustryController', function($scope, $localStorage, $sessio
 
   $scope.submitForm = function() {
     $scope.user.industry = $("#industries a.active").attr("id")
-    $scope.user.quiz.activeSection = 2;
-    console.log($scope.user.quiz.activeSection);
-    $location.path('/quiz');
+    $http({
+        method: 'POST',
+        url: '/quiz/industry',
+        data: {
+                'username': $scope.user.user.username,
+                'industry': $scope.user.industry
+            }
+        })
+        .success(function(response){
+            $scope.user.quiz.activeSection = 2;
+            $location.path('/quiz');
+        })
   }
 
 });
@@ -450,18 +480,43 @@ app.controller('QuizPersonalityController', function($scope, $localStorage, $ses
   // Set local scope to persisted user data
   $scope.user = $localStorage;
 
-  if ($scope.user.questions == undefined){
-    $scope.user.questions = [
-                 {id:'Q1', question:"What does your ideal work day look like?", answer:""},
-                 {id:'Q2', question:"What is the greatest accomplishment of your life?", answer:""},
-                 {id:'Q3', question:"For what in your life do you feel most grateful?", answer:""},
-                 {id:'Q4', question:"If you were able to live to the age of 90 and retain either the mind or body of a 30-year old for the last 60 years of your life, which would you choose?", answer:""},
-                 {id:'Q5', question:"What would constitute a perfect day for you? (not work related like number 1)", answer:""},
-                 {id:'Q6', question:"Describe your average day (needs to be swapped out)", answer:""}
-                ]
-  }
+  // Get User Personality Qs from DB
+  $http({
+      method: 'GET',
+      url: '/quiz/personality',
+      params: {'username': $scope.user.user.username}
 
-  $scope.formQuestions = $.extend(true,{},$scope.user.questions);
+      })
+      .success(function(response){
+        console.log(response);
+        $scope.user.questions = [
+                     {id:'Q1', question:"What does your ideal work day look like?", answer:response.q1},
+                     {id:'Q2', question:"What is the greatest accomplishment of your life?", answer:response.q2},
+                     {id:'Q3', question:"For what in your life do you feel most grateful?", answer:response.q3},
+                     {id:'Q4', question:"If you were able to live to the age of 90 and retain either the mind or body of a 30-year old for the last 60 years of your life, which would you choose?", answer:response.q4},
+                     {id:'Q5', question:"What would constitute a perfect day for you? (not work related like number 1)", answer:response.q5},
+                     {id:'Q6', question:"Describe your average day (needs to be swapped out)", answer:response.q6}
+                    ]
+
+
+
+        if ($scope.user.questions == undefined){
+          $scope.user.questions = [
+                       {id:'Q1', question:"What does your ideal work day look like?", answer:""},
+                       {id:'Q2', question:"What is the greatest accomplishment of your life?", answer:""},
+                       {id:'Q3', question:"For what in your life do you feel most grateful?", answer:""},
+                       {id:'Q4', question:"If you were able to live to the age of 90 and retain either the mind or body of a 30-year old for the last 60 years of your life, which would you choose?", answer:""},
+                       {id:'Q5', question:"What would constitute a perfect day for you? (not work related like number 1)", answer:""},
+                       {id:'Q6', question:"Describe your average day (needs to be swapped out)", answer:""}
+                      ]
+        }
+
+        $scope.formQuestions = $.extend(true,{},$scope.user.questions);
+
+
+      });
+
+
 
   $scope.back = function() {
     $scope.user.quiz.activeSection = 1;
@@ -470,10 +525,23 @@ app.controller('QuizPersonalityController', function($scope, $localStorage, $ses
 
   $scope.submitForm = function() {
     $scope.user.questions = $scope.formQuestions;
-    console.log($scope.user.questions);
-
-    $scope.user.quiz.activeSection = 3;
-    $location.path('/quiz');
+    $http({
+        method: 'POST',
+        url: '/quiz/personality',
+        data: {
+                'username': $scope.user.user.username,
+                'q1': $scope.user.questions[0].answer,
+                'q2': $scope.user.questions[1].answer,
+                'q3': $scope.user.questions[2].answer,
+                'q4': $scope.user.questions[3].answer,
+                'q5': $scope.user.questions[4].answer,
+                'q6': $scope.user.questions[5].answer
+            }
+        })
+        .success(function(response){
+          $scope.user.quiz.activeSection = 3;
+          $location.path('/quiz');
+        })
   }
 
 });
@@ -497,6 +565,8 @@ app.controller('QuizPerksController', function($scope, $localStorage, $sessionSt
   // Set local scope to persisted user data
   $scope.user = $localStorage;
 
+  // GET A LIST OF ALL THE PERKS FROM DB HERE
+
   if ($scope.user.perks == undefined){
     $scope.user.perks = [
                  {id:'Perk1', perk:"Food Provided", checked: false},
@@ -514,9 +584,28 @@ app.controller('QuizPerksController', function($scope, $localStorage, $sessionSt
   }
 
   $scope.submitForm = function() {
+
+    // Get list of perks
     $scope.user.perks = $scope.formPerks;
-    $scope.user.quiz.activeSection = 4;
-    $location.path('/quiz');
+
+    var list_of_perks = []
+    for (var key in $scope.user.perks) {
+      list_of_perks.push($scope.user.perks[key]);
+    }
+
+    $http({
+        method: 'POST',
+        url: '/quiz/perks',
+        data: {
+                'username': $scope.user.user.username,
+                'perks': list_of_perks
+            }
+        })
+        .success(function(response){
+          $scope.user.quiz.activeSection = 4;
+          $location.path('/quiz');
+        })
+
   }
 
 });
@@ -537,61 +626,78 @@ app.controller('QuizResumeController', function($scope, $localStorage, $sessionS
       }
   );
 
+
   // Set local scope to persisted user data
   $scope.user = $localStorage;
 
+  // Get User Personality Qs from DB
+  $http({
+      method: 'GET',
+      url: '/quiz/resume',
+      params: {'username': $scope.user.user.username}
+
+      })
+      .success(function(response){
+        console.log(response);
+        $scope.user.experiences = response.experience;
+        $scope.user.educations = response.education;
+        $scope.user.skills = response.skills;
+
+        // Experience related methods
+        if ($scope.user.experiences == ""){
+          $scope.user.experiences = [
+                       {id:0, company:"", role:"", description:"", startdate:"", enddate:""}
+                      ]
+        }
+
+        $scope.formExperiences= $.extend(true,[],$scope.user.experiences);
+
+
+        $scope.removeExperience = function(experience_id){
+          $scope.formExperiences = $scope.formExperiences.filter(e => e.id !== experience_id)
+        }
+
+        $scope.addExperience = function(){
+          $scope.formExperiences.push({id: $scope.formExperiences.length,  company:"", role:"", description:"", startdate:"", enddate:""});
+
+        }
+
+        // Education related methods
+        if ($scope.user.educations == ""){
+          $scope.user.educations = [
+                       {id: 0, degree:"", institute:"", description:"", startdate:"", enddate:""}
+                      ]
+        }
+
+        $scope.formEducations = $.extend(true,[],$scope.user.educations);
+
+        $scope.removeEducation = function(education_id){
+          $scope.formEducations = $scope.formEducations.filter(e => e.id !== education_id)
+        }
+
+        $scope.addEducation = function(){
+          $scope.formEducations.push({id: $scope.formEducations.length, degree:"", institute:"", description:"", startdate:"", enddate:""});
+        }
+
+        // Skill PillBox methods
+        if ($scope.user.skills == ""){
+          $scope.user.skills = []
+        }
+
+        $scope.formSkills= $.extend(true,[],$scope.user.skills);
+
+
+        $('#skillPillbox').pillbox();
+
+        $('#skillPillbox').pillbox('addItems', $scope.formSkills);
+
+      });
+
   // Disable hitting enter to submit
-  $(document).on("keypress", "form", function(event) {
-      return event.keyCode != 13 && !$(document.activeElement).is('textarea');
+  $(document).on("keypress", ":input:not(textarea)", function(event) {
+      return event.keyCode != 13;
   });
 
-  // Experience related methods
-  if ($scope.user.experiences == undefined){
-    $scope.user.experiences = [
-                 {id:'1', company:"", role:"", description:"", startdate:"", enddate:""}
-                ]
-  }
-
-  $scope.formExperiences= $.extend(true,[],$scope.user.experiences);
-
-
-  $scope.removeExperience = function(experience_id){
-    $scope.formExperiences = $scope.formExperiences.filter(e => e.id !== experience_id)
-  }
-
-  $scope.addExperience = function(){
-    $scope.formExperiences.push({id: $scope.formExperiences.length,  company:"", role:"", description:"", startdate:"", enddate:""});
-
-  }
-
-  // Education related methods
-  if ($scope.user.educations == undefined){
-    $scope.user.educations = [
-                 {id:'1', degree:"", institute:"", description:"", startdate:"", enddate:""}
-                ]
-  }
-
-  $scope.formEducations = $.extend(true,[],$scope.user.educations);
-
-  $scope.removeEducation = function(education_id){
-    $scope.formEducations = $scope.formEducations.filter(e => e.id !== education_id)
-  }
-
-  $scope.addEducation = function(){
-    $scope.formEducations.push({id: $scope.formEducations.length, degree:"", institute:"", description:"", startdate:"", enddate:""});
-  }
-
-  // Skill PillBox methods
-  if ($scope.user.skills == undefined){
-    $scope.user.skills = []
-  }
-
-  $scope.formSkills= $.extend(true,[],$scope.user.skills);
-
-
-  $('#skillPillbox').pillbox();
-
-  $('#skillPillbox').pillbox('addItems', $scope.formSkills);
 
   // Form submission related methods
 
@@ -611,13 +717,26 @@ app.controller('QuizResumeController', function($scope, $localStorage, $sessionS
     for ( var i=0, len=skillpills.length; i < len; i++ )
         unique_skills[skillpills[i]['value']] = skillpills[i];
 
-    finalskillpills = new Array();
+    finalskillpills = [];
     for ( var key in unique_skills )
         finalskillpills.push(unique_skills[key]);
 
     $scope.user.skills = finalskillpills;
-    $scope.user.quiz.activeSection = 4;
-    $location.path('/');
+
+    $http({
+        method: 'POST',
+        url: '/quiz/resume',
+        data: {
+                'username': $scope.user.user.username,
+                'experience': $scope.user.experiences,
+                'education': $scope.user.educations,
+                'skills': $scope.user.skills
+            }
+        })
+        .success(function(response){
+          $scope.user.quiz.activeSection = 0;
+          $location.path('/');
+        })
   }
 
 });
@@ -823,8 +942,11 @@ app.controller('JobseekerJobViewController', function($scope, $localStorage, $lo
 
 });
 
+//
+//
 // Job Poster Specific controls
-
+//
+//
 
 app.controller('JobposterPostJobController', function($scope, $localStorage, $sessionStorage, $location, $http){
 
@@ -850,64 +972,24 @@ app.controller('JobposterPostJobController', function($scope, $localStorage, $se
       return event.keyCode != 13;
   });
 
-  // Experience related methods
-  if ($scope.user.experiences == undefined){
-    $scope.user.experiences = [
-                 {id:'1', company:"", role:"", description:"", startdate:"", enddate:""}
-                ]
-  }
-
-  $scope.formExperiences= $.extend(true,[],$scope.user.experiences);
+  // Create job dict
+  $scope.user.jobpost = {}
+  $scope.user.jobpost.skills = []
 
 
-  $scope.removeExperience = function(experience_id){
-    $scope.formExperiences = $scope.formExperiences.filter(e => e.id !== experience_id)
-  }
-
-  $scope.addExperience = function(){
-    $scope.formExperiences.push({id: $scope.formExperiences.length,  company:"", role:"", description:"", startdate:"", enddate:""});
-
-  }
-
-  // Education related methods
-  if ($scope.user.educations == undefined){
-    $scope.user.educations = [
-                 {id:'1', degree:"", institute:"", description:"", startdate:"", enddate:""}
-                ]
-  }
-
-  $scope.formEducations = $.extend(true,[],$scope.user.educations);
-
-  $scope.removeEducation = function(education_id){
-    $scope.formEducations = $scope.formEducations.filter(e => e.id !== education_id)
-  }
-
-  $scope.addEducation = function(){
-    $scope.formEducations.push({id: $scope.formEducations.length, degree:"", institute:"", description:"", startdate:"", enddate:""});
-  }
-
-  // Skill PillBox methods
-  if ($scope.user.skills == undefined){
-    $scope.user.skills = []
-  }
-
-  $scope.formSkills= $.extend(true,[],$scope.user.skills);
-
-
+  // Skill Pillbox Init
   $('#skillPillbox').pillbox();
 
-  $('#skillPillbox').pillbox('addItems', $scope.formSkills);
 
   // Form submission related methods
-
-  $scope.back = function() {
-    $scope.user.quiz.activeSection = 3;
-    $location.path('/quiz');
+  $scope.cancel = function() {
+    $location.path('/');
   }
 
   $scope.submitForm = function() {
-    $scope.user.experiences = $scope.formExperiences;
-    $scope.user.educations = $scope.formEducations;
+    $scope.user.jobpost.title = $scope.jobpost.title;
+    $scope.user.jobpost.company = $scope.jobpost.company;
+    $scope.user.jobpost.summary = $scope.jobpost.summary;
 
     // Remove Duplicates from PillBox
     skillpills = $('#skillPillbox').pillbox('items');
@@ -920,8 +1002,7 @@ app.controller('JobposterPostJobController', function($scope, $localStorage, $se
     for ( var key in unique_skills )
         finalskillpills.push(unique_skills[key]);
 
-    $scope.user.skills = finalskillpills;
-    $scope.user.quiz.activeSection = 4;
+    $scope.user.jobpost.skills = finalskillpills;
     $location.path('/');
   }
 
@@ -1058,7 +1139,6 @@ app.service('anchorSmoothScroll', function(){
 
          // This scrolling function
          // is from http://www.itnewb.com/tutorial/Creating-the-Smooth-Scroll-Effect-with-JavaScript
-
          var startY = currentYPosition();
          var stopY = elmYPosition(eID);
          var distance = stopY > startY ? stopY - startY : startY - stopY;
@@ -1187,7 +1267,6 @@ app.directive("customSort", function() {
 
           sort.sortingOrder = newSortingOrder;
       };
-
 
       scope.selectedCls = function(column) {
           if(column == scope.sort.sortingOrder){
