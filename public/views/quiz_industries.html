@@ -29,12 +29,6 @@
                       </a>
                   </li>
                   <li class="nav-item col-sm-12 col-md-4 col-lg-3">
-                      <a class="nav-link" ng-class="{active: user.industry == 'electrician'}" data-toggle="tab" id="electrician" data-target="#option3" role="tab">
-                        <img src="assets/img/placeholderimg2.png" alt="Thumbnail Image" class="rounded-circle img-raised d-none d-md-block">
-                        <p>Electrician</p>
-                      </a>
-                  </li>
-                  <li class="nav-item col-sm-12 col-md-4 col-lg-3">
                       <a class="nav-link disabled" data-toggle="tab" data-target="#option3" role="tab">
                         <img src="assets/img/placeholderimg2.png" alt="Thumbnail Image" class="rounded-circle img-grayscale img-raised d-none d-md-block">
                         <p>More Coming Soon</p>
@@ -45,7 +39,6 @@
             <select class="form-control d-md-none" id="tab_selector">
                 <option value="0" ng-selected="{{user.industry == 'software_engineering'}}">Software Engineering</option>
                 <option value="1" ng-selected="{{user.industry == 'office_assistant'}}">Office Assistant</option>
-                <option value="2" ng-selected="{{user.industry == 'electrician'}}">Electrician</option>
             </select>
             <!--/ Industry Options -->
             <div class="card-body">
@@ -67,15 +60,6 @@
                         </div>
                         <p>
                           Office assistants' job duties usually include tasks like typing, filing, taking inventory, keeping records and sorting checks. They may also prepare documents, process mail and answer telephones.                        </p>
-                    </div>
-                    <div class="tab-pane" ng-class="{active: user.industry == 'electrician'}" id="option3" role="tabpanel">
-                        <h2>Electrician</h2>
-                        <div class="offset-sm-3 col-sm-6 d-md-none">
-                          <img src="assets/img/placeholderimg2.png" alt="Thumbnail Image" class="rounded-circle img-raised">
-                        </div>
-                        <p>
-                          An electrician is a tradesman specializing in electrical wiring of buildings, stationary machines, and related equipment. Electricians may be employed in the installation of new electrical components or the maintenance and repair of existing electrical infrastructure.
-                        </p>
                     </div>
                     <div class="form-group">
                       <button class="btn btn-default" ng-click="back()">Back</button>

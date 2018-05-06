@@ -13,20 +13,28 @@
     <form class="form-horizontal needs-validation"  novalidate ng-submit="submitForm()" name="jobpostForm" novalidate>
       <fieldset>
 
-        <!-- Job Title -->
+        <!-- Job Posting Form -->
         <div class="row">
-          <label>Job Title:</label><br>
-          <input name="jobTitle"  class="form-control" ng-model="jobpost.title" type="text" required>
+          <div class="col-12">
+            <label>Job Title:</label><br>
+            <input name="jobTitle"  class="form-control" ng-model="jobpost.title" type="text" required>
+          </div>
         </div>
         <div class="row">
-          <label>Company Name:</label><br>
-          <input name="companyName"  class="form-control" ng-model="jobpost.company" type="text" required>
+          <div class="col-12">
+            <label>Company Name:</label><br>
+            <input name="companyName"  class="form-control" ng-model="jobpost.company" type="text" required>
+          </div>
         </div>
-        <div class="row" ng-class="{'has-success': jobpostForm.summary.$valid}">
-          <label>Provide a brief meaningful summary: </label><br>
-          <textarea class="form-control" ng-model="jobpost.summary" rows="3" placeholder="Enter a brief meaningful summary" name="summary" required wordcount-validate="5"></textarea>
-          <span ng-hide="jobpostForm.summary.$valid">Minimum # of words needed: {{jobpostForm.summary.$viewValue|wordCounter}}/5</span>
-          <span ng-show="jobpostForm.summary.$valid">Word requirement met!</span>
+        <div class="row">
+          <div class="col-6">
+            <label>City:</label><br>
+            <input name="companyCity"  class="form-control" ng-model="jobpost.city" type="text" required>
+          </div>
+          <div class="col-6">
+            <label>State:</label><br>
+            <input name="companyState"  class="form-control" ng-model="jobpost.state" type="text" required>
+          </div>
         </div>
         <br>
 
@@ -159,12 +167,6 @@
                       </a>
                   </li>
                   <li class="nav-item col-sm-12 col-md-4 col-lg-2">
-                      <a class="nav-link" data-toggle="tab" id="electrician" data-target="#industry3" role="tab">
-                        <img src="assets/img/placeholderimg2.png" alt="Thumbnail Image" class="rounded-circle img-raised d-none d-md-block">
-                        <p>Electrician</p>
-                      </a>
-                  </li>
-                  <li class="nav-item col-sm-12 col-md-4 col-lg-2">
                       <a class="nav-link disabled" data-toggle="tab" role="tab">
                         <img src="assets/img/placeholderimg2.png" alt="Thumbnail Image" class="rounded-circle img-grayscale img-raised d-none d-md-block">
                         <p>More Coming Soon</p>
@@ -175,7 +177,6 @@
             <select class="form-control d-md-none" id="tab_selector">
                 <option value="0">Software Engineering</option>
                 <option value="1">Office Assistant</option>
-                <option value="2">Electrician</option>
             </select>
         </div>
         <div class="tab-content text-center">
@@ -195,15 +196,6 @@
                 </div>
                 <p>
                   Office assistants' job duties usually include tasks like typing, filing, taking inventory, keeping records and sorting checks. They may also prepare documents, process mail and answer telephones.                        </p>
-            </div>
-            <div class="tab-pane" id="industry3" role="tabpanel">
-                <h4>Electrician</h4>
-                <div class="offset-sm-3 col-sm-6 d-md-none">
-                  <img src="assets/img/placeholderimg2.png" alt="Thumbnail Image" class="rounded-circle img-raised">
-                </div>
-                <p>
-                  An electrician is a tradesman specializing in electrical wiring of buildings, stationary machines, and related equipment. Electricians may be employed in the installation of new electrical components or the maintenance and repair of existing electrical infrastructure.
-                </p>
             </div>
         </div>
         <br>
