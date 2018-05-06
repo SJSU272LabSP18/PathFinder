@@ -3,11 +3,11 @@
   <div class="card-body d-flex h-100">
     <div class="row">
         <div id="companylogo" class="col-md-3">
-          <img src="{{job.CompanyLogo}}" class="rounded-circle img-raised"/>
+          <img src="{{job.logourl}}" class="rounded-circle img-raised"/>
         </div>
         <div id="jobtitle" class="col-md-9 align-middle">
-          <h2>{{job.Job_Title}}</h2>
-          <h3>{{job.Company}} in {{job.City}}, {{job.State}}</h3>
+          <h2>{{job.title}}</h2>
+          <h3>{{job.company}} in {{job.city}}, {{job.state}}</h3>
         </div>
     </div>
   </div>
@@ -21,7 +21,7 @@
           <div class="row">
             <h3>Job Summary</h3>
           </div>
-          <div style="white-space: pre-line;">{{job.Job_Summary}}</div>
+          <div style="white-space: pre-line;">{{job.summary}}</div>
         </div>
     </div>
     <br>
@@ -30,7 +30,7 @@
           <div class="row">
             <h3>Job Type</h3>
           </div>
-          <div style="white-space: pre-line;">{{job.Job_Type}}</div>
+          <div style="white-space: pre-line;">{{job.persona}}</div>
         </div>
     </div>
     <br>
@@ -41,7 +41,7 @@
           </div>
           <div class="d-flex">
             <ul class="list-inline">
-              <li ng-repeat="skill in job.Key_Skills" class="list-inline-item">
+              <li ng-repeat="skill in job.skills" class="list-inline-item">
                 {{skill.text}}
                 <span ng-hide="$last">, </span>
               </li>
@@ -57,7 +57,7 @@
     <div class="row">
         <h2>Full Job Description</h2>
         <div id="jobdescription" class="col-12">
-          <div style="white-space: pre-line;">{{job.Description}}</div>
+          <div style="white-space: pre-line;">{{job.description}}</div>
         </div>
     </div>
   </div>

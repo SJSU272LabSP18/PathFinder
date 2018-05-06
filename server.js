@@ -449,6 +449,10 @@ app.post('/quiz/personality', authorizeRequest, function(req,res){
         user.q5 = req.body.q5;
         user.q6 = req.body.q6;
 
+        // PUT LOGIC FOR WATSON PERSONALITY STUFF HERE
+
+
+
         user.save(function(err) {
             if (err) {
                 console.log(err);
@@ -629,6 +633,59 @@ app.get('/quiz/resume', authorizeRequest, function(req,res){
 
 });
 
+// Get Jobs
+app.get('/jobseeker/jobs', authorizeRequest, function(req,res){
+
+
+    console.log("Username: " + req.query.username);
+    // 1. Get data in MongoDB
+    Promise.all(
+      [
+        Jobseeker.findOne({ username: req.query.username}),
+      ]
+    ).then( ([ jobseeker]) => {
+
+      // Get list of jobs in same industry and persona
+
+      console.log("Looking for jobs for " + jobseeker.industry + " " + jobseeker.persona);
+      Jobposter.find({ industry: jobseeker.industry, persona:jobseeker.persona }, function(err, jobs) {
+          if (err) {
+              console.log(err);
+              return res.status(400).send('Error updating account.');
+          }
+
+          // PUT LOGIC FOR RANKING HERE?
+          console.log(jobs);
+          return res.json(jobs);
+
+      });
+    });
+});
+
+// Get a specific jobs
+app.get('/jobseeker/job/view', authorizeRequest, function(req,res){
+
+
+    console.log("Username: " + req.query.username);
+    console.log("Job ID: " + req.query.job_id)
+    // 1. Get data in MongoDB
+    Promise.all(
+      [
+        Jobseeker.findOne({ username: req.query.username}),
+        Jobposter.findOne({ _id: req.query.job_id})
+      ]
+    ).then( ([jobseeker, job]) => {
+
+      console.log("FOUND JOB");
+      console.log(job);
+
+      // PUT LOGIC FOR SKILL GAPS HERE
+
+      return res.json(job);
+
+    });
+});
+
 
 // JOB POSTER STUFFS
 
@@ -638,6 +695,7 @@ app.post('/post/job', authorizeRequest, function(req,res){
     // 1. Input validation. Front end validation exists, but this functions as a fail-safe
     req.checkBody('username', 'Username is required').notEmpty();
     req.checkBody('title', 'Title is required').notEmpty();
+    req.checkBody('company', 'Company is required').notEmpty();
     req.checkBody('summary', 'Summary is required').notEmpty();
     req.checkBody('city', 'City is required').notEmpty();
     req.checkBody('state', 'State is required').notEmpty();
@@ -663,6 +721,7 @@ app.post('/post/job', authorizeRequest, function(req,res){
     var jobpost = new Jobposter({
         username: req.body.username,
         title: req.body.title,
+        company: req.body.company,
         logourl: req.body.logourl,
         summary: req.body.summary,
         description: req.body.description,

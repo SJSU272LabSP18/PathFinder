@@ -12,11 +12,11 @@
         <thead>
 
             <tr>
-                <th class="" custom-sort order="'Company'" sort="sort">Company&nbsp;</th>
-                <th class="" custom-sort order="'Job_Title'" sort="sort">Job Title&nbsp;</th>
-                <th class="" custom-sort order="'City'" sort="sort">City&nbsp;</th>
-                <th class="" custom-sort order="'State'" sort="sort">State&nbsp;</th>
-                <th class="" custom-sort order="'Ranking'" sort="sort">Ranking&nbsp;</th>
+                <th class="" custom-sort order="'company'" sort="sort">Company&nbsp;</th>
+                <th class="" custom-sort order="'title'" sort="sort">Job Title&nbsp;</th>
+                <th class="" custom-sort order="'city'" sort="sort">City&nbsp;</th>
+                <th class="" custom-sort order="'state'" sort="sort">State&nbsp;</th>
+                <th class="" custom-sort order="'ranking'" sort="sort">Ranking&nbsp;</th>
             </tr>
         </thead>
         <tfoot>
@@ -42,12 +42,12 @@
 
         </tfoot>
         <tbody>
-            <tr ng-repeat="item in pagedItems[currentPage] | orderBy:sort.sortingOrder:sort.reverse" ng-click="goToJob(item.id)">
-                <td>{{item.Company}}</td>
-                <td>{{item.Job_Title}}</td>
-                <td>{{item.City}}</td>
-                <td>{{item.State}}</td>
-                <td>{{item.Ranking}}</td>
+            <tr ng-repeat="item in pagedItems[currentPage] | orderBy:sort.sortingOrder:sort.reverse" ng-click="goToJob(item._id)">
+                <td>{{item.company}}</td>
+                <td>{{item.title}}</td>
+                <td>{{item.city}}</td>
+                <td>{{item.state}}</td>
+                <td>tbd</td>
             </tr>
         </tbody>
     </table>

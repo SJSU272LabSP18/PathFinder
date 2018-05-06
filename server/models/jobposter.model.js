@@ -13,7 +13,7 @@ var questionsSchema = new mongoose.Schema({
     username: {type: String, required: true},
     title: {type: String},
     company: {type: String},
-    company: {type: String},
+    logourl: {type: String},
     summary: {type: String},
     description: {type: String},
     city: {type: String},

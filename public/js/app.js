@@ -756,6 +756,141 @@ app.controller('JobseekerJobsController', function($scope, $filter, $localStorag
   $http({
       method: 'GET',
       url: '/protected'
+      })
+      .success(function(response){
+          $scope.message = response;
+      })
+      .error(function(response){
+          alert(response);
+          $location.path('/account/login');
+      }
+  );
+
+  // Set local scope to persisted user data
+  $scope.user = $localStorage;
+
+  $scope.sort = {
+              sortingOrder : 'company',
+              reverse : false
+          };
+
+  // Create Table Based on Jobs Data
+  $http({
+      method: 'GET',
+      url: '/jobseeker/jobs',
+      params: {'username': $scope.user.user.username}
+      })
+      .success(function(response){
+          // init
+          $scope.items = response;
+          console.log($scope.items);
+
+
+          $scope.gap = 5;
+          $scope.filteredItems = [];
+          $scope.groupedItems = [];
+          $scope.itemsPerPage = 10;
+          $scope.pagedItems = [];
+          $scope.currentPage = 0;
+
+          // Calculate gap that should be caused
+          num_pages = Math.ceil($scope.items.length/$scope.itemsPerPage);
+          if(num_pages < $scope.gap){
+            $scope.gap = num_pages;
+          }
+
+
+            var searchMatch = function (haystack, needle) {
+                if (!needle) {
+                    return true;
+                }
+                return haystack.toLowerCase().indexOf(needle.toLowerCase()) !== -1;
+            };
+
+            // init the filtered items
+            $scope.search = function () {
+                $scope.filteredItems = $filter('filter')($scope.items, function (item) {
+                    for(var attr in item) {
+                        if (searchMatch(item[attr], $scope.query))
+                            return true;
+                    }
+                    return false;
+                });
+                // take care of the sorting order
+                if ($scope.sort.sortingOrder !== '') {
+                    $scope.filteredItems = $filter('orderBy')($scope.filteredItems, $scope.sort.sortingOrder, $scope.sort.reverse);
+                }
+                $scope.currentPage = 0;
+                // now group by pages
+                $scope.groupToPages();
+            };
+
+
+            // calculate page in place
+            $scope.groupToPages = function () {
+                $scope.pagedItems = [];
+
+                for (var i = 0; i < $scope.filteredItems.length; i++) {
+                    if (i % $scope.itemsPerPage === 0) {
+                        $scope.pagedItems[Math.floor(i / $scope.itemsPerPage)] = [ $scope.filteredItems[i] ];
+                    } else {
+                        $scope.pagedItems[Math.floor(i / $scope.itemsPerPage)].push($scope.filteredItems[i]);
+                    }
+                }
+            };
+
+            $scope.range = function (size,start, end) {
+                var ret = [];
+                console.log(size,start, end);
+                if (size < end) {
+                    end = size;
+                    start = size-$scope.gap;
+                }
+                for (var i = start; i < end; i++) {
+                    ret.push(i);
+                }
+                 console.log(ret);
+                return ret;
+            };
+
+            $scope.prevPage = function () {
+                if ($scope.currentPage > 0) {
+                    $scope.currentPage--;
+                }
+            };
+
+            $scope.nextPage = function () {
+                if ($scope.currentPage < $scope.pagedItems.length - 1) {
+                    $scope.currentPage++;
+                }
+            };
+
+            $scope.setPage = function () {
+                $scope.currentPage = this.n;
+            };
+
+          // functions have been describe process the data for display
+          $scope.search();
+
+      });
+
+
+
+  // Redirect user to jobs page
+  $scope.goToJob = function(id) {
+    $location.path('/jobseeker/jobs/view/' + id);
+  }
+
+
+});
+
+
+app.controller('JobseekerJobViewController', function($scope, $localStorage, $location, $sessionStorage, $routeParams,  $http){
+
+  // Check if user is authorized to view page
+  $http({
+      method: 'GET',
+      url: '/protected'
   })
       .success(function(response){
           $scope.message = response;
@@ -769,185 +904,50 @@ app.controller('JobseekerJobsController', function($scope, $filter, $localStorag
   // Set local scope to persisted user data
   $scope.user = $localStorage;
 
+  // Pull job listing from db
+  $http({
+      method: 'GET',
+      url: '/jobseeker/job/view',
+      params: {'username': $scope.user.user.username, 'job_id': $routeParams.id}
+      })
+      .success(function(response){
+          $scope.job= response;
+          console.log($scope.job);
 
-  // Create Table Based on Jobs Data
-
-  // init
-  $scope.sort = {
-              sortingOrder : 'Company',
-              reverse : false
-          };
-
-  $scope.gap = 5;
-  $scope.filteredItems = [];
-  $scope.groupedItems = [];
-  $scope.itemsPerPage = 10;
-  $scope.pagedItems = [];
-  $scope.currentPage = 0;
-
-  $scope.items = [
-    {"id":1,"Company":"Spotify","Job_Title":"Front-End Engineer","City":"New York City","State":"NY","Ranking":99},
-    {"id":2,"Company":"Soundcloud","Job_Title":"Back-End Engineer","City":"New York City","State":"NY","Ranking":60},
-    {"id":3,"Company":"Pandora","Job_Title":"Full-Stack Engineer","City":"Oakland","State":"CA","Ranking":75},
-    {"id":4,"Company":"Apple Music","Job_Title":"Front-End Engineer","City":"Cupertino","State":"CA","Ranking":90},
-    {"id":5,"Company":"Tidal","Job_Title":"UX Engineer","City":"Chicago","State":"IL","Ranking":80},
-  ];
-
-  // Calculate gap that should be caused
-  num_pages = Math.ceil($scope.items.length/$scope.itemsPerPage);
-  if(num_pages < $scope.gap){
-    $scope.gap = num_pages;
-  }
-
-  var searchMatch = function (haystack, needle) {
-      if (!needle) {
-          return true;
-      }
-      return haystack.toLowerCase().indexOf(needle.toLowerCase()) !== -1;
-  };
-
-  // init the filtered items
-  $scope.search = function () {
-      $scope.filteredItems = $filter('filter')($scope.items, function (item) {
-          for(var attr in item) {
-              if (searchMatch(item[attr], $scope.query))
-                  return true;
+          if($scope.job == ""){
+            alert("No Job Found in DB");
+            $location.path('/jobseeker/jobs');
           }
-          return false;
-      });
-      // take care of the sorting order
-      if ($scope.sort.sortingOrder !== '') {
-          $scope.filteredItems = $filter('orderBy')($scope.filteredItems, $scope.sort.sortingOrder, $scope.sort.reverse);
-      }
-      $scope.currentPage = 0;
-      // now group by pages
-      $scope.groupToPages();
-  };
+
+          $scope.user.skillgaps = [
+            {
+              "text":"Python",
+              "value":"Python",
+              "trainings": [
+                {
+                  title: "Complete Python Bootcamp: Go from zero to hero in Python 3",
+                  link: "https://www.udemy.com/complete-python-bootcamp/"
+                },
+                {
+                  title: "Introduction To Python Programming",
+                  link: "https://www.udemy.com/pythonforbeginnersintro/"
+                }
+              ]
+            },
+            {
+              "text":"React",
+              "value":"React",
+              "trainings": [
+                {
+                  title: "Master ReactJS: Learn React JS from Scratch",
+                  link: "https://www.udemy.com/master-reactjs/"
+                }
+              ]
+            },
+          ]
 
 
-  // calculate page in place
-  $scope.groupToPages = function () {
-      $scope.pagedItems = [];
-
-      for (var i = 0; i < $scope.filteredItems.length; i++) {
-          if (i % $scope.itemsPerPage === 0) {
-              $scope.pagedItems[Math.floor(i / $scope.itemsPerPage)] = [ $scope.filteredItems[i] ];
-          } else {
-              $scope.pagedItems[Math.floor(i / $scope.itemsPerPage)].push($scope.filteredItems[i]);
-          }
-      }
-  };
-
-  $scope.range = function (size,start, end) {
-      var ret = [];
-      console.log(size,start, end);
-      if (size < end) {
-          end = size;
-          start = size-$scope.gap;
-      }
-      for (var i = start; i < end; i++) {
-          ret.push(i);
-      }
-       console.log(ret);
-      return ret;
-  };
-
-  $scope.prevPage = function () {
-      if ($scope.currentPage > 0) {
-          $scope.currentPage--;
-      }
-  };
-
-  $scope.nextPage = function () {
-      if ($scope.currentPage < $scope.pagedItems.length - 1) {
-          $scope.currentPage++;
-      }
-  };
-
-  $scope.setPage = function () {
-      $scope.currentPage = this.n;
-  };
-
-  // functions have been describe process the data for display
-  $scope.search();
-
-
-  // Redirect user to jobs page
-  $scope.goToJob = function(id) {
-    $location.path('/jobseeker/jobs/view/' + id);
-  }
-
-
-});
-
-
-app.controller('JobseekerJobViewController', function($scope, $localStorage, $location, $sessionStorage, $routeParams){
-
-  // Set local scope to persisted user data
-  $scope.user = $localStorage;
-
-  // Pull this from db in future
-  $scope.items = [
-    {
-
-      "id":1,
-      "Company":"Spotify",
-      "CompanyLogo": "https://media.licdn.com/mpr/mpr/shrink_200_200/gcrc/dms/image/C560BAQFkDzx_7dqq3A/company-logo_400_400/0?e=2124345600&v=beta&t=7zBkFJuVSz8lK8i46oS-J7_QUNF-NjPoyRShTdu-9vY",
-      "Job_Title":"Front-End Engineer",
-      "City":"New York City",
-      "State":"NY",
-      "Ranking":99,
-      "Job_Summary":"Spotify is looking for a Software Engineer to join our Engineering org.\nYou will build data solutions and distributed services to bring music and digital media experiences to our 100 million active users and millions of artists, either by working directly on product features, publishing and insight tools for artists, or by improving the quality of our software tools and large scale infrastructure.\n You will take on complex data and distributed systems problems using some of the most diverse datasets available — user behaviors, acoustical analysis, revenue streams, cultural and contextual data, and other signals across our broad range of mobile and connected platforms.\n Above all, your work will impact the way the world experiences music.",
-      "Job_Type": "Entry Level",
-      "Key_Skills": [
-        {"text":"JavaScript", "value":"JavaScript"},
-        {"text":"Python", "value":"Python"},
-        {"text":"HTML", "value":"HTML"},
-        {"text":"React", "value":"React"}
-      ],
-      "Description": "What you’ll do:\nBuild large-scale batch and real-time data pipelines with data processing frameworks like Scalding, Scio, Storm, Spark and the Google Cloud Platform.\n\nArchitect, design, develop, deploy and operate services that support millions of users.\n\nLeverage best practices in continuous integration and delivery.\n\nHelp drive optimization, testing and tooling to improve data and systems quality.\n\nCollaborate with other engineers, ML experts and stakeholders, taking learning and leadership opportunities that will arise every single day.\n\nWork in cross functional agile teams to continuously experiment, iterate and deliver on new product objectives."
-    },
-  ];
-
-  $scope.job = $scope.items.find(function(element) {
-    return element.id ==  $routeParams.id;
-  });
-
-  if($scope.job == undefined){
-    alert("No Job Found in DB");
-    $location.path('/jobseeker/jobs');
-  }
-
-  $('#skillPillbox').pillbox();
-  $('#skillPillbox').pillbox('addItems', $scope.job.Key_Skills);
-
-  $scope.user.skillgaps = [
-    {
-      "text":"Python",
-      "value":"Python",
-      "trainings": [
-        {
-          title: "Complete Python Bootcamp: Go from zero to hero in Python 3",
-          link: "https://www.udemy.com/complete-python-bootcamp/"
-        },
-        {
-          title: "Introduction To Python Programming",
-          link: "https://www.udemy.com/pythonforbeginnersintro/"
-        }
-      ]
-    },
-    {
-      "text":"React",
-      "value":"React",
-      "trainings": [
-        {
-          title: "Master ReactJS: Learn React JS from Scratch",
-          link: "https://www.udemy.com/master-reactjs/"
-        }
-      ]
-    },
-  ]
-
+      })
 
 });
 
@@ -1140,6 +1140,7 @@ app.controller('JobposterPostJobController', function($scope, $localStorage, $se
         data: {
                 'username': $scope.user.user.username,
                 'title': $scope.user.jobpost.title,
+                'company': $scope.user.jobpost.company,
                 'logourl': $scope.user.jobpost.logourl,
                 'summary': $scope.user.jobpost.summary,
                 'description': $scope.user.jobpost.description,
