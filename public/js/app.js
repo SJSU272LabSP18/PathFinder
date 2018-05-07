@@ -11,6 +11,7 @@ app.controller('HeaderController', function($scope, $localStorage, $sessionStora
     // Set local scope to persisted user data
     $scope.user = $localStorage;
     $scope.loc = $location;
+    console.log($scope.user);
 
     // Logout function
     $scope.logout = function(){
@@ -21,6 +22,7 @@ app.controller('HeaderController', function($scope, $localStorage, $sessionStora
             .success(function(response){
                 alert(response);
                 $localStorage.$reset();
+                $scope.user = $localStorage;
                 $location.path('/');
             })
             .error(function(response){
