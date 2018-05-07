@@ -41,7 +41,7 @@
 
         </tfoot>
         <tbody>
-            <tr ng-repeat="item in pagedItems[currentPage] | orderBy:sort.sortingOrder:sort.reverse" ng-click="goToJob(item._id)">
+            <tr class="hand_pointer" ng-repeat="item in pagedItems[currentPage] | orderBy:sort.sortingOrder:sort.reverse" ng-click="goToJob(item._id)">
                 <td>{{item.company}}</td>
                 <td>{{item.title}}</td>
                 <td>{{item.city}}</td>

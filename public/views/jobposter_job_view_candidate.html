@@ -1,0 +1,120 @@
+<!--jobposter_job_view_candiate.html-->
+<div class="card container">
+  <div class="card-body">
+    <div class="row">
+        <h2>
+          <i class="fa fa-user" aria-hidden="true"></i>
+          {{candidate.firstname}} {{candidate.lastname}}
+        </h2>
+    </div>
+  </div>
+</div>
+
+<div class="card container">
+  <div class="card-body">
+    <div class="row">
+        <h2>
+          <i class="fa fa-building" aria-hidden="true"></i>
+          Experience
+        </h2>
+    </div>
+    <div class="card container" ng-repeat="experience in candidate.experience">
+      <div class="card-body">
+
+        <label>Company:</label>
+        <p>{{experience.company}}</p>
+
+        <label>Role:</label>
+        <p>{{experience.role}}</p>
+
+        <div class="row">
+          <div class="col-6">
+            <label>Start Date:</label><br>
+            <p>{{experience.startdate}}</p>
+          </div>
+          <div class="col-6">
+            <label>End Date:</label><br>
+            <p>{{experience.enddate}}</p>
+          </div>
+        </div>
+
+        <label>Description:</label><br>
+        <p>{{experience.description}}</p>
+        <br><br>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card container">
+  <div class="card-body">
+    <div class="row">
+        <h2>
+          <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+          Education
+        </h2>
+    </div>
+    <div class="card container" ng-repeat="education in candidate.education">
+      <div class="card-body">
+
+        <label>Institute:</label>
+        <p>{{education.institute}}</p>
+
+        <label>Degree:</label>
+        <p>{{education.degree}}</p>
+
+        <div class="row">
+          <div class="col-6">
+            <label>Start Date:</label><br>
+            <p>{{education.startdate}}</p>
+          </div>
+          <div class="col-6">
+            <label>End Date:</label><br>
+            <p>{{education.enddate}}</p>
+          </div>
+        </div>
+
+        <label>Description:</label><br>
+        <p>{{education.description}}</p>
+        <br><br>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card container">
+  <div class="card-body">
+    <div class="row">
+        <div id="jobskills" class="col-sm-12 col-md-12">
+          <div class="row">
+            <h2>
+              <i class="fa fa-bolt" aria-hidden="true"></i>
+              Key Skills
+            </h2>
+          </div>
+          <div class="d-flex">
+            <ul class="list-inline">
+              <li ng-repeat="skill in candidate.skills" class="list-inline-item">
+                {{skill.text}}
+                <span ng-hide="$last">, </span>
+              </li>
+            </ul>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+<div class="card container">
+  <div class="card-body">
+    <div class="row">
+      <h3>Interested? Notify the Jobseeker!</h3>
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-3">
+        <a class="link" href="mailto:{{candidate.email}}"><button class="btn btn-info btn-block" type="button">Notify</button></a>
+    </div>
+  </div>
+</div>
+
+<!--/obposter_job_view_candiate.html-->

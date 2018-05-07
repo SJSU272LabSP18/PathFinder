@@ -9,11 +9,18 @@
 
 form label {font-weight:bold}
 
+label {font-weight:bold}
+
 .link
 {
    color:aqua;
    text-decoration: none;
    background-color: none;
+}
+
+
+.hand_pointer{
+  cursor: pointer;
 }
 
 .down-arrow{

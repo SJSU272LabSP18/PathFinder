@@ -1,7 +1,7 @@
-<!--jobseeker_jobs.html-->
+<!--jobposter_jobs.html-->
 <div class="row" id="header">
   <div class="col-md-12">
-      <h2>Looking for {{user.industry}} jobs</h2>
+      <h2>Prospective Candidates</h2>
   </div>
 </div>
 
@@ -12,10 +12,8 @@
         <thead>
 
             <tr>
-                <th class="" custom-sort order="'company'" sort="sort">Company&nbsp;</th>
-                <th class="" custom-sort order="'title'" sort="sort">Job Title&nbsp;</th>
-                <th class="" custom-sort order="'city'" sort="sort">City&nbsp;</th>
-                <th class="" custom-sort order="'state'" sort="sort">State&nbsp;</th>
+                <th class="" custom-sort order="'firstname'" sort="sort">First Name&nbsp;</th>
+                <th class="" custom-sort order="'lastname'" sort="sort">Last Name&nbsp;</th>
                 <th class="" custom-sort order="'ranking'" sort="sort">Ranking&nbsp;</th>
             </tr>
         </thead>
@@ -42,11 +40,9 @@
 
         </tfoot>
         <tbody>
-            <tr class="hand_pointer" ng-repeat="item in pagedItems[currentPage] | orderBy:sort.sortingOrder:sort.reverse" ng-click="goToJob(item._id)">
-                <td>{{item.company}}</td>
-                <td>{{item.title}}</td>
-                <td>{{item.city}}</td>
-                <td>{{item.state}}</td>
+            <tr class="hand_pointer" ng-repeat="item in pagedItems[currentPage] | orderBy:sort.sortingOrder:sort.reverse" ng-click="goToCandidate(item._id)">
+                <td>{{item.firstname}}</td>
+                <td>{{item.lastname}}</td>
                 <td>tbd</td>
             </tr>
         </tbody>
@@ -55,4 +51,4 @@
   <div>
 </div>
 
-<!--/jobseeker_jobs.html-->
+<!--/jobposter_jobs.html-->

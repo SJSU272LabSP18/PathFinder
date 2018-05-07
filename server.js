@@ -317,6 +317,8 @@ app.post('/quiz/persona', authorizeRequest, function(req,res){
     // 1. Input validation. Front end validation exists, but this functions as a fail-safe
     req.checkBody('username', 'Username is required').notEmpty();
     req.checkBody('email', 'Email is required').notEmpty();
+    req.checkBody('firstname', 'Email is required').notEmpty();
+    req.checkBody('lastname', 'Email is required').notEmpty();
     req.checkBody('persona', 'Persona is required').notEmpty();
 
     var errors = req.validationErrors(); // returns an object with results of validation check
@@ -337,6 +339,8 @@ app.post('/quiz/persona', authorizeRequest, function(req,res){
           var user = new Jobseeker({
               username: req.body.username,
               email: req.body.email,
+              firstname: req.body.firstname,
+              lastname: req.body.lastname,
               persona: req.body.persona
           });
         }
@@ -653,10 +657,12 @@ app.get('/jobseeker/jobs', authorizeRequest, function(req,res){
       Jobposter.find({ industry: jobseeker.industry, persona:jobseeker.persona }, function(err, jobs) {
           if (err) {
               console.log(err);
-              return res.status(400).send('Error updating account.');
+              return res.status(400).send('Error finding jobs.');
           }
 
-          // PUT LOGIC FOR RANKING HERE?
+          // TODO: Put logic for finding rank here
+          // PUT LOGIC FOR RANKING HERE
+          //
           console.log(jobs);
           return res.json(jobs);
 
@@ -681,7 +687,9 @@ app.get('/jobseeker/job/view', authorizeRequest, function(req,res){
       console.log("FOUND JOB");
       console.log(job);
 
-      // PUT LOGIC FOR SKILL GAPS HERE
+      // TODO: Put logic for finding skill gaps and trainings here
+      // PUT LOGIC FOR RANKING HERE
+      //
 
       return res.json(job);
 
@@ -845,6 +853,67 @@ app.post('/update/job', authorizeRequest, function(req,res){
         });
     });
 
+});
+
+
+// Get Candidates for Specific Job Posting
+app.get('/jobposter/jobs/candidates', authorizeRequest, function(req,res){
+
+    // 1. Input validation. Front end validation exists, but this functions as a fail-safe
+    req.checkQuery('job_id', 'Job ID is required').notEmpty();
+
+    var errors = req.validationErrors(); // returns an object with results of validation check
+    if (errors) {
+        res.status(400).send(errors);
+        return;
+    }
+
+    // 2. Get data in MongoDB
+    Promise.all(
+      [
+        Jobposter.findOne({ _id: req.query.job_id})
+      ]
+    ).then( ([job]) => {
+
+      console.log("Looking for jobseeker for: " + job.persona + " and " + job.industry);
+      Jobseeker.find({ industry: job.industry, persona:job.persona }, function(err, jobseekers) {
+          if (err) {
+              console.log(err);
+              return res.status(400).send('Error finding jobseekers');
+          }
+
+          //TODO: Put logic here for ranking jobseekers
+          console.log(jobseekers);
+          return res.json(jobseekers);
+
+        });
+    });
+});
+
+
+// Get Candidate
+app.get('/jobposter/jobs/candidate', authorizeRequest, function(req,res){
+
+    // 1. Input validation. Front end validation exists, but this functions as a fail-safe
+    req.checkQuery('candidate_id', 'Candidate ID is required').notEmpty();
+
+    var errors = req.validationErrors(); // returns an object with results of validation check
+    if (errors) {
+        res.status(400).send(errors);
+        return;
+    }
+
+    // 2. Get data in MongoDB
+    Promise.all(
+      [
+        Jobseeker.findOne({ _id: req.query.candidate_id})
+      ]
+    ).then( ([jobseeker]) => {
+
+      console.log(jobseeker);
+      return res.json(jobseeker);
+
+    });
 });
 
 
