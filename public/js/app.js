@@ -1506,6 +1506,7 @@ app.controller('JobposterJobEditViewController', function($scope, $localStorage,
   }
 
   $scope.submitForm = function() {
+    $scope.user.jobpost = {}
     $scope.user.jobpost.id = $scope.jobpost._id;
     $scope.user.jobpost.title = $scope.jobpost.title;
     $scope.user.jobpost.company = $scope.jobpost.company;
