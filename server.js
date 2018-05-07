@@ -455,9 +455,9 @@ app.post('/quiz/personality', authorizeRequest, function(req,res){
         user.q5 = req.body.q5;
         user.q6 = req.body.q6;
 
-        // PUT LOGIC FOR WATSON PERSONALITY STUFF HERE
-
-
+        // TODO:
+        // Put logic here to get watson insights, need to update model to store result
+        //
 
         user.save(function(err) {
             if (err) {
@@ -660,8 +660,9 @@ app.get('/jobseeker/jobs', authorizeRequest, function(req,res){
               return res.status(400).send('Error finding jobs.');
           }
 
-          // TODO: Put logic for finding rank here
-          // PUT LOGIC FOR RANKING HERE
+          // TODO:
+          // Here we have a list of jobs and the jobseeker
+          // Put the logic to rank the jobseeker and jobposts
           //
           console.log(jobs);
           return res.json(jobs);
@@ -687,9 +688,9 @@ app.get('/jobseeker/job/view', authorizeRequest, function(req,res){
       console.log("FOUND JOB");
       console.log(job);
 
-      // TODO: Put logic for finding skill gaps and trainings here
-      // PUT LOGIC FOR RANKING HERE
-      //
+      // TODO:
+      // Here we have the jobseeker and job information
+      // Put the logic for finding the skill gaps here and trainings
 
       return res.json(job);
 
@@ -882,7 +883,10 @@ app.get('/jobposter/jobs/candidates', authorizeRequest, function(req,res){
               return res.status(400).send('Error finding jobseekers');
           }
 
-          //TODO: Put logic here for ranking jobseekers
+          //
+          //TODO: Here we have jobpost and list of possible jobseeker_jobs
+          // Put logic here to rank jobseekers with jobpost
+          //
           console.log(jobseekers);
           return res.json(jobseekers);
 
