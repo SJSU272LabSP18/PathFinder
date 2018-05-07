@@ -774,6 +774,80 @@ app.get('/jobposter/jobs', authorizeRequest, function(req,res){
     });
 });
 
+
+app.post('/update/job', authorizeRequest, function(req,res){
+
+    // 1. Input validation. Front end validation exists, but this functions as a fail-safe
+    req.checkBody('id', 'id is required').notEmpty();
+    req.checkBody('username', 'Username is required').notEmpty();
+    req.checkBody('email', 'Email is required').notEmpty();
+    req.checkBody('title', 'Title is required').notEmpty();
+    req.checkBody('company', 'Company is required').notEmpty();
+    req.checkBody('summary', 'Summary is required').notEmpty();
+    req.checkBody('city', 'City is required').notEmpty();
+    req.checkBody('state', 'State is required').notEmpty();
+    req.checkBody('persona', 'Persona is required').notEmpty();
+    req.checkBody('industry', 'Industry is required').notEmpty();
+
+    req.checkBody('emotionalSlider', 'emotionalSlider is required').notEmpty();
+    req.checkBody('extrovertSlider', 'extrovertSlider is required').notEmpty();
+    req.checkBody('unplannedSlider', 'unplannedSlider is required').notEmpty();
+    req.checkBody('orgSlider', 'orgSlider is required').notEmpty();
+    req.checkBody('growthSlider', 'growthSlider is required').notEmpty();
+    req.checkBody('challengeSlider', 'challengeSlider is required').notEmpty();
+    req.checkBody('noveltySlider', 'noveltySlider is required').notEmpty();
+    req.checkBody('helpSlider', 'helpSlider is required').notEmpty();
+
+
+    var errors = req.validationErrors(); // returns an object with results of validation check
+    if (errors) {
+        res.status(400).send(errors);
+        return;
+    }
+
+    // 2. Fetch job in MongoDB and update
+    Jobposter.findOne({ _id: req.body.id}, function(err, job) {
+        if (err) {
+            console.log(err);
+            return res.status(400).send('Error updating job.');
+        }
+
+        console.log("JOB");
+        console.log(job);
+
+        job.title = req.body.title;
+        job.company = req.body.company;
+        job.logourl = req.body.logourl;
+        job.summary = req.body.summary;
+        job.description = req.body.description;
+        job.city = req.body.city;
+        job.state = req.body.state;
+        job.persona = req.body.persona;
+        job.industry = req.body.industry;
+        job.skills = req.body.skills;
+        job.perks = req.body.perks;
+        job.emotionalSlider = req.body.emotionalSlider;
+        job.extrovertSlider = req.body.extrovertSlider;
+        job.unplannedSlider = req.body.unplannedSlider;
+        job.orgSlider = req.body.orgSlider;
+        job.growthSlider = req.body.growthSlider;
+        job.challengeSlider = req.body.challengeSlider;
+        job.noveltySlider = req.body.noveltySlider;
+        job.helpSlider = req.body.helpSlider;
+
+        job.save(function(err) {
+            if (err) {
+                console.log(err);
+                res.status(500).send('Error updating job.');
+                return;
+            }
+            res.status(200).send('Job posting updated!');
+        });
+    });
+
+});
+
+
 // Custom middleware to check if user is logged-in
 function authorizeRequest(req, res, next) {
 

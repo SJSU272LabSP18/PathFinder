@@ -1,0 +1,307 @@
+<!--jobseeker_edit_job_view.html-->
+<div class="row" id="header">
+  <div class="col-md-12">
+      <h2>Updating Job Post</h2>
+  </div>
+</div>
+
+<div class="card container">
+
+  <div class="card-body">
+    <form class="form-horizontal needs-validation"  novalidate ng-submit="submitForm()" name="jobpostForm" novalidate>
+      <fieldset>
+
+        <!-- Job Posting Form -->
+        <div class="row">
+          <div class="col-12">
+            <label>Job Title:</label><br>
+            <input name="jobTitle"  class="form-control" ng-model="jobpost.title" type="text" required>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <label>Company Name:</label><br>
+            <input name="companyName"  class="form-control" ng-model="jobpost.company" type="text" required>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <label>Company Logo (URL Only):</label><br>
+            <input name="companyLogo"  class="form-control" ng-model="jobpost.logourl" type="text">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6">
+            <label>City:</label><br>
+            <input name="companyCity"  class="form-control" ng-model="jobpost.city" type="text" required>
+          </div>
+          <div class="col-6">
+            <label>State:</label><br>
+            <input name="companyState"  class="form-control" ng-model="jobpost.state" type="text" required>
+          </div>
+        </div>
+        <!-- Description -->
+        <div class="row" ng-class="{'has-success': jobpostForm.summary.$valid}">
+          <label>Provide a brief meaninful job summary:</label><br>
+          <textarea class="form-control" name="summary" ng-model="jobpost.summary" rows="5" placeholder="Enter meaninful job summary here!" required wordcount-validate="5"></textarea>
+          <span ng-hide="jobpostForm.summary.$valid">Minimum # of words needed: {{jobpostForm.summary.$viewValue|wordCounter}}/5</span>
+          <span ng-show="jobpostForm.summary.$valid">Word requirement met!</span>
+        </div>
+        <br>
+        <br>
+
+        <!-- Persona Options -->
+        <div class="row">
+            <label>Who would this job cater to?</label>
+            <div class="d-none d-md-block">
+            <ul class="nav nav-tabs justify-content-center image_section form-group" id="personas" role="tablist">
+                <li class="nav-item col-sm-12 col-md-4 col-lg-2">
+                    <a class="nav-link" ng-class="{active: jobpost.persona == 'intern'}" data-toggle="tab" id="intern" data-target="#option1" role="tab">
+                      <img src="assets/img/placeholderimg.png" alt="Thumbnail Image" class="rounded-circle img-raised d-none d-md-block">
+                      <p>Student Looking for Internship</p>
+                    </a>
+                </li>
+                <li class="nav-item col-sm-12 col-md-4 col-lg-2">
+                    <a class="nav-link" ng-class="{active: jobpost.persona == 'new_grad'}" data-toggle="tab" id="new_grad" data-target="#option2" role="tab">
+                      <img src="assets/img/placeholderimg.png" alt="Thumbnail Image" class="rounded-circle img-raised d-none d-md-block">
+                      <p>Fresh College Grad</p>
+                    </a>
+                </li>
+                <li class="nav-item col-sm-12 col-md-4 col-lg-2">
+                    <a class="nav-link" ng-class="{active: jobpost.persona == '0-2years'}" data-toggle="tab" id="0-2years" data-target="#option3" role="tab">
+                      <img src="assets/img/placeholderimg.png" alt="Thumbnail Image" class="rounded-circle img-raised d-none d-md-block">
+                      <p>Person with 0-2 Years Experience</p>
+                    </a>
+                </li>
+                <li class="nav-item col-sm-12 col-md-4 col-lg-2">
+                    <a class="nav-link" ng-class="{active: jobpost.persona == '2-6years'}" data-toggle="tab" id="2-6years" data-target="#option4" role="tab">
+                      <img src="assets/img/placeholderimg.png" alt="Thumbnail Image" class="rounded-circle img-raised d-none d-md-block">
+                      <p>Person with around 2-6 Years experience</p>
+                    </a>
+                </li>
+                <li class="nav-item col-sm-12 col-md-4 col-lg-2">
+                    <a class="nav-link" ng-class="{active: jobpost.persona == '6+years'}" data-toggle="tab" id="6+years" data-target="#option5" role="tab">
+                      <img src="assets/img/placeholderimg.png" alt="Thumbnail Image" class="rounded-circle img-raised d-none d-md-block">
+                      <p>Person with 6+ Years experience</p>
+                    </a>
+                </li>
+            </ul>
+          </div>
+          <select class="form-control d-md-none" id="tab_selector_personas">
+              <option value="0" ng-selected="{{jobpost.persona == 'intern'}}">Student Looking for Internship</option>
+              <option value="1" ng-selected="{{jobpost.persona == 'new_grad'}}">A Fresh College Grad</option>
+              <option value="2" ng-selected="{{jobpost.persona == '0-2years'}}">0-2 Years Experience</option>
+              <option value="3" ng-selected="{{jobpost.persona == '2-6years'}}">2-6 Years Experience</option>
+              <option value="4" ng-selected="{{jobpost.persona == '6+years'}}">6+ Years Experience</option>
+          </select>
+        </div>
+        <div class="tab-content text-center">
+            <div class="tab-pane" ng-class="{active: jobpost.persona == 'intern'}"  id="option1" role="tabpanel">
+                <h4>Student Looking for Internship</h4>
+                <div class="offset-sm-3 col-sm-6 d-md-none">
+                  <img src="assets/img/placeholderimg.png" alt="Thumbnail Image" class="rounded-circle img-raised">
+                </div>
+                <p>
+                  This job would be perfect for a student looking for an internship!
+                </p>
+            </div>
+            <div class="tab-pane" ng-class="{active: jobpost.persona == 'new_grad'}"  id="option2" role="tabpanel">
+                <h4>A Fresh College Grad</h4>
+                <div class="offset-sm-3 col-sm-6 d-md-none">
+                  <img src="assets/img/placeholderimg.png" alt="Thumbnail Image" class="rounded-circle img-raised">
+                </div>
+                <p>
+                  This job would be awesome for a fresh graduate from a University/Credential program.
+                </p>
+            </div>
+            <div class="tab-pane" ng-class="{active: jobpost.persona == '0-2years'}"  id="option3" role="tabpanel">
+                <h4>Little to no experience (< 1 Year)</h4>
+                <div class="offset-sm-3 col-sm-6 d-md-none">
+                  <img src="assets/img/placeholderimg.png" alt="Thumbnail Image" class="rounded-circle img-raised">
+                </div>
+                <p>
+                  A person with little to no experience would be suitable for this role, this is as an opportunity for them to grow!
+                </p>
+            </div>
+            <div class="tab-pane" ng-class="{active: jobpost.persona == '2-6years'}"  id="option4" role="tabpanel">
+                <h4>3+ Years Experience</h4>
+                <div class="offset-sm-3 col-sm-6 d-md-none">
+                  <img src="assets/img/placeholderimg.png" alt="Thumbnail Image" class="rounded-circle img-raised">
+                </div>
+                <p>
+                  Looking for a person that has some experience but is relatively early in their career!
+                </p>
+            </div>
+            <div class="tab-pane" ng-class="{active: jobpost.persona == '6+years'}"  id="option5" role="tabpanel">
+                <h4>3+ Years Experience</h4>
+                <div class="offset-sm-3 col-sm-6 d-md-none">
+                  <img src="assets/img/placeholderimg.png" alt="Thumbnail Image" class="rounded-circle img-raised">
+                </div>
+                <p>
+                  Somebody with 6 or more years experience would be perfect!
+                </p>
+            </div>
+        </div>
+        <br>
+
+
+        <!-- Industry Options -->
+        <div class="row">
+            <label>What type of job is this specifically?</label>
+            <div class="d-none d-md-block">
+              <ul class="nav nav-tabs justify-content-center image_section form-group" id="industries" role="tablist">
+                  <li class="nav-item col-sm-12 col-md-4 col-lg-2">
+                      <a class="nav-link" ng-class="{active: jobpost.industry == 'software_engineering'}" data-toggle="tab" id="software_engineering" data-target="#industry1" role="tab">
+                        <img src="assets/img/placeholderimg2.png" alt="Thumbnail Image" class="rounded-circle img-raised d-none d-md-block">
+                        <p>Software Engineering</p>
+                      </a>
+                  </li>
+                  <li class="nav-item col-sm-12 col-md-4 col-lg-2">
+                      <a class="nav-link" ng-class="{active: jobpost.industry == 'office_assistant'}" data-toggle="tab" id="office_assistant" data-target="#industry2" role="tab">
+                        <img src="assets/img/placeholderimg2.png" alt="Thumbnail Image" class="rounded-circle img-raised d-none d-md-block">
+                        <p>Office Assistant</p>
+                      </a>
+                  </li>
+                  <li class="nav-item col-sm-12 col-md-4 col-lg-2">
+                      <a class="nav-link disabled" data-toggle="tab" role="tab">
+                        <img src="assets/img/placeholderimg2.png" alt="Thumbnail Image" class="rounded-circle img-grayscale img-raised d-none d-md-block">
+                        <p>More Coming Soon</p>
+                      </a>
+                  </li>
+              </ul>
+            </div>
+            <select class="form-control d-md-none" id="tab_selector_industry">
+                <option value="0" ng-selected="{{jobpost.industry == 'software_engineering'}}">Software Engineering</option>
+                <option value="1" ng-selected="{{jobpost.industry == 'office_assistant'}}">Office Assistant</option>
+            </select>
+        </div>
+        <div class="tab-content text-center">
+            <div class="tab-pane" ng-class="{active: jobpost.industry == 'software_engineering'}" id="industry1" role="tabpanel">
+                <h4>Software Engineering</h4>
+                <div class="offset-sm-3 col-sm-6 d-md-none">
+                  <img src="assets/img/placeholderimg2.png" alt="Thumbnail Image" class="rounded-circle img-raised">
+                </div>
+                <p>
+                  Software engineers apply the principles and techniques of computer science, engineering, and mathematical analysis to the design, development, testing, and evaluation of the software and the systems that enable computers to perform their many applications.
+                </p>
+            </div>
+            <div class="tab-pane" ng-class="{active: jobpost.industry == 'office_assistant'}" id="industry2" role="tabpanel">
+                <h4>Office Assistant</h4>
+                <div class="offset-sm-3 col-sm-6 d-md-none">
+                  <img src="assets/img/placeholderimg2.png" alt="Thumbnail Image" class="rounded-circle img-raised">
+                </div>
+                <p>
+                  Office assistants' job duties usually include tasks like typing, filing, taking inventory, keeping records and sorting checks. They may also prepare documents, process mail and answer telephones.                        </p>
+            </div>
+        </div>
+        <br>
+
+        <!-- Skills -->
+        <div class="row">
+          <label>What are the skills necessary for this job?</label><br>
+        </div>
+        <div class="fuelux">
+          <div class="pillbox" data-initialize="pillbox" id="skillPillbox">
+            <ul class="clearfix pill-group">
+              <li class="pillbox-input-wrap btn-group">
+                <a class="pillbox-more">and <span class="pillbox-more-count"></span> more...</a>
+                <input type="text" class="form-control dropdown-toggle pillbox-add-item" placeholder="add skill">
+              </li>
+            </ul>
+          </div>
+        </div>
+        <br>
+
+        <!-- Skills -->
+        <div class="row">
+          <label>What are some perks for this position?</label><br>
+        </div>
+        <div class="fuelux">
+          <div class="pillbox" data-initialize="pillbox" id="perkPillbox">
+            <ul class="clearfix pill-group">
+              <li class="pillbox-input-wrap btn-group">
+                <a class="pillbox-more">and <span class="pillbox-more-count"></span> more...</a>
+                <input type="text" class="form-control dropdown-toggle pillbox-add-item" placeholder="add perk">
+              </li>
+            </ul>
+          </div>
+        </div>
+        <br>
+
+        <!-- Description -->
+        <div class="row" ng-class="{'has-success': jobpostForm.description.$valid}">
+          <label>Provide a more thorough job description:</label><br>
+          <textarea class="form-control" name="description" ng-model="jobpost.description" rows="10" placeholder="Enter thorough job description here!" required wordcount-validate="5"></textarea>
+          <span ng-hide="jobpostForm.description.$valid">Minimum # of words needed: {{jobpostForm.description.$viewValue|wordCounter}}/5</span>
+          <span ng-show="jobpostForm.description.$valid">Word requirement met!</span>
+        </div>
+        <br>
+
+
+        <!-- Personality Sliders -->
+        <label>Personality Sliders</label>
+        <br>
+        <br>
+        <div class="col-12">
+            <label>How emotionally demanding is this job?</label><br>
+            <div id="emotionalSlider" class="slider slider-primary"></div>
+        </div>
+        <br>
+        <br>
+        <div class="col-12">
+            <label>What level of extraversion is ideal for this job?</label><br>
+            <div id="extrovertSlider" class="slider slider-primary"></div>
+        </div>
+        <br>
+        <br>
+        <div class="col-12">
+            <label>How often do unplanned or unexpected tasks come up?</label><br>
+            <div id="unplannedSlider" class="slider slider-primary"></div>
+        </div>
+        <br>
+        <br>
+        <div class="col-12">
+            <label>Does the job have organization, planning, and things that have a clear purpose?</label><br>
+            <div id="orgSlider" class="slider slider-primary"></div>
+        </div>
+        <br>
+        <br>
+        <div class="col-12">
+            <label>Does this position foster learning, exploration, and growth?</label><br>
+            <div id="growthSlider" class="slider slider-primary"></div>
+        </div>
+        <br>
+        <br>
+        <div class="col-12">
+            <label>What level of challenge does this job offer?</label><br>
+            <div id="challengeSlider" class="slider slider-primary"></div>
+        </div>
+        <br>
+        <br>
+        <div class="col-12">
+            <label>How much novelty and excitement does the job offer?</label><br>
+            <div id="noveltySlider" class="slider slider-primary"></div>
+        </div>
+        <br>
+        <br>
+        <div class="col-12">
+            <label>How often will the job duties require helping others?</label><br>
+            <div id="helpSlider" class="slider slider-primary"></div>
+        </div>
+        <br>
+        <br>
+        <!-- Submission -->
+        <div class="form-group">
+          <button class="btn btn-default" ng-click="cancel()">Cancel</button>
+          <button class="btn btn-primary" ng-disabled="jobpostForm.$invalid" type="submit">Update</button>
+        </div>
+
+      </fieldset>
+    </form>
+    <!-- End Resume Card -->
+
+  </div>
+
+</div>
+
+<!--/jobseeker_job_view.html-->
