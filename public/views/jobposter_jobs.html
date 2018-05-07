@@ -1,0 +1,56 @@
+<!--jobposter_jobs.html-->
+<div class="row" id="header">
+  <div class="col-md-12">
+      <h2>My Job Listings</h2>
+  </div>
+</div>
+
+<div class="card container">
+  <div class="card-body">
+
+    <table class="table table-hover table-striped table-responsive-sm">
+        <thead>
+
+            <tr>
+                <th class="" custom-sort order="'company'" sort="sort">Company&nbsp;</th>
+                <th class="" custom-sort order="'title'" sort="sort">Job Title&nbsp;</th>
+                <th class="" custom-sort order="'city'" sort="sort">City&nbsp;</th>
+                <th class="" custom-sort order="'state'" sort="sort">State&nbsp;</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <td colspan="12">
+                <div>
+                    <ul class="pagination pagination-primary">
+                        <li class="page-item" ng-class="{disabled: currentPage == 0}">
+                            <a class="page-link" href ng-click="prevPage()">« Prev</a>
+                        </li>
+
+                        <li class="page-item" ng-repeat="n in range(pagedItems.length, currentPage, currentPage + gap) "
+                            ng-class="{active: n == currentPage}"
+                        ng-click="setPage()">
+                            <a class="page-link" href ng-bind="n + 1">1</a>
+                        </li>
+
+                        <li class="page-item" ng-class="{disabled: (currentPage) == pagedItems.length - 1}">
+                            <a class="page-link" href ng-click="nextPage()">Next »</a>
+                        </li>
+                    </ul>
+                </div>
+            </td>
+
+        </tfoot>
+        <tbody>
+            <tr ng-repeat="item in pagedItems[currentPage] | orderBy:sort.sortingOrder:sort.reverse" ng-click="goToJob(item._id)">
+                <td>{{item.company}}</td>
+                <td>{{item.title}}</td>
+                <td>{{item.city}}</td>
+                <td>{{item.state}}</td>
+            </tr>
+        </tbody>
+    </table>
+
+  <div>
+</div>
+
+<!--/jobposter_jobs.html-->

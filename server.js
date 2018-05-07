@@ -757,6 +757,22 @@ app.post('/post/job', authorizeRequest, function(req,res){
 
 });
 
+// Get Jobs for jobposter
+app.get('/jobposter/jobs', authorizeRequest, function(req,res){
+
+
+    console.log("Username: " + req.query.username);
+    // 1. Get data in MongoDB
+    Promise.all(
+      [
+        Jobposter.find({ username: req.query.username}),
+      ]
+    ).then( ([jobs]) => {
+
+      return res.json(jobs);
+
+    });
+});
 
 // Custom middleware to check if user is logged-in
 function authorizeRequest(req, res, next) {

@@ -1175,6 +1175,180 @@ app.controller('JobposterPostJobController', function($scope, $localStorage, $se
 });
 
 
+app.controller('JobposterJobsController', function($scope, $filter, $localStorage, $sessionStorage, $location, $http){
+
+  // Check if user is authorized to view page
+  $http({
+      method: 'GET',
+      url: '/protected'
+      })
+      .success(function(response){
+          $scope.message = response;
+      })
+      .error(function(response){
+          alert(response);
+          $location.path('/account/login');
+      }
+  );
+
+  // Set local scope to persisted user data
+  $scope.user = $localStorage;
+
+  $scope.sort = {
+              sortingOrder : 'company',
+              reverse : false
+          };
+
+  // Create Table Based on Jobs Data
+  $http({
+      method: 'GET',
+      url: '/jobposter/jobs',
+      params: {'username': $scope.user.user.username}
+      })
+      .success(function(response){
+          // init
+          $scope.items = response;
+          console.log($scope.items);
+
+
+          $scope.gap = 5;
+          $scope.filteredItems = [];
+          $scope.groupedItems = [];
+          $scope.itemsPerPage = 10;
+          $scope.pagedItems = [];
+          $scope.currentPage = 0;
+
+          // Calculate gap that should be caused
+          num_pages = Math.ceil($scope.items.length/$scope.itemsPerPage);
+          if(num_pages < $scope.gap){
+            $scope.gap = num_pages;
+          }
+
+
+            var searchMatch = function (haystack, needle) {
+                if (!needle) {
+                    return true;
+                }
+                return haystack.toLowerCase().indexOf(needle.toLowerCase()) !== -1;
+            };
+
+            // init the filtered items
+            $scope.search = function () {
+                $scope.filteredItems = $filter('filter')($scope.items, function (item) {
+                    for(var attr in item) {
+                        if (searchMatch(item[attr], $scope.query))
+                            return true;
+                    }
+                    return false;
+                });
+                // take care of the sorting order
+                if ($scope.sort.sortingOrder !== '') {
+                    $scope.filteredItems = $filter('orderBy')($scope.filteredItems, $scope.sort.sortingOrder, $scope.sort.reverse);
+                }
+                $scope.currentPage = 0;
+                // now group by pages
+                $scope.groupToPages();
+            };
+
+
+            // calculate page in place
+            $scope.groupToPages = function () {
+                $scope.pagedItems = [];
+
+                for (var i = 0; i < $scope.filteredItems.length; i++) {
+                    if (i % $scope.itemsPerPage === 0) {
+                        $scope.pagedItems[Math.floor(i / $scope.itemsPerPage)] = [ $scope.filteredItems[i] ];
+                    } else {
+                        $scope.pagedItems[Math.floor(i / $scope.itemsPerPage)].push($scope.filteredItems[i]);
+                    }
+                }
+            };
+
+            $scope.range = function (size,start, end) {
+                var ret = [];
+                console.log(size,start, end);
+                if (size < end) {
+                    end = size;
+                    start = size-$scope.gap;
+                }
+                for (var i = start; i < end; i++) {
+                    ret.push(i);
+                }
+                 console.log(ret);
+                return ret;
+            };
+
+            $scope.prevPage = function () {
+                if ($scope.currentPage > 0) {
+                    $scope.currentPage--;
+                }
+            };
+
+            $scope.nextPage = function () {
+                if ($scope.currentPage < $scope.pagedItems.length - 1) {
+                    $scope.currentPage++;
+                }
+            };
+
+            $scope.setPage = function () {
+                $scope.currentPage = this.n;
+            };
+
+          // functions have been describe process the data for display
+          $scope.search();
+
+      });
+
+
+
+  // Redirect user to jobs page
+  $scope.goToJob = function(id) {
+    $location.path('/jobposter/jobs/view/' + id);
+  }
+
+
+});
+
+app.controller('JobposterJobViewController', function($scope, $localStorage, $location, $sessionStorage, $routeParams,  $http){
+
+  // Check if user is authorized to view page
+  $http({
+      method: 'GET',
+      url: '/protected'
+  })
+      .success(function(response){
+          $scope.message = response;
+      })
+      .error(function(response){
+          alert(response);
+          $location.path('/account/login');
+      }
+  );
+
+  // Set local scope to persisted user data
+  $scope.user = $localStorage;
+
+  // Pull job listing from db
+  $http({
+      method: 'GET',
+      url: '/jobseeker/job/view',
+      params: {'username': $scope.user.user.username, 'job_id': $routeParams.id}
+      })
+      .success(function(response){
+          $scope.job= response;
+          console.log($scope.job);
+
+          if($scope.job == ""){
+            alert("No Job Found in DB");
+            $location.path('/jobseeker/jobs');
+          }
+      })
+
+});
+
+
+
+
 
 /*********************************
  Routing
@@ -1226,6 +1400,7 @@ app.config(function($routeProvider) {
             controller: 'AccountController'
         }).
 
+        //JOB SEEKER SPECIFIC STUFS
         //Quiz Main Page
         when('/quiz', {
             templateUrl: 'views/quiz_main.html',
@@ -1274,12 +1449,24 @@ app.config(function($routeProvider) {
             controller: 'JobseekerJobViewController'
         }).
 
+        //JOB POSTER SPECIFIC STUFS
         //Job Poster Post Job Page
         when('/post/job', {
             templateUrl: 'views/jobposter_post_job.html',
             controller: 'JobposterPostJobController'
         }).
 
+        //Job Poster View Jobs Page
+        when('/jobposter/jobs', {
+            templateUrl: 'views/jobposter_jobs.html',
+            controller: 'JobposterJobsController'
+        }).
+
+        //Job Poster Specific Job Page
+        when('/jobposter/jobs/view/:id', {
+            templateUrl: 'views/jobposter_job_view.html',
+            controller: 'JobposterJobViewController'
+        }).
 
         //Create Account page
         when('/account/create', {
