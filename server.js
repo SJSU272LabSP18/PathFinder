@@ -308,6 +308,35 @@ app.get('/account/logout', function(req,res){
 
 });
 
+// EXPLORE JOBS STUFFS
+
+
+// Get All Jobs for non logged in user
+app.get('/explore/jobs', function(req,res){
+
+
+    console.log("Persona: " + req.query.persona);
+    console.log("Industry: " + req.query.industry);
+    Jobposter.find({ industry: req.query.industry, persona: req.query.persona }, function(err, jobs) {
+        if (err) {
+            console.log(err);
+            return res.status(400).send('Error finding jobs.');
+        }
+        return res.json(jobs);
+    });
+});
+
+// Get Specific Jobsfor non logged in user
+app.get('/explore/job/view', function(req,res){
+
+    Jobposter.findOne({ _id: req.query.job_id}, function(err, job) {
+        if (err) {
+            console.log(err);
+            return res.status(400).send('Error finding job.');
+        }
+        return res.json(job);
+    });
+});
 
 // JOB SEEKER STUFFS
 

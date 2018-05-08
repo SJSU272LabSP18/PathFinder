@@ -18,9 +18,19 @@ label {font-weight:bold}
    background-color: none;
 }
 
-
 .hand_pointer{
   cursor: pointer;
+}
+
+.blur {
+    filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius='3');
+    -webkit-filter: url(#blur-filter);
+    filter: url(#blur-filter);
+    -webkit-filter: blur(3px);
+    filter: blur(3px);
+}
+.blur-svg {
+    display: none;
 }
 
 .down-arrow{
