@@ -73,11 +73,11 @@
             <h3>We found a skill gap in the following (Click for Trainings!)</h3>
           </div>
 
-          <div ng-repeat="gap in user.skillgaps">
+          <div ng-repeat="gap in job.skill_gap">
             <div class="col-xs-12 col-sm-6 col-md-3">
-              <button type="button" class="btn btn-primary btn-block" data-toggle="collapse" data-target="#{{gap.value}}">{{gap.text}}</button>
+              <button type="button" class="btn btn-primary btn-block" data-toggle="collapse" data-target="#{{gap}}">{{gap}}</button>
             </div>
-            <div id="{{gap.value}}" class="collapse">
+            <div id="{{gap}}" class="collapse">
               <div ng-repeat="training in gap.trainings">
                 <h4>{{training.title}}</h4>
                 <a href="{{training.link}}" target="_blank">{{training.link}}</a>
@@ -91,6 +91,7 @@
     </div>
   </div>
 </div>
+
 
 <div class="card container">
   <div class="card-body">

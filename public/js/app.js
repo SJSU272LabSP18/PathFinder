@@ -1095,35 +1095,7 @@ app.controller('JobseekerJobViewController', function($scope, $localStorage, $lo
             alert("No Job Found in DB");
             $location.path('/jobseeker/jobs');
           }
-
-          $scope.user.skillgaps = [
-            {
-              "text":"Python",
-              "value":"Python",
-              "trainings": [
-                {
-                  title: "Complete Python Bootcamp: Go from zero to hero in Python 3",
-                  link: "https://www.udemy.com/complete-python-bootcamp/"
-                },
-                {
-                  title: "Introduction To Python Programming",
-                  link: "https://www.udemy.com/pythonforbeginnersintro/"
-                }
-              ]
-            },
-            {
-              "text":"React",
-              "value":"React",
-              "trainings": [
-                {
-                  title: "Master ReactJS: Learn React JS from Scratch",
-                  link: "https://www.udemy.com/master-reactjs/"
-                }
-              ]
-            },
-          ]
-
-
+          
       })
 
 });
