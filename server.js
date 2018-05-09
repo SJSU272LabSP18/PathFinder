@@ -734,7 +734,7 @@ app.get('/jobseeker/job/view', authorizeRequest, function(req,res){
       // Remove Skills that Jobseeker already has
       for(var i  = 0; i < jobseeker.skills.length; i++){
         for(var j = 0; j < skill_gap.length; j++){
-          if (jobseeker.skills[i].value == skill_gap[j]){
+          if (jobseeker.skills[i].value == skill_gap[j].skill){
             skill_gap.splice(j,1);
           }
         }
