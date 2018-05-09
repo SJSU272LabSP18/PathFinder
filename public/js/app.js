@@ -671,8 +671,8 @@ app.controller('QuizPersonalityController', function($scope, $localStorage, $ses
                      {id:'Q2', question:"What is the greatest accomplishment of your life?", answer:response.q2},
                      {id:'Q3', question:"For what in your life do you feel most grateful?", answer:response.q3},
                      {id:'Q4', question:"If you were able to live to the age of 90 and retain either the mind or body of a 30-year old for the last 60 years of your life, which would you choose?", answer:response.q4},
-                     {id:'Q5', question:"What would constitute a perfect day for you? (not work related like number 1)", answer:response.q5},
-                     {id:'Q6', question:"Describe your average day (needs to be swapped out)", answer:response.q6}
+                     {id:'Q5', question:"What is your most treasured memory?", answer:response.q5},
+                     {id:'Q6', question:"If you could wake up tomorrow having gained any one quality or ability, what would it be?", answer:response.q6}
                     ]
 
 
@@ -683,8 +683,8 @@ app.controller('QuizPersonalityController', function($scope, $localStorage, $ses
                        {id:'Q2', question:"What is the greatest accomplishment of your life?", answer:""},
                        {id:'Q3', question:"For what in your life do you feel most grateful?", answer:""},
                        {id:'Q4', question:"If you were able to live to the age of 90 and retain either the mind or body of a 30-year old for the last 60 years of your life, which would you choose?", answer:""},
-                       {id:'Q5', question:"What would constitute a perfect day for you? (not work related like number 1)", answer:""},
-                       {id:'Q6', question:"Describe your average day (needs to be swapped out)", answer:""}
+                       {id:'Q5', question:"What is your most treasured memory?", answer:""},
+                       {id:'Q6', question:"If you could wake up tomorrow having gained any one quality or ability, what would it be?", answer:""}
                       ]
         }
 
@@ -1095,7 +1095,7 @@ app.controller('JobseekerJobViewController', function($scope, $localStorage, $lo
             alert("No Job Found in DB");
             $location.path('/jobseeker/jobs');
           }
-          
+
       })
 
 });
