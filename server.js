@@ -740,6 +740,7 @@ app.get('/jobseeker/job/view', authorizeRequest, function(req,res){
         }
       }
 
+      // Iterate through skill gaps, execute rest call to get google cse results
       job.skill_gap = skill_gap;
       console.log("Skill Gap");
       console.log(job.skill_gap);
