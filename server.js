@@ -488,21 +488,93 @@ app.post('/quiz/personality', authorizeRequest, function(req,res){
         user.q5 = req.body.q5;
         user.q6 = req.body.q6;
 
-        // TODO:
-        // Put logic here to get watson insights, need to update model to store result
-        //
+        // Get personality insights
+        var post_body = req.body.q1 + " " + req.body.q2 + " " + req.body.q3 + " " + req.body.q4 + " " + req.body.q5 + " " + req.body.q6;
+        var request = require("request");
+        // console.log("post_body", post_body);
 
-        user.save(function(err) {
-            if (err) {
-                console.log(err);
-                res.status(500).send('Error updating account.');
-                return;
+        var options = {
+            method: 'POST',
+            url: 'https://watson-api-explorer.mybluemix.net/personality-insights/api/v3/profile',
+            auth: {
+                user: '30d55ab4-a84c-434c-90dd-49742f96b0c7',
+                password: 'aKicDJRQv5fM'
+            },
+            qs:
+            {
+                version: '2016-05-20',
+                raw_scores: 'false',
+                csv_headers: 'false',
+                consumption_preferences: 'false'
+            },
+            headers:
+            {
+                'Cache-Control': 'no-cache',
+                'Accept-Language': 'en',
+                'Content-Language': 'en',
+                Accept: 'application/json',
+                'Content-Type': 'text/plain'
+            },
+            body: post_body
+        };
+        // console.log("options", options);
+
+
+        request(options, function (error, response, body) {
+            // console.log("response", response);
+            if (error) {
+                console.log("error", error);
+                throw new Error(error);
             }
-            res.status(200).send('Personality questions updated!');
+
+            // console.log("body", body);
+            var p = JSON.parse(body);
+            // Extract the personality scores
+            for (var p_trait in p.personality) {
+                if (p.personality[p_trait].trait_id == 'big5_openness') {
+                    user.emotional = (p.personality[p_trait].percentile * 100);
+                }
+                if (p.personality[p_trait].trait_id == 'big5_extraversion') {
+                    user.extrovert = (p.personality[p_trait].percentile * 100);
+                }
+            }
+
+            for (var n_trait in p.needs) {
+                if (p.needs[n_trait].trait_id == 'need_structure') {
+                    user.structure = (p.needs[n_trait].percentile * 100) / 10;
+                }
+                if (p.needs[n_trait].trait_id == 'need_curiosity') {
+                    user.curiosity = (p.needs[n_trait].percentile * 100) / 10;
+                }
+                if (p.needs[n_trait].trait_id == 'need_challenge') {
+                    user.challenge = (p.needs[n_trait].percentile * 100) / 10;
+                }
+            }
+
+            for (var trait in p.values) {
+                if (p.values[trait].trait_id == 'value_openness_to_change') {
+                    user.stimulation = (p.values[trait].percentile * 100) / 10;
+                }
+                if (p.values[trait].trait_id == 'value_self_transcendence') {
+                    user.help = (p.values[trait].percentile * 100) / 10;
+                }
+            }
+
+            user.save(function (err) {
+                console.log(user);
+                if (err) {
+                    console.log(err);
+                    res.status(500).send('Error updating account.');
+                    return;
+                }
+                res.status(200).send('Personality questions updated!');
+            });
         });
     });
 
 });
+
+
 
 // Get Personality
 app.get('/quiz/personality', authorizeRequest, function(req,res){
@@ -693,11 +765,63 @@ app.get('/jobseeker/jobs', authorizeRequest, function(req,res){
               return res.status(400).send('Error finding jobs.');
           }
 
-          // TODO:
-          // Here we have a list of jobs and the jobseeker
-          // Put the logic to rank the jobseeker and jobposts
-          //
-          console.log(jobs);
+          var jobseeker_skills = [];
+          for (var i = 0; i < jobseeker.skills.length; i++) {
+              jobseeker_skills.push(jobseeker.skills[i].value);
+          }
+          // console.log(jobseeker_skills);
+          // For each job, find the match
+          for (var j in jobs) {
+              var job_skills = [];
+              for (var i = 0; i < jobs[j].skills.length; i++) {
+                  job_skills.push(jobs[j].skills[i].value);
+              }
+              var num_req_skills = job_skills.length;
+
+              // Get % of skills that match, that is # present / req
+              var num_match = 0;
+              // console.log("Job skills", job_skills);
+              for (var i = 0; i < job_skills.length; i++) {
+                  // console.log(job_skills[i]);
+                  if (jobseeker_skills.indexOf(job_skills[i])) {
+                      num_match++;
+                  }
+              }
+              // console.log("num match", num_match);
+
+              // Skills match counts for 80%
+              var skills_match = (num_match / num_req_skills) * 80;
+
+              // console.log(skills_match);
+
+              // Calculate percent match for personality
+              var RMSE = 0;
+              var personality_match = 0;
+              var map = {};
+              map[jobs[j].emotionalSlider] = jobseeker.emotional;
+              map[jobs[j].extrovertSlider] = jobseeker.extrovert;
+              map[jobs[j].unplannedSlider] = jobseeker.structure;
+              map[jobs[j].challengeSlider] = jobseeker.challenge;
+              map[jobs[j].noveltySlider] = jobseeker.stimulation;
+              map[jobs[j].helpSlider] = jobseeker.help;
+              // console.log(map);
+              //console.log(jobseeker);
+
+              for (var key in map) {
+                  RMSE = RMSE + (parseInt(key) - map[key]) ^ 2;
+              }
+              //console.log(RMSE);
+
+              RMSE = Math.sqrt(RMSE / 7);
+              // Personality counts for 20%
+              personality_match = (1 - RMSE) * 20;
+              // console.log(RMSE);
+              // console.log(personality_match);
+
+              var total_match = skills_match + personality_match;
+              console.log(total_match);
+              jobs[j].ranking = Math.abs(total_match.toFixed(1));
+          }
           return res.json(jobs);
 
       });

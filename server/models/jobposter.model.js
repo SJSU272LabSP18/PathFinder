@@ -40,7 +40,8 @@ var questionsSchema = new mongoose.Schema({
     growthSlider: {type: Number},
     challengeSlider: {type: Number},
     noveltySlider: {type: Number},
-    helpSlider: {type: Number}
+    helpSlider: {type: Number},
+    ranking: { type: Number, default: 0}
 });
 
 module.exports = mongoose.model('Jobposter', questionsSchema);
