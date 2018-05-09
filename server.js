@@ -728,59 +728,56 @@ app.get('/jobseeker/job/view', authorizeRequest, function(req,res){
       // TODO:
       // Here we have the jobseeker and job information
       // Put the logic for finding the skill gaps here and trainings
+      if(jobseeker != undefined){
 
-      /*
-      var skill_gap = [];
-      // Get Skills Needed
-      for(var i = 0; i < job.skills.length; i++){
-        skill_gap.push({'skill': job.skills[i].value, 'trainings': []});
-      }
+        var skill_gap = [];
+        // Get Skills Needed
+        for(var i = 0; i < job.skills.length; i++){
+          skill_gap.push({'skill': job.skills[i].value, 'trainings': []});
+        }
 
-      // Remove Skills that Jobseeker already has
-      for(var i  = 0; i < jobseeker.skills.length; i++){
-        for(var j = 0; j < skill_gap.length; j++){
-          if (jobseeker.skills[i].value == skill_gap[j].skill){
-            skill_gap.splice(j,1);
+        // Remove Skills that Jobseeker already has
+        for(var i  = 0; i < jobseeker.skills.length; i++){
+          for(var j = 0; j < skill_gap.length; j++){
+            if (jobseeker.skills[i].value == skill_gap[j].skill){
+              skill_gap.splice(j,1);
+            }
           }
         }
+
+        // Iterate through skill gaps, execute rest call to get google cse results
+        var options = { method: 'GET',
+          url: 'https://www.googleapis.com/customsearch/v1',
+          qs:
+           { key: 'AIzaSyB178s4XLvqkJRRRrvZT4YX-_9rKb-tzek',
+             num: '4',
+             cx: '000150702483990711318:hrirdu5mxc8',
+             q: ''
+             },
+          headers:
+           { 'Postman-Token': '19276978-5091-4a03-bcf5-0f6831031a02',
+             'Cache-Control': 'no-cache' } };
+
+        console.log("SKILL GAPS");
+
+        console.log(skill_gap);
+
+        for(var i = 0; i < skill_gap.length; i++  ){
+          // send request for google cse
+          console.log(skill_gap[i].trainings);
+          options.qs.q = skill_gap[i].skill;
+          console.log(options);
+          request(options, function (error, response, body) {
+
+            res = JSON.parse(body);
+            console.log(res);
+
+          });
+        }
+
+        job.skill_gap = skill_gap;
       }
 
-      // Iterate through skill gaps, execute rest call to get google cse results
-      var options = { method: 'GET',
-        url: 'https://www.googleapis.com/customsearch/v1',
-        qs:
-         { key: 'AIzaSyB178s4XLvqkJRRRrvZT4YX-_9rKb-tzek',
-           num: '4',
-           cx: '000150702483990711318:hrirdu5mxc8',
-           q: '' },
-        headers:
-         { 'Postman-Token': '19276978-5091-4a03-bcf5-0f6831031a02',
-           'Cache-Control': 'no-cache' } };
-
-
-      for(var i = 0; i < skill_gap.length; i++  ){
-        // send request for google cse
-        console.log
-        options.qs.q = skill_gap[i].skill;
-        request(options, function (error, response, body) {
-
-
-          res = JSON.parse(body);
-          //
-          for(var j = 0; j < res.items.length; j++){
-            console.log(skill_gap[i]);
-            skill_gap[i].trainings.append({'title': res.items[j].title, 'link': res.items[j].link});
-
-          }
-          //
-
-
-        });
-      }
-
-
-      job.skill_gap = skill_gap;
-      */
       return res.json(job);
     });
 });
