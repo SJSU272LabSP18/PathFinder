@@ -75,7 +75,7 @@
 
           <div ng-repeat="gap in job.skill_gap">
             <div class="col-xs-12 col-sm-6 col-md-3">
-              <button type="button" class="btn btn-primary btn-block" data-toggle="collapse" data-target="#{{gap}}">{{gap}}</button>
+              <button type="button" class="btn btn-primary btn-block" data-toggle="collapse" data-target="#{{gap.skill}}">{{gap.skill}}</button>
             </div>
             <div id="{{gap}}" class="collapse">
               <div ng-repeat="training in gap.trainings">
