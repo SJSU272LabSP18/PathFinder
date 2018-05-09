@@ -15,8 +15,8 @@
 
           <div ng-form="subForm" ng-class="{'has-success': subForm.$valid }" ng-repeat="question in formQuestions">
             <label for="{{question.id}}">{{question.id}} {{question.question}}</label><br>
-            <textarea class="form-control" ng-model="question.answer" name="{{question.id}}" rows="3" placeholder="Enter text here" required wordcount-validate="600"></textarea>
-            <span ng-hide="subForm.$valid">Minimum # of words needed: {{subForm[question.id].$viewValue|wordCounter}}/600</span>
+            <textarea class="form-control" ng-model="question.answer" name="{{question.id}}" rows="3" placeholder="Enter text here" required wordcount-validate="100"></textarea>
+            <span ng-hide="subForm.$valid">Minimum # of words needed: {{subForm[question.id].$viewValue|wordCounter}}/100</span>
             <span ng-show="subForm.$valid">Word requirement met!</span>
             <br><br>
           </div>
