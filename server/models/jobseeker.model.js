@@ -22,6 +22,13 @@ var questionsSchema = new mongoose.Schema({
     q4: {type: String, default: ""},
     q5: {type: String, default: ""},
     q6: {type: String, default: ""},
+    emotional: { type: Number, default: 0 },
+    extrovert: { type: Number, default: 0 },
+    structure: { type: Number, default: 0 },
+    curiosity: { type: Number, default: 0 },
+    challenge: { type: Number, default: 0 },
+    novelty: { type: Number, default: 0 },
+    help: { type: Number, default: 0 },
     perks: [{
         id : String,
         perk : String,
@@ -47,7 +54,8 @@ var questionsSchema = new mongoose.Schema({
     skills: [{
         text: String,
         value: String
-    }]
+    }],
+    ranking: { type: Number, default: 0}
 });
 
 module.exports = mongoose.model('Jobseeker', questionsSchema);
