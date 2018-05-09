@@ -717,12 +717,35 @@ app.get('/jobseeker/job/view', authorizeRequest, function(req,res){
       console.log("FOUND JOB");
       console.log(job);
 
+      console.log("FOUND JOBSEEKER");
+      console.log(jobseeker);
+
+
       // TODO:
       // Here we have the jobseeker and job information
       // Put the logic for finding the skill gaps here and trainings
 
-      return res.json(job);
+      var skill_gap = [];
+      // Get Skills Needed
+      for(var i = 0; i < job.skills.length; i++){
+        skill_gap.push(job.skills[i].value);
+      }
 
+      // Remove Skills that Jobseeker already has
+      for(var i  = 0; i < jobseeker.skills.length; i++){
+        for(var j = 0; j < skill_gap.length; j++){
+          if (jobseeker.skills[i].value == skill_gap[j]){
+            skill_gap.splice(j,1);
+          }
+        }
+      }
+      job.skill_gap = skill_gap;
+      console.log("Skill Gap");
+      console.log(job.skill_gap);
+
+
+
+      return res.json(job);
     });
 });
 

@@ -29,6 +29,7 @@ var questionsSchema = new mongoose.Schema({
         text: String,
         value: String
     }],
+    skill_gap: [String],
     emotionalSlider: {type: Number},
     extrovertSlider: {type: Number},
     unplannedSlider: {type: Number},
