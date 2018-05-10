@@ -870,6 +870,7 @@ app.get('/jobseeker/job/view', authorizeRequest, function(req,res){
         }
 
         // Iterate through skill gaps, execute rest call to get google cse results
+        /*
         var options = { method: 'GET',
           url: 'https://www.googleapis.com/customsearch/v1',
           qs:
@@ -882,10 +883,6 @@ app.get('/jobseeker/job/view', authorizeRequest, function(req,res){
            { 'Postman-Token': '19276978-5091-4a03-bcf5-0f6831031a02',
              'Cache-Control': 'no-cache' } };
 
-        console.log("SKILL GAPS");
-
-        console.log(skill_gap);
-
         for(var i = 0; i < skill_gap.length; i++  ){
           // send request for google cse
           console.log(skill_gap[i].trainings);
@@ -897,8 +894,10 @@ app.get('/jobseeker/job/view', authorizeRequest, function(req,res){
             console.log(res);
 
           });
-        }
+        }*/
+        console.log("SKILL GAPS");
 
+        console.log(skill_gap);
         job.skill_gap = skill_gap;
       }
 
