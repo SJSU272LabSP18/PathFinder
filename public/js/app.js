@@ -670,9 +670,9 @@ app.controller('QuizPersonalityController', function($scope, $localStorage, $ses
                      {id:'Q1', question:"What does your ideal work day look like?", answer:response.q1},
                      {id:'Q2', question:"What is the greatest accomplishment of your life?", answer:response.q2},
                      {id:'Q3', question:"For what in your life do you feel most grateful?", answer:response.q3},
-                     {id:'Q4', question:"If you were able to live to the age of 90 and retain either the mind or body of a 30-year old for the last 60 years of your life, which would you choose?", answer:response.q4},
+                     {id:'Q4', question:"How would you describe yourself?", answer:response.q4},
                      {id:'Q5', question:"What is your most treasured memory?", answer:response.q5},
-                     {id:'Q6', question:"If you could wake up tomorrow having gained any one quality or ability, what would it be?", answer:response.q6}
+                     {id:'Q6', question:"What are some of your hobbies?", answer:response.q6}
                     ]
 
 
@@ -682,9 +682,9 @@ app.controller('QuizPersonalityController', function($scope, $localStorage, $ses
                        {id:'Q1', question:"What does your ideal work day look like?", answer:""},
                        {id:'Q2', question:"What is the greatest accomplishment of your life?", answer:""},
                        {id:'Q3', question:"For what in your life do you feel most grateful?", answer:""},
-                       {id:'Q4', question:"If you were able to live to the age of 90 and retain either the mind or body of a 30-year old for the last 60 years of your life, which would you choose?", answer:""},
+                       {id:'Q4', question:"How would you describe yourself?", answer:""},
                        {id:'Q5', question:"What is your most treasured memory?", answer:""},
-                       {id:'Q6', question:"If you could wake up tomorrow having gained any one quality or ability, what would it be?", answer:""}
+                       {id:'Q6', question:"What are some of your hobbies?", answer:""}
                       ]
         }
 
