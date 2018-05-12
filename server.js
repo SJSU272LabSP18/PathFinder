@@ -805,6 +805,17 @@ app.get('/jobseeker/jobs', authorizeRequest, function(req,res){
               map[(jobs[j].noveltySlider)] = jobseeker.stimulation;
               map[(jobs[j].helpSlider)] = jobseeker.help;
 
+              if (!Object.entries)
+                 Object.entries = function( obj ){
+                    var ownProps = Object.keys( obj ),
+                       i = ownProps.length,
+                       resArray = new Array(i); // preallocate the Array
+
+                    while (i--)
+                       resArray[i] = [ownProps[i], obj[ownProps[i]]];
+                    return resArray;
+                 };
+
               for (var [key, value] of Object.entries(map)) {
                   if (key != undefined && value != undefined) {
                       RMSE = RMSE + Math.pow((parseInt(key) - value), 2);
@@ -1081,7 +1092,7 @@ app.post('/job/delete', authorizeRequest, function(req, res){
             res.status(500).send('Error deleting job.');
             return;
         }
-        
+
         res.status(200).send('Job successfully deleted.');
     });
 });
@@ -1159,6 +1170,18 @@ app.get('/jobposter/jobs/candidates', authorizeRequest, function(req,res){
               map[(job.challengeSlider)] = jobseekers[j].challenge;
               map[(job.noveltySlider)] = jobseekers[j].stimulation;
               map[(job.helpSlider)] = jobseekers[j].help;
+
+
+              if (!Object.entries)
+                 Object.entries = function( obj ){
+                    var ownProps = Object.keys( obj ),
+                       i = ownProps.length,
+                       resArray = new Array(i); // preallocate the Array
+
+                    while (i--)
+                       resArray[i] = [ownProps[i], obj[ownProps[i]]];
+                    return resArray;
+                 };
 
               for (var [key, value] of Object.entries(map)) {
                   if (key != undefined && value != undefined) {
