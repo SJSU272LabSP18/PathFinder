@@ -948,7 +948,7 @@ app.controller('JobseekerJobsController', function($scope, $filter, $localStorag
 
   $scope.sort = {
               sortingOrder : 'ranking',
-              reverse : false
+              reverse : true
           };
 
   // Create Table Based on Jobs Data
@@ -1345,7 +1345,7 @@ app.controller('JobposterJobsController', function($scope, $filter, $localStorag
 
   $scope.sort = {
               sortingOrder : 'company',
-              reverse : true
+              reverse : false
           };
 
   // Create Table Based on Jobs Data
