@@ -43,7 +43,7 @@
             <tr class="hand_pointer" ng-repeat="item in pagedItems[currentPage] | orderBy:sort.sortingOrder:sort.reverse" ng-click="goToCandidate(item._id)">
                 <td>{{item.firstname}}</td>
                 <td>{{item.lastname}}</td>
-                <td>tbd</td>
+                <td>{{item.ranking}}</td>
             </tr>
         </tbody>
     </table>

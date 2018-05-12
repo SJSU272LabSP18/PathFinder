@@ -769,7 +769,7 @@ app.get('/jobseeker/jobs', authorizeRequest, function(req,res){
           for (var i = 0; i < jobseeker.skills.length; i++) {
               jobseeker_skills.push(jobseeker.skills[i].value);
           }
-          // console.log(jobseeker_skills);
+          console.log("jobseeker_skills", jobseeker_skills);
           // For each job, find the match
           for (var j in jobs) {
               var job_skills = [];
@@ -780,47 +780,55 @@ app.get('/jobseeker/jobs', authorizeRequest, function(req,res){
 
               // Get % of skills that match, that is # present / req
               var num_match = 0;
-              // console.log("Job skills", job_skills);
+              console.log("Job skills", job_skills);
               for (var i = 0; i < job_skills.length; i++) {
                   // console.log(job_skills[i]);
-                  if (jobseeker_skills.indexOf(job_skills[i])) {
+                  if (jobseeker_skills.indexOf(job_skills[i]) != -1) {
                       num_match++;
                   }
               }
-              // console.log("num match", num_match);
+              console.log("num match", num_match);
 
               // Skills match counts for 80%
               var skills_match = (num_match / num_req_skills) * 80;
 
-              // console.log(skills_match);
+              console.log("skills_match", skills_match);
 
               // Calculate percent match for personality
               var RMSE = 0;
               var personality_match = 0;
               var map = {};
-              map[jobs[j].emotionalSlider] = jobseeker.emotional;
-              map[jobs[j].extrovertSlider] = jobseeker.extrovert;
-              map[jobs[j].unplannedSlider] = jobseeker.structure;
-              map[jobs[j].challengeSlider] = jobseeker.challenge;
-              map[jobs[j].noveltySlider] = jobseeker.stimulation;
-              map[jobs[j].helpSlider] = jobseeker.help;
-              // console.log(map);
-              //console.log(jobseeker);
+              map[(jobs[j].emotionalSlider)] = jobseeker.emotional;
+              map[(jobs[j].extrovertSlider)] = jobseeker.extrovert;
+              map[(jobs[j].unplannedSlider)] = jobseeker.structure;
+              map[(jobs[j].challengeSlider)] = jobseeker.challenge;
+              map[(jobs[j].noveltySlider)] = jobseeker.stimulation;
+              map[(jobs[j].helpSlider)] = jobseeker.help;
 
-              for (var key in map) {
-                  RMSE = RMSE + (parseInt(key) - map[key]) ^ 2;
+              for (var [key, value] of Object.entries(map)) {
+                  if (key != undefined && value != undefined) {
+                      RMSE = RMSE + Math.pow((parseInt(key) - value), 2);
+                  }
+                  //console.log(key, value);
               }
-              //console.log(RMSE);
 
-              RMSE = Math.sqrt(RMSE / 7);
+              RMSE = Math.sqrt(RMSE / 6);
+              console.log("RMSE: ", RMSE);
+
+              personality_match = (100 - RMSE);
+              console.log("personality_match: ", personality_match);
+
               // Personality counts for 20%
-              personality_match = (1 - RMSE) * 20;
-              // console.log(RMSE);
-              // console.log(personality_match);
+              var personality_weight = 0.2;
 
-              var total_match = skills_match + personality_match;
-              console.log(total_match);
-              jobs[j].ranking = Math.abs(total_match.toFixed(1));
+              // Skills counts for 80%
+              var skills_weight = 0.8;
+
+              // total match formula
+              var total_match = skills_match * skills_weight + personality_match * personality_weight;
+
+              console.log("total_match: ", total_match);
+              jobs[j].ranking = total_match.toFixed(1);
           }
           return res.json(jobs);
 
@@ -1096,11 +1104,80 @@ app.get('/jobposter/jobs/candidates', authorizeRequest, function(req,res){
           // Put logic here to rank jobseekers with jobpost
           //
           console.log(jobseekers);
+
+          var job_skills = [];
+          for (var i = 0; i < job.skills.length; i++) {
+              job_skills.push(job.skills[i].value);
+          }
+          var num_req_skills = job_skills.length;
+          console.log("job_skills", jobseeker_skills);
+          // For each job, find the match
+          for (var j in jobseekers) {
+              var jobseeker_skills = [];
+              for (var i = 0; i < jobseekers[j].skills.length; i++) {
+                  jobseeker_skills.push(jobseekers[j].skills[i].value);
+              }
+
+              // Get % of skills that match, that is # present / req
+              var num_match = 0;
+              console.log("Job skills", jobseeker_skills);
+
+              for (var i = 0; i < job_skills.length; i++) {
+                  // console.log(job_skills[i]);
+                  if (jobseeker_skills.indexOf(job_skills[i]) != -1) {
+                      num_match++;
+                  }
+              }
+              console.log("num match", num_match);
+
+              // Skills match counts for 80%
+              var skills_match = (num_match / num_req_skills) * 80;
+
+              console.log("skills_match", skills_match);
+
+              // Calculate percent match for personality
+              var RMSE = 0;
+              var personality_match = 0;
+              var map = {};
+              map[(job.emotionalSlider)] = jobseekers[j].emotional;
+              map[(job.extrovertSlider)] = jobseekers[j].extrovert;
+              map[(job.unplannedSlider)] = jobseekers[j].structure;
+              map[(job.challengeSlider)] = jobseekers[j].challenge;
+              map[(job.noveltySlider)] = jobseekers[j].stimulation;
+              map[(job.helpSlider)] = jobseekers[j].help;
+
+              for (var [key, value] of Object.entries(map)) {
+                  if (key != undefined && value != undefined) {
+                      RMSE = RMSE + Math.pow((parseInt(key) - value), 2);
+                  }
+                  //console.log(key, value);
+              }
+
+              RMSE = Math.sqrt(RMSE / 6);
+              console.log("RMSE: ", RMSE);
+
+              personality_match = (100 - RMSE);
+              console.log("personality_match: ", personality_match);
+
+              // Personality counts for 20%
+              var personality_weight = 0.2;
+
+              // Skills counts for 80%
+              var skills_weight = 0.8;
+
+              // total match formula
+              var total_match = skills_match * skills_weight + personality_match * personality_weight;
+
+              console.log("total_match: ", total_match);
+              jobseekers[j].ranking = total_match.toFixed(1);
+              console.log("!!", jobseekers[j].ranking, "!!");
+          }
           return res.json(jobseekers);
 
         });
     });
 });
+
 
 
 // Get Candidate
