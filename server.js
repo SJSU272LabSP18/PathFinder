@@ -1072,6 +1072,20 @@ app.post('/update/job', authorizeRequest, function(req,res){
 
 });
 
+//Account deletion
+app.post('/job/delete', authorizeRequest, function(req, res){
+
+    Jobposter.remove({ _id: req.body.job_id }, function(err) {
+        if (err) {
+            console.log(err);
+            res.status(500).send('Error deleting job.');
+            return;
+        }
+        
+        res.status(200).send('Job successfully deleted.');
+    });
+});
+
 
 // Get Candidates for Specific Job Posting
 app.get('/jobposter/jobs/candidates', authorizeRequest, function(req,res){

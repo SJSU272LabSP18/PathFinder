@@ -1651,6 +1651,25 @@ app.controller('JobposterJobEditViewController', function($scope, $localStorage,
     $location.path('/jobposter/jobs/view/' + $scope.jobpost._id);
   }
 
+  $scope.delete = function() {
+    $http({
+        method: 'POST',
+        url: '/job/delete',
+        data: {
+            'job_id': $scope.jobpost._id
+        }
+    })
+        .success(function(response){
+            alert(response);
+            $location.path('/jobposter/jobs/');
+        })
+        .error(function(response){
+            alert(response);
+        }
+    );
+
+  }
+
   $scope.submitForm = function() {
     $scope.user.jobpost = {}
     $scope.user.jobpost.id = $scope.jobpost._id;
