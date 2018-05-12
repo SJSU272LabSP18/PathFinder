@@ -947,7 +947,7 @@ app.controller('JobseekerJobsController', function($scope, $filter, $localStorag
   $scope.user = $localStorage;
 
   $scope.sort = {
-              sortingOrder : 'company',
+              sortingOrder : 'ranking',
               reverse : false
           };
 
@@ -1781,7 +1781,7 @@ app.controller('JobposterJobViewCandidatesController', function($scope, $filter,
   $scope.user = $localStorage;
 
   $scope.sort = {
-              sortingOrder : 'firstname',
+              sortingOrder : 'ranking',
               reverse : false
           };
 
