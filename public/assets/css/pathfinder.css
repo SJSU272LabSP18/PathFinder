@@ -33,6 +33,11 @@ label {font-weight:bold}
     display: none;
 }
 
+svg:not (:root ) {
+    width:100%;
+    height: auto;
+}
+
 .down-arrow{
   position: fixed;
   bottom: 0;
